@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&display=swap');
+
+:root {
+    /* Generic colors */
+    --black: #000000;
+    --white: #FFFFFF;
+    --red: #ee4040;
+
+    /* Primary Tones */
+    --primary: #5C33F2;
+    --primary-t10: #1A0063;
+    --primary-t20: #2F009C;
+    --primary-t30: #4400D9;
+    --primary-t40: #5D34F3;
+    --primary-t50: #775AFF;
+    --primary-t60: #917EFF;
+    --primary-t70: #AD9FFF;
+    --primary-t80: #C9BFFF;
+    --primary-t90: #E5DEFF;
+    --primary-t95: #F4EEFF;
+
+    /* Secondary Tones */
+    --secondary: #9839FE;
+    --secondary-t10: #2A0053;
+    --secondary-t20: #460084;
+    --secondary-t30: #6500B9;
+    --secondary-t40: #8315E9;
+    --secondary-t50: #9C44FF;
+    --secondary-t60: #B170FF;
+    --secondary-t70: #C595FF;
+    --secondary-t80: #DAB9FF;
+    --secondary-t90: #EEDBFF;
+    --secondary-t95: #F9EDFF;
+
+    /* Tertiary Tones */
+    --tertiary: #7034F6;
+    --tertiary-t10: #21005E;
+    --tertiary-t20: #380094;
+    --tertiary-t30: #5200CE;
+    --tertiary-t40: #6B2CF1;
+    --tertiary-t50: #8354FF;
+    --tertiary-t60: #9C7AFF;
+    --tertiary-t70: #B59CFF;
+    --tertiary-t80: #CEBDFF;
+    --tertiary-t90: #E8DDFF;
+    --tertiary-t95: #F5EEFF;
+
+    /* Neutral */
+    --neutral: #0A131C;
+    --neutral-t10: #141C26;
+    --neutral-t20: #28313B;
+    --neutral-t30: #3F4852;
+    --neutral-t40: #565F6A;
+    --neutral-t50: #6F7883;
+    --neutral-t60: #88919D;
+    --neutral-t70: #A3ACB8;
+    --neutral-t80: #BEC7D4;
+    --neutral-t90: #DAE3F0;
+    --neutral-t95: #E9F1FF;
+}
