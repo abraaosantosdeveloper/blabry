@@ -1,0 +1,160 @@
+---
+sidebar_position: 2
+title: Modelo 3C
+---
+
+import ChatLog from '@site/src/components/ChatLog/ChatLog';
+
+# Modelo 3C — Abordagens Preliminares
+
+O modelo 3C (Cartão, Conversa e Confirmação) foi utilizado para documentar as histórias de usuário do Blabry. Cada requisito passou por uma conversa entre o P.O e o desenvolvedor antes de ser implementado, garantindo clareza nos critérios de aceitação.
+
+Esta seção registra as abordagens preliminares sobre requisitos não funcionais relacionados ao frontend — performance, responsividade, acessibilidade, segurança e manutenibilidade.
+
+---
+
+## Performance
+
+### Cartão
+
+| Campo | Descrição |
+|---|---|
+| ID | RNF-F01, RNF-F02, RNF-F03, RNF-F04 |
+| Como | usuário do Blabry |
+| Quero | que a aplicação carregue rapidamente e responda de forma fluida |
+| Para | ter uma experiência agradável sem esperas perceptíveis |
+
+### Conversa
+
+<ChatLog messages={[
+    { autor: 'po', texto: 'Quando o usuário abre o Blabry pela primeira vez, quanto tempo ele pode esperar antes de ver a tela de login? E quando navega entre o feed e o chat, essa transição pode ter algum delay perceptível ou precisa ser instantânea?' },
+    { autor: 'dev', texto: 'Ele não deve esperar mais que 2 segundos em condições ideais. De acordo com o tempo de resposta da API, até que esse retorno chegue, será mostrada uma animação de carregamento para que o usuário tenha um feedback sobre o status do sistema, segundo a primeira heurística de Nielsen: Visibilidade do Status do Sistema. Após essa espera, o usuário já estará pronto a realizar as primeiras ações: cadastro e/ou login.' },
+    { autor: 'po', texto: 'E sobre as transições entre seções — essa animação de slide que aparece no design — ela pode ter um delay de até quantos milissegundos antes de parecer travada para o usuário?' },
+    { autor: 'dev', texto: 'A animação não tem um delay, mas a sua duração fica em torno de 200 a 300ms, para ser fluida. No entanto, dependendo do desempenho do computador do cliente, um delay pode aparecer, mas não por decisão de design da aplicação. A regra é: usuário clicou, animação executa imediatamente.' }
+]} />
+
+### Confirmação
+
+*Print da tela de carregamento a ser adicionado após implementação.*
+
+---
+
+## Responsividade
+
+### Cartão
+
+| Campo | Descrição |
+|---|---|
+| ID | RNF-F05 |
+| Como | usuário do Blabry |
+| Quero | acessar a aplicação em qualquer dispositivo |
+| Para | usar o Blabry no celular, tablet ou computador sem perda de funcionalidade |
+
+### Conversa
+
+<ChatLog messages={[
+    { autor: 'po', texto: 'Você me mostrou o design tanto para desktop quanto para mobile. Existe algum tamanho de tela abaixo do qual o Blabry pode deixar de funcionar bem? Por exemplo, smartwatches ou telas muito pequenas estão fora do escopo?' },
+    { autor: 'dev', texto: 'Sim. A aplicação foi pensada para computadores, tablets e celulares. Pode começar a ter problemas em dispositivos cujo viewport resulta em uma largura interna menor que 320 pixels.' }
+]} />
+
+### Confirmação
+
+*Print das telas mobile a ser adicionado após implementação.*
+
+---
+
+## Acessibilidade
+
+### Cartão
+
+| Campo | Descrição |
+|---|---|
+| ID | RNF-F09, RNF-F10, RNF-F11 |
+| Como | usuário do Blabry |
+| Quero | que a interface seja minimamente acessível |
+| Para | que leitores de tela consigam interpretar os elementos visuais |
+
+### Conversa
+
+<ChatLog messages={[
+    { autor: 'po', texto: 'O Blabry precisa funcionar para usuários que navegam apenas pelo teclado, sem mouse? E existe alguma preocupação com leitores de tela — usuários com deficiência visual que usam ferramentas como o NVDA ou VoiceOver?' },
+    { autor: 'dev', texto: 'Não, ainda não foram implementadas questões de acessibilidade senão alt text nos componentes para leitores de tela. A navegação com teclado ainda não é um recurso que faz parte da aplicação.' }
+]} />
+
+### Confirmação
+
+*A ser validado após implementação.*
+
+---
+
+## Segurança
+
+### Cartão
+
+| Campo | Descrição |
+|---|---|
+| ID | RNF-F12, RNF-F13, RNF-F14 |
+| Como | usuário do Blabry |
+| Quero | que minhas credenciais sejam armazenadas e tratadas com segurança |
+| Para | não ter minha conta comprometida por falhas de segurança no frontend |
+
+### Conversa
+
+<ChatLog messages={[
+    { autor: 'po', texto: 'O token JWT que o backend retorna após o login — onde ele deve ser armazenado no browser? E o que acontece quando o usuário fecha o browser e abre novamente — ele deve continuar logado ou precisa fazer login de novo?' },
+    { autor: 'dev', texto: 'Inicialmente, será armazenado no localStorage. Contudo, haverá uma validação no back-end, onde o token tem uma duração que, por sua vez, ainda não foi definida. Mas após esse período, o token será invalidado e o usuário precisará fazer login novamente. Futuramente, quando houver a versão mobile em React Native, haverá outra verificação para saber o caráter da aplicação, e se for nativa, esse token não terá limites. Já se for na web, continua tendo.' },
+    { autor: 'po', texto: 'Quando o token expirar, o que o usuário vê?' },
+    { autor: 'dev', texto: 'O frontend detecta o token expirado e redireciona automaticamente para a tela de login.' }
+]} />
+
+### Confirmação
+
+*A ser validado após implementação do fluxo de autenticação.*
+
+---
+
+## Feedback de Erros
+
+### Cartão
+
+| Campo | Descrição |
+|---|---|
+| ID | RNF-F08 |
+| Como | usuário do Blabry |
+| Quero | receber feedback claro quando algo der errado |
+| Para | entender o que aconteceu e saber o que fazer a seguir |
+
+### Conversa
+
+<ChatLog messages={[
+    { autor: 'po', texto: 'Quando o usuário digita a senha errada ou um email que não existe, o que ele deve ver? Uma mensagem abaixo do campo específico, um toast no canto da tela, ou um alerta genérico no formulário?' },
+    { autor: 'dev', texto: 'Usaremos um toast com cor e mensagem de acordo com o erro.' }
+]} />
+
+### Confirmação
+
+*Print do componente de toast a ser adicionado após implementação.*
+
+---
+
+## Manutenibilidade
+
+### Cartão
+
+| Campo | Descrição |
+|---|---|
+| ID | RNF-F15, RNF-F16, RNF-F17 |
+| Como | desenvolvedor do Blabry |
+| Quero | que o código frontend seja organizado e previsível |
+| Para | facilitar a manutenção e adição de novas funcionalidades sem quebrar o que já existe |
+
+### Conversa
+
+<ChatLog messages={[
+    { autor: 'po', texto: 'Existe alguma regra sobre como os componentes devem ser organizados? Por exemplo, um componente pode ter mais de uma responsabilidade, ou cada um deve fazer apenas uma coisa?' },
+    { autor: 'dev', texto: 'Cada componente tem uma responsabilidade, uma vez que a aplicação está sendo construída seguindo princípios de SOLID. Portanto, um serviço dedicado a autenticação realiza autenticação. O serviço de cadastro realiza cadastro; nova postagem, novo comentário, tudo seguirá este padrão para evitar quebras no caso de uma nova funcionalidade surgir.' }
+]} />
+
+### Confirmação
+
+*A ser validado com revisão da estrutura de pastas do projeto.*
