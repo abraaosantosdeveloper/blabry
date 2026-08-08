@@ -8,7 +8,7 @@ import Perfil from './pages/Perfil';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/blabry">
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/novaconta' element={<Cadastro />} />
