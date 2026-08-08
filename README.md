@@ -79,7 +79,8 @@ O modelo 3C (Cartão, Conversa e Confirmação) foi utilizado para documentar as
 
 As histórias de usuário do Blabry foram documentadas seguindo o modelo 3C — Cartão, Conversa e Confirmação. As conversas entre P.O e desenvolvedor estão registradas com visualização interativa na documentação oficial.
 
-[Ver modelo 3C na documentação](https://abraaosantosdeveloper.github.io/blabry/docs/modelo-3c)
+[Acessar Modelo 3c](https://abraaosantosdeveloper.github.io/blabry/docs/modelo-3c)
+
 ---
 
 ## Requisitos não funcionais
