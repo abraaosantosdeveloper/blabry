@@ -49,10 +49,6 @@ app/
 │   ├── hooks/
 │   └── styles/
 │       └── variables.css
-docs/
-├── assets/
-│   └── board/
-└── docs/
 ```
 
 ---
