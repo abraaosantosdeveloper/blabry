@@ -142,7 +142,7 @@ Estrutura base do projeto React iniciada com Vite. Roteamento configurado com Re
 
 A documentação técnica detalhada — decisões de design, arquitetura de componentes e guias de contribuição — está disponível em:
 
-[Acessar documentação](https://abraaosantosdeveloper.github.io/blabry-front-end/docs)
+[Acessar documentação](https://abraaosantosdeveloper.github.io/blabry-docs/)
 
 ---
 
