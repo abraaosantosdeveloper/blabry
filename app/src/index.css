@@ -1,1 +1,19 @@
-@import './styles/variables.css';
+@import url(./styles/variables.css);
+
+* {
+    font-family: 'Inter', sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.input-wrapper {
+    width: fit-content;
+}
+
+@media (max-width: 480px) {
+    .input-wrapper {
+        width: 100%;
+        padding: 0 24px;
+    }
+}
