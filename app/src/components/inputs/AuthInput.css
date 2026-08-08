@@ -1,0 +1,45 @@
+.field-group {
+    width: fit-content;
+}
+
+.field-group>label,
+.field-group>input {
+    display: block;
+}
+
+.field-group>label {
+    font-weight: 500;
+    margin: 10px 15px;
+    font-size: 14px;
+    color: var(--black);
+}
+
+.field-group>input {
+    width: 22rem;
+    height: 2.5rem;
+    color: var(--neutral-t20);
+    font-weight: 500;
+    border: 2px solid var(--neutral-t90);
+    border-radius: 8px;
+    outline: 0;
+    padding: 0 20px;
+    transition: all .2s;
+}
+
+.field-group>input:focus {
+    border: 2px solid var(--tertiary-t50);
+}
+
+.field-group>input::placeholder {
+    color: var(--neutral-t60);
+}
+
+@media (max-width: 480px) {
+    .field-group {
+        width: 100%;
+    }
+
+    .field-group>input {
+        width: 100%;
+    }
+}
