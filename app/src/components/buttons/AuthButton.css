@@ -1,0 +1,28 @@
+.auth-btn {
+    width: 180px;
+    height: 40px;
+    color: var(--white);
+    background-color: var(--secondary);
+    border: 0;
+    outline: 0;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all .2s;
+    margin: 45px auto 20px;
+    cursor: pointer;
+}
+
+.auth-btn:hover {
+    background-color: var(--secondary-t40);
+}
+
+.auth-btn:active {
+    background-color: var(--secondary-t30);
+}
+
+@media (max-width: 480px) {
+    .auth-btn {
+        width: 80%;
+    }
+}
