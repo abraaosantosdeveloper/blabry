@@ -1,42 +1,26 @@
-import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import HomepageFeatures from '@site/src/components/HomepageFeatures';
-
-import Heading from '@theme/Heading';
 import styles from './index.module.css';
 
-function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
-  return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <Heading as="h1" className="hero__title">
-          {siteConfig.title}
-        </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro">
-            Docusaurus Tutorial - 5min ⏱️
-          </Link>
-        </div>
-      </div>
-    </header>
-  );
-}
-
 export default function Home() {
-  const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Hello from ${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
-      <HomepageHeader />
-      <main>
-        <HomepageFeatures />
+      title="Blabry Docs"
+      description="Documentação oficial do Blabry">
+      <main className={styles.main}>
+      <div className={styles.brand}>
+        <img src="img/logo.svg" alt="Blabry" className={styles.logo} />
+        <h1 className={styles.title}>Blabry</h1>
+      </div>
+        <p className={styles.tagline}>
+          Explore a arquitetura, as decisões técnicas e o processo de desenvolvimento.
+        </p>
+        <Link
+          className={styles.cta}
+          to="/docs/modelo-3c">
+          Acessar documentação
+        </Link>
       </main>
     </Layout>
   );

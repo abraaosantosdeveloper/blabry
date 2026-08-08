@@ -1,0 +1,56 @@
+.chatLog {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    margin: 24px 0;
+}
+
+.messageLeft {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.messageRight {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.bubbleLeft {
+    background-color: #EDE9FF;
+    border-radius: 0px 12px 12px 12px;
+    padding: 10px 16px;
+    max-width: 70%;
+}
+
+.bubbleRight {
+    background-color: #5C33F2;
+    border-radius: 12px 0px 12px 12px;
+    padding: 10px 16px;
+    max-width: 70%;
+}
+
+.autor {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #5C33F2;
+}
+
+.bubbleRight .autor {
+    color: #C9BFFF;
+}
+
+.texto {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+    color: #1a1a1a;
+}
+
+.bubbleRight .texto {
+    color: #ffffff;
+}

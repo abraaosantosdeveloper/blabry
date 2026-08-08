@@ -20,15 +20,15 @@ const config = {
   },
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://abraaosantosdeveloper.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/blabry',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'abraaosantosdeveloper', // Usually your GitHub org/user name.
-  projectName: 'blabry-front-end', // Usually your repo name.
+  projectName: 'blabry', // Usually your repo name.
 
   onBrokenLinks: 'throw',
 
@@ -48,9 +48,6 @@ const config = {
         docs: {
           sidebarPath: './sidebars.js',
           // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -74,13 +71,7 @@ const config = {
   },
   items: [
     {
-      type: 'docSidebar',
-      sidebarId: 'tutorialSidebar',
-      position: 'left',
-      label: 'Documentação',
-    },
-    {
-      href: 'https://github.com/abraaosantosdeveloper/blabry-front-end',
+      href: 'https://github.com/abraaosantosdeveloper/blabry',
       label: 'GitHub',
       position: 'right',
     },
