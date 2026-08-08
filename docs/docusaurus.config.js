@@ -23,7 +23,7 @@ const config = {
   url: 'https://abraaosantosdeveloper.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/blabry',
+  baseUrl: '/blabry/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -77,7 +77,7 @@ const config = {
     },
   ],
 },
-      footer: {
+  footer: {
   style: 'dark',
   copyright: `Copyright © ${new Date().getFullYear()} Blabry. Desenvolvido por Abraão Santos.`,
 },
