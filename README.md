@@ -38,17 +38,17 @@ Acesse `http://localhost:5173` no browser.
 ```
 app/
 ├── public/
-├── src/
-│   ├── assets/
-│   │   └── icons/
-│   ├── components/
-│   │   ├── buttons/
-│   │   └── inputs/
-│   ├── pages/
-│   ├── services/
-│   ├── hooks/
-│   └── styles/
-│       └── variables.css
+└── src/
+    ├── assets/
+    │   └── icons/
+    ├── components/
+    │   ├── buttons/
+    │   └── inputs/
+    ├── pages/
+    ├── services/
+    ├── hooks/
+    └── styles/
+        └── variables.css
 ```
 
 ---
@@ -63,9 +63,7 @@ O protótipo completo das telas foi desenvolvido no Figma antes da implementaç�
 
 ## Gestão do projeto
 
-O desenvolvimento é guiado por épicos e histórias de usuário documentados em FigJam, seguindo os princípios do livro Engenharia de Software Moderna. O quadro Kanban registra o progresso de cada tarefa.
-
-![Quadro Kanban](./docs/assets/board/kanban-08-08-26-login-scrn.png)
+O desenvolvimento é guiado por épicos e histórias de usuário documentados em FigJam, seguindo os princípios do livro Engenharia de Software Moderna. 
 
 ---
 
