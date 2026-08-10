@@ -10,7 +10,7 @@ function AuthInput({
 }) {
     return (
         <div className='field-group'>
-            <label>{label}</label>
+            <label htmlFor={fieldId}>{label}</label>
             <input type={fieldType} id={fieldId} placeholder={placeholder} value={value} onChange={onChange} />
         </div>
     )
