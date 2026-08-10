@@ -43,7 +43,7 @@ function NovaConta() {
             </div>
 
             <AuthButton label={"Cadastrar"} />
-            <p className="already-user">Já tem conta? <Link className="already-user-link" to="/login">Fazer login</Link></p>
+            <p className="already-user">Já tem conta? <Link className="already-user-link" to="/">Fazer login</Link></p>
         </div>
     )
 }
