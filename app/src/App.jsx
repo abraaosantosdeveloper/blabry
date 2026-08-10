@@ -10,7 +10,9 @@ function App() {
   return (
     <BrowserRouter basename="/blabry">
       <Routes>
-        <Route path='/' element={<Login />} />
+        <Route path='/login' element={<Login />} />
+        {/* Descomentar depois de implementar */}
+        {/* <Route path='/recuperar-senha' element={<Login />} /> */}
         <Route path='/novaconta' element={<Cadastro />} />
         <Route path='/feed' element={<Feed />} />
         <Route path='/chat/:id' element={<Chat />} />
