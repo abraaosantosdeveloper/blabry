@@ -1,0 +1,16 @@
+.field-group>select {
+    height: 2.5rem;
+    padding: 0 10px;
+    color: var(--neutral-t20);
+    font-weight: 500;
+    border: 2px solid var(--neutral-t90);
+    border-radius: 8px;
+    outline: 0;
+    padding: 0 12px;
+    transition: all .2s;
+}
+
+.field-group>select:focus {
+    border: 2px solid var(--tertiary-t50);
+
+}
