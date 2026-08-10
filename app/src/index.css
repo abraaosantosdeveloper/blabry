@@ -7,6 +7,7 @@
     box-sizing: border-box;
 }
 
+
 .input-wrapper {
     width: fit-content;
 }
@@ -27,7 +28,15 @@
     color: var(--black);
 }
 
+
+
 @media (max-width: 480px) {
+    .sign-in-form {
+        height: auto;
+        min-height: 100vh;
+        padding-bottom: 40px;
+    }
+
     .input-wrapper {
         width: 100%;
         padding: 0 24px;
@@ -40,4 +49,5 @@
     .field-group>input {
         width: 100%;
     }
+
 }
