@@ -1,0 +1,32 @@
+.logo {
+    width: 172px;
+    height: 65px;
+    margin-bottom: 2.5rem;
+}
+
+.sign-in-form {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.input-line-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 22rem;
+}
+
+#nome-input,
+#apelido-input,
+#senha-input,
+#nascimento-input,
+#nacionalidade-input {
+    width: 10.5rem;
+
+}
