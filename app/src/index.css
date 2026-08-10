@@ -11,9 +11,33 @@
     width: fit-content;
 }
 
+.field-group {
+    width: fit-content;
+}
+
+.field-group>label,
+.field-group>input {
+    display: block;
+}
+
+.field-group>label {
+    font-weight: 500;
+    margin: 10px 15px;
+    font-size: 14px;
+    color: var(--black);
+}
+
 @media (max-width: 480px) {
     .input-wrapper {
         width: 100%;
         padding: 0 24px;
+    }
+
+    .field-group {
+        width: 100%;
+    }
+
+    .field-group>input {
+        width: 100%;
     }
 }
