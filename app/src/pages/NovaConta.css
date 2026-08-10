@@ -13,7 +13,6 @@
     justify-content: center;
 }
 
-
 .input-line-wrapper {
     display: flex;
     flex-direction: row;
@@ -28,5 +27,37 @@
 #nascimento-input,
 #nacionalidade-input {
     width: 10.5rem;
+}
 
+@media (max-width: 480px) {
+    .sign-in-form {
+        justify-content: flex-start;
+        padding-top: 60px;
+    }
+
+    .logo {
+        width: 140px;
+        height: auto;
+        margin-bottom: 2rem;
+    }
+
+    .input-line-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        padding: 0 24px;
+        gap: 0;
+    }
+
+    .input-line-wrapper .field-group {
+        width: 100%;
+    }
+
+    #nome-input,
+    #apelido-input,
+    #senha-input,
+    #nascimento-input,
+    #nacionalidade-input {
+        width: 100%;
+    }
 }
