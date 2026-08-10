@@ -13,10 +13,6 @@
     margin-bottom: 4.3rem;
 }
 
-.already-user {
-    color: var(--neutral-t40);
-}
-
 .forgot-psw {
     width: 22rem;
     padding: 10px 15px;
@@ -28,6 +24,15 @@
 
 .already-user-link {
     color: var(--primary);
+}
+
+.already-user {
+    color: var(--neutral-t40);
+}
+
+#email-input,
+#password-input {
+    width: 22rem;
 }
 
 @media (max-width: 480px) {
@@ -46,4 +51,15 @@
         width: 100%;
         padding: 10px 0;
     }
+
+    .already-user {
+        margin-top: 16px;
+        margin-bottom: 24px;
+    }
+
+    #email-input,
+    #password-input {
+        width: 100%;
+    }
+
 }

@@ -24,15 +24,32 @@
 #nome-input,
 #apelido-input,
 #senha-input,
+#confirmar-senha-input,
 #nascimento-input,
 #nacionalidade-input {
     width: 10.5rem;
+}
+
+#email-input {
+    width: 22rem;
+}
+
+.already-user-link {
+    color: var(--primary);
+}
+
+.already-user {
+    color: var(--neutral-t40);
 }
 
 @media (max-width: 480px) {
     .sign-in-form {
         justify-content: flex-start;
         padding-top: 60px;
+        height: auto;
+        min-height: 100vh;
+        padding-bottom: 40px;
+
     }
 
     .logo {
@@ -45,7 +62,7 @@
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
-        padding: 0 24px;
+        padding: 0;
         gap: 0;
     }
 
@@ -56,8 +73,10 @@
     #nome-input,
     #apelido-input,
     #senha-input,
+    #confirmar-senha-input,
     #nascimento-input,
-    #nacionalidade-input {
+    #nacionalidade-input,
+    #email-input {
         width: 100%;
     }
 }

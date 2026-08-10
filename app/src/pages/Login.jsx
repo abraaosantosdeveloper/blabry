@@ -14,8 +14,8 @@ function Login() {
 
             <img src={logo} alt="Logo Blabry" className="logo" />
             <div className="input-wrapper">
-                <AuthInput label={"Email"} placeholder={"email@exemplo.com"} fieldType={"Email"} fieldId={"email-input"} value={email} onChange={(e) => setEmail(e.target.value)} />
-                <AuthInput label={"Senha"} placeholder={"Senha"} fieldType={"Password"} fieldId={"password-input"} value={senha} onChange={(e) => setSenha(e.target.value)} />
+                <AuthInput label={"Email"} placeholder={"email@exemplo.com"} fieldType={"email"} fieldId={"email-input"} value={email} onChange={(e) => setEmail(e.target.value)} />
+                <AuthInput label={"Senha"} placeholder={"Senha"} fieldType={"password"} fieldId={"password-input"} value={senha} onChange={(e) => setSenha(e.target.value)} />
                 <Link className="forgot-psw" to="/recuperar-senha">Esqueci a senha</Link>
             </div>
 
