@@ -20,7 +20,7 @@ function Login() {
             </div>
 
             <AuthButton label={"Entrar"} />
-            <p className="already-user">Não tem conta <Link className="already-user-link" to="/novaconta">Cadastre-se</Link></p>
+            <p className="already-user">Não tem conta <Link className="already-user-link" to="/nova-conta">Cadastre-se</Link></p>
         </div>
     )
 }
