@@ -1,6 +1,7 @@
 .auth-btn {
     width: 180px;
     height: 40px;
+    min-height: 40px;
     color: var(--white);
     background-color: var(--secondary);
     border: 0;
