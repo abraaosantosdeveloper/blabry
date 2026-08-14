@@ -5,6 +5,7 @@ import Chat from './pages/Chat';
 import Feed from './pages/Feed';
 import MeuPerfil from './pages/MeuPerfil';
 import Perfil from './pages/Perfil';
+import ProtectedRoute from './components/protectRoutes/ProtectedRoutes';
 
 function App() {
   return (
@@ -14,10 +15,26 @@ function App() {
         {/* Descomentar depois de implementar */}
         {/* <Route path='/recuperar-senha' element={<Login />} /> */}
         <Route path='/nova-conta' element={<Cadastro />} />
-        <Route path='/feed' element={<Feed />} />
-        <Route path='/chat/:id' element={<Chat />} />
-        <Route path='/perfil/me' element={<MeuPerfil />} />
-        <Route path='/perfil/:alias' element={<Perfil />} />
+        <Route path='/feed' element={
+          <ProtectedRoute>
+            <Feed />
+          </ProtectedRoute>
+        } />
+        <Route path='/chat/:id' element={
+          <ProtectedRoute>
+            <Chat />
+          </ProtectedRoute>
+        } />
+        <Route path='/perfil/me' element={
+          <ProtectedRoute>
+            <MeuPerfil />
+          </ProtectedRoute>
+        } />
+        <Route path='/perfil/:alias' element={
+          <ProtectedRoute>
+            <Perfil />
+          </ProtectedRoute>
+        } />
       </Routes>
     </BrowserRouter>
   )
