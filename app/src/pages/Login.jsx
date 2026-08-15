@@ -11,7 +11,7 @@ function Login() {
     const navigate = useNavigate()
 
     async function handleLogin() {
-        const resposta = await fetch('http://localhost:3000/auth/login', {
+        const resposta = await fetch('https://pretty-generosity-production-b8c6.up.railway.app/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
