@@ -6,6 +6,13 @@
     --white: #FFFFFF;
     --red: #ee4040;
     --white: #fff;
+    --success-bg: #E8F7F0;
+    --success: #2D9E6B;
+    --success-border: #6EDBA8;
+    --success-text: #fdfdfd;
+    --failure-bg: #ffc0c0;
+    --failure-red: #df3f3f;
+    --failure-red-border: #ff8b8b;
 
     /* Primary Tones */
     --primary: #5C33F2;
