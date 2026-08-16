@@ -1,6 +1,7 @@
 import { useState } from "react"
 import AuthButton from "../components/buttons/AuthButton"
 import AuthInput from "../components/inputs/AuthInput"
+import Toast from "../components/toasts/Toast"
 import logo from '../assets/icons/logo_text.svg'
 import { Link, useNavigate } from 'react-router-dom'
 import './Login.css'
@@ -8,6 +9,7 @@ import './Login.css'
 function Login() {
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
+    // const [toast, setToast] = useState({ mensagem: 'Login realizado!', tipo: 'sucesso', visible: true })
     const navigate = useNavigate()
 
     async function handleLogin() {
@@ -31,6 +33,8 @@ function Login() {
 
     return (
         <div className="login-form">
+
+            {/* <Toast mensagem={toast.mensagem} tipo={toast.tipo} visible={toast.visible} /> */}
 
             <img src={logo} alt="Logo Blabry" className="logo" />
             <div className="input-wrapper">
