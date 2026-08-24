@@ -4,9 +4,16 @@
     position: fixed;
     top: 24px;
     left: 50%;
-    transform: translateX(-50%);
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+    transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
 }
 
 .toast-content-wrapper {
