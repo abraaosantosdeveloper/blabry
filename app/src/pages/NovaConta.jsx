@@ -1,5 +1,6 @@
 import { useState } from "react"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { cadastrar } from '../services/auth.service'
 import './NovaConta.css'
 import logo from '../assets/icons/logo_text.svg'
 import AuthInput from '../components/inputs/AuthInput'
@@ -14,6 +15,16 @@ function NovaConta() {
     const [confirmarSenha, setConfirmarSenha] = useState('')
     const [nascimento, setNascimento] = useState('')
     const [nacionalidade, setNacionalidade] = useState('')
+    const navigate = useNavigate()
+
+    async function handleCadastro() {
+        const dados = await cadastrar({ nome, apelido, email, senha, nascimento, nacionalidade })
+        if (dados.token) {
+            localStorage.setItem('token', dados.token)
+            localStorage.setItem('nome', dados.usuario.nome)
+            navigate('/feed')
+        }
+    }
 
     return (
         <div className="sign-in-form">
@@ -43,7 +54,7 @@ function NovaConta() {
                 </div>
             </div>
 
-            <AuthButton label={"Cadastrar"} />
+            <AuthButton label={"Cadastrar"} onClick={handleCadastro} />
             <p className="already-user">Já tem conta? <Link className="already-user-link" to="/">Fazer login</Link></p>
         </div>
     )
