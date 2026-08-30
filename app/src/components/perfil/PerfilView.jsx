@@ -43,7 +43,9 @@ function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoAbrirOpcoes,
 
     return (
         <div className="perfil">
-            <h1 className="perfil-titulo">{titulo}</h1>
+            {/* Título só para leitores de tela — o container central não exibe
+                rótulo de página, seguindo o padrão do feed. */}
+            <h1 className="sr-only">{titulo}</h1>
 
             <section className="perfil-topo">
                 <div className="perfil-identidade">
