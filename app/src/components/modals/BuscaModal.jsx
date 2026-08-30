@@ -32,10 +32,10 @@ function BuscaModal({ aberto, aoFechar }) {
         return total === 1 ? '1 resultado' : `${total} resultados`
     }, [ativo, carregando, erro, total])
 
-    function fechar() {
+    const fechar = useCallback(() => {
         setTermo('')
         aoFechar()
-    }
+    }, [aoFechar])
 
     return (
         <Modal aberto={aberto} aoFechar={fechar} rotulo="Pesquisar">

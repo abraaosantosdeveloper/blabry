@@ -1,4 +1,5 @@
 .field-group>select {
+    width: 100%;
     height: 2.5rem;
     padding: 0 10px;
     color: var(--neutral-t20);

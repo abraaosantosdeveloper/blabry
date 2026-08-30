@@ -256,7 +256,14 @@
 @media (max-width: 480px) {
     .perfil-topo {
         flex-direction: column;
-        gap: 10px;
+        gap: 12px;
+    }
+
+    /* Em coluna, o eixo principal é o vertical: manter `flex: 1 1 200px`
+       transformaria a base de largura em uma altura de 200px. */
+    .perfil-identidade {
+        flex: 0 0 auto;
+        width: 100%;
     }
 
     .perfil-numeros {

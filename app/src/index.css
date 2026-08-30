@@ -45,12 +45,20 @@ button {
 }
 
 
+/* Largura dos formulários de autenticação. Os campos são sempre fluidos;
+   quem limita é o contêiner. Assim nenhum campo pode divergir dos outros
+   nem estourar a tela em resoluções pequenas. */
+:root {
+    --campo-largura: 22rem;
+}
+
 .input-wrapper {
-    width: fit-content;
+    width: 100%;
+    max-width: var(--campo-largura);
 }
 
 .field-group {
-    width: fit-content;
+    width: 100%;
 }
 
 .field-group>label,
@@ -75,16 +83,7 @@ button {
     }
 
     .input-wrapper {
-        width: 100%;
         padding: 0 24px;
-    }
-
-    .field-group {
-        width: 100%;
-    }
-
-    .field-group>input {
-        width: 100%;
     }
 
 }

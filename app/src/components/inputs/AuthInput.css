@@ -1,5 +1,5 @@
 .field-group>input {
-    width: 22rem;
+    width: 100%;
     height: 2.5rem;
     color: var(--neutral-t20);
     font-weight: 500;

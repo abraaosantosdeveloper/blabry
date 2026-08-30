@@ -16,7 +16,8 @@
 
 /* ---- Progresso das etapas ---- */
 .etapas-barra {
-    width: 22rem;
+    width: 100%;
+    max-width: var(--campo-largura);
     height: 4px;
     background-color: var(--neutral-t90);
     border-radius: 999px;
@@ -40,7 +41,8 @@
 
 /* ---- Conteúdo da etapa ---- */
 .etapa-container {
-    width: 22rem;
+    width: 100%;
+    max-width: var(--campo-largura);
     display: flex;
     flex-direction: column;
 }
@@ -103,7 +105,7 @@
 }
 
 .dica {
-    max-width: 22rem;
+    max-width: 100%;
     margin: 12px 2px 0;
     font-size: 12.5px;
     line-height: 1.4;
@@ -146,13 +148,15 @@
     justify-content: space-between;
     align-items: flex-start;
     gap: 1rem;
-    width: 22rem;
+    width: 100%;
 }
 
-.input-line-wrapper .field-group,
-.input-line-wrapper .field-group>input,
-.input-line-wrapper .field-group>select {
-    width: 100%;
+/* min-width: 0 impede que o conteúdo force o item além da metade
+   disponível — sem isso um campo empurra o outro para fora. */
+.input-line-wrapper>.field-group,
+.input-line-wrapper>.alias-campo {
+    flex: 1 1 0;
+    min-width: 0;
 }
 
 .already-user-link {

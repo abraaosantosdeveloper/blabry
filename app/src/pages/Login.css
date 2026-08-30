@@ -14,7 +14,8 @@
 }
 
 .forgot-psw {
-    width: 22rem;
+    width: 100%;
+    max-width: var(--campo-largura);
     padding: 10px 15px;
     font-size: 15px;
     color: var(--primary);
@@ -32,7 +33,7 @@
 
 #email-input,
 #password-input {
-    width: 22rem;
+    width: 100%;
 }
 
 @media (max-width: 480px) {

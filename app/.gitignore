@@ -24,4 +24,8 @@ dist-ssr
 *.sw?
 
 # Env
+# .env.production e commitado de proposito: so tem a URL publica da API,
+# e garante que qualquer build aponte para producao.
 .env
+.env.local
+.env.*.local
