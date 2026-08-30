@@ -66,3 +66,121 @@
     --neutral-t90: #DAE3F0;
     --neutral-t95: #E9F1FF;
 }
+
+
+/* ============================================================
+   CAMADA SEMÂNTICA
+   ------------------------------------------------------------
+   A paleta acima descreve COR. Estes tokens descrevem FUNÇÃO —
+   e é a função que muda de valor entre os temas. Componentes
+   devem usar exclusivamente os tokens desta seção.
+   ============================================================ */
+
+:root,
+[data-tema="claro"] {
+    color-scheme: light;
+
+    /* Superfícies */
+    --fundo: var(--white);
+    --superficie: var(--white);
+    --superficie-2: var(--neutral-t95);
+    --superficie-3: var(--neutral-t90);
+
+    /* Texto */
+    --texto: var(--neutral);
+    --texto-medio: var(--neutral-t20);
+    /* Valores próprios em vez de --neutral-t50/t60: aqueles degraus da escala
+       ficam em 4,48:1 e 3,19:1 sobre branco, abaixo do mínimo de 4,5:1 que o
+       RNF-F10 exige (WCAG 2.1 AA). Estes mantêm o matiz azulado da escala. */
+    --texto-suave: #616A76;
+    --texto-fraco: #6B7480;
+
+    /* Traços */
+    --borda: var(--neutral-t90);
+    --borda-forte: var(--neutral-t80);
+
+    /* Marca */
+    --acento: var(--primary);
+    --acento-hover: var(--primary-t30);
+    --acento-suave: var(--primary-t95);
+    --acento-suave-2: var(--primary-t90);
+    --acento-borda: var(--primary-t80);
+    --acento-contraste: #FFFFFF;
+    --acento-foco: var(--tertiary-t50);
+
+    /* Ações secundárias */
+    --secundario-fundo: var(--secondary);
+    --secundario-hover: var(--secondary-t40);
+    --secundario-ativo: var(--secondary-t30);
+
+    /* Estados */
+    /* --failure-red (#ee4040) fica em 3,86:1 sobre branco. Como o vermelho
+       também é usado como texto ("Excluir conta", "Fazer logoff"), o token
+       semântico usa um tom mais fechado; a paleta de marca segue intacta. */
+    --perigo: #D92B2B;
+    --perigo-borda: var(--failure-red-border);
+    --perigo-fundo: #FFF6F6;
+    --perigo-contraste: #FFFFFF;
+    /* Verde e fundo do toast ajustados: o par original (#2D9E6B sobre #E8F7F0)
+       ficava em 3,06:1. O toast é justamente onde a mensagem precisa ser lida. */
+    --sucesso: #1E7A50;
+    --sucesso-borda: var(--success-border);
+    --sucesso-fundo: var(--success-bg);
+
+    /* Profundidade */
+    --sombra: 0 4px 12px rgba(10, 19, 28, .08);
+    --sombra-media: 0 8px 28px rgba(10, 19, 28, .14);
+    --sombra-alta: 0 12px 40px rgba(10, 19, 28, .18);
+    --sombra-acento: 0 6px 20px rgba(92, 51, 242, .38);
+    --overlay: rgba(10, 19, 28, .45);
+    --recorte-overlay: rgba(10, 19, 28, .5);
+}
+
+[data-tema="escuro"] {
+    color-scheme: dark;
+
+    /* Cinzas neutros, sem viés de matiz: a escala --neutral da marca é
+       azulada, o que no tema escuro deixava a interface com aparência fria.
+       Estes tons têm R, G e B praticamente iguais. */
+    --fundo: #0F0F10;
+    --superficie: #171718;
+    --superficie-2: #212123;
+    --superficie-3: #2B2B2E;
+
+    --texto: #F2F2F3;
+    --texto-medio: #D0D0D2;
+    --texto-suave: #A0A0A4;
+    --texto-fraco: #86868B;
+
+    --borda: #2A2A2D;
+    --borda-forte: #3B3B3F;
+
+    /* O roxo da marca não tem contraste suficiente sobre fundo escuro;
+       o tom claro da própria escala assume o papel de acento. */
+    --acento: var(--primary-t70);
+    --acento-hover: var(--primary-t80);
+    --acento-suave: #201C33;
+    --acento-suave-2: #2A2545;
+    --acento-borda: var(--primary-t30);
+    --acento-contraste: #12081F;
+    --acento-foco: var(--tertiary-t60);
+
+    --secundario-fundo: var(--secondary-t50);
+    --secundario-hover: var(--secondary-t60);
+    --secundario-ativo: var(--secondary-t40);
+
+    --perigo: #FF8B8B;
+    --perigo-borda: #7A3232;
+    --perigo-fundo: #2A1919;
+    --perigo-contraste: #2A0A0A;
+    --sucesso: #6EDBA8;
+    --sucesso-borda: #2A6047;
+    --sucesso-fundo: #16241E;
+
+    --sombra: 0 4px 12px rgba(0, 0, 0, .45);
+    --sombra-media: 0 8px 28px rgba(0, 0, 0, .55);
+    --sombra-alta: 0 12px 40px rgba(0, 0, 0, .65);
+    --sombra-acento: 0 6px 20px rgba(92, 51, 242, .45);
+    --overlay: rgba(0, 0, 0, .65);
+    --recorte-overlay: rgba(0, 0, 0, .68);
+}

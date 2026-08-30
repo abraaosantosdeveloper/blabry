@@ -5,8 +5,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--white);
-    background-color: var(--secondary);
+    color: var(--acento-contraste);
+    background-color: var(--secundario-fundo);
     border: 2px solid transparent;
     outline: 0;
     border-radius: 8px;
@@ -18,27 +18,27 @@
 }
 
 .auth-btn:hover:not(:disabled) {
-    background-color: var(--secondary-t40);
+    background-color: var(--secundario-hover);
 }
 
 .auth-btn:active:not(:disabled) {
-    background-color: var(--secondary-t30);
+    background-color: var(--secundario-ativo);
     transform: scale(.98);
 }
 
 .auth-btn.secundario {
-    color: var(--primary);
+    color: var(--acento);
     background-color: transparent;
-    border-color: var(--neutral-t90);
+    border-color: var(--borda);
 }
 
 .auth-btn.secundario:hover:not(:disabled) {
-    background-color: var(--primary-t95);
-    border-color: var(--primary-t80);
+    background-color: var(--acento-suave);
+    border-color: var(--acento-borda);
 }
 
 .auth-btn.secundario:active:not(:disabled) {
-    background-color: var(--primary-t90);
+    background-color: var(--acento-suave-2);
 }
 
 .auth-btn.compacto {
@@ -55,14 +55,14 @@
     width: 16px;
     height: 16px;
     border: 2px solid rgba(255, 255, 255, .35);
-    border-top-color: var(--white);
+    border-top-color: var(--acento-contraste);
     border-radius: 50%;
     animation: girar .6s linear infinite;
 }
 
 .auth-btn.secundario .spinner {
-    border-color: var(--primary-t80);
-    border-top-color: var(--primary);
+    border-color: var(--acento-borda);
+    border-top-color: var(--acento);
 }
 
 @keyframes girar {

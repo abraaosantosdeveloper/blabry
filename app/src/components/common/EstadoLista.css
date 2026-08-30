@@ -6,32 +6,32 @@
     gap: 12px;
     padding: 36px 20px;
     text-align: center;
-    color: var(--neutral-t50);
+    color: var(--texto-suave);
     font-size: clamp(.8125rem, 3.4vw, .875rem);
 }
 
 .estado-spinner {
     width: 26px;
     height: 26px;
-    border: 2.5px solid var(--neutral-t90);
-    border-top-color: var(--primary);
+    border: 2.5px solid var(--borda);
+    border-top-color: var(--acento);
     border-radius: 50%;
     animation: estado-girar .7s linear infinite;
 }
 
 .estado-acao {
     padding: 7px 16px;
-    border: 1px solid var(--primary);
+    border: 1px solid var(--acento);
     border-radius: 8px;
     background: none;
-    color: var(--primary);
+    color: var(--acento);
     font-size: .8125rem;
     font-weight: 600;
     cursor: pointer;
 }
 
 .estado-acao:hover {
-    background-color: var(--primary-t95);
+    background-color: var(--acento-suave);
 }
 
 @keyframes estado-girar {

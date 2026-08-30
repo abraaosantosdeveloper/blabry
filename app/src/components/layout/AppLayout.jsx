@@ -6,7 +6,7 @@ import ChatsIcon from '../../assets/icons/chats.svg?react'
 import AvatarIcon from '../../assets/icons/avatar.svg?react'
 import BellIcon from '../../assets/icons/bell.svg?react'
 import MagnifierIcon from '../../assets/icons/magnifier.svg?react'
-import logo from '../../assets/icons/logo_text.svg'
+import Logo from '../common/Logo'
 import './AppLayout.css'
 
 const NAVEGACAO = [
@@ -23,7 +23,7 @@ function AppLayout({ naoLidas = 1 }) {
         <div className="app-shell">
             <header className="app-topo">
                 <NavLink to="/feed" className="app-logo" aria-label="Blabry — ir para o feed">
-                    <img src={logo} alt="Blabry" />
+                    <Logo />
                 </NavLink>
 
                 <div className="app-topo-acoes">

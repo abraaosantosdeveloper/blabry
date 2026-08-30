@@ -16,7 +16,7 @@
     flex-direction: column;
     align-items: center;
     gap: 12px;
-    border: 2px dashed var(--neutral-t90);
+    border: 2px dashed var(--borda);
     border-radius: 12px;
     background: none;
     cursor: pointer;
@@ -24,8 +24,8 @@
 }
 
 .photo-drop:hover {
-    border-color: var(--primary-t70);
-    background-color: var(--primary-t95);
+    border-color: var(--acento-borda);
+    background-color: var(--acento-suave);
 }
 
 .photo-drop-circulo {
@@ -35,8 +35,8 @@
     align-items: center;
     justify-content: center;
     font-size: clamp(24px, 7vw, 30px);
-    color: var(--primary);
-    background-color: var(--primary-t95);
+    color: var(--acento);
+    background-color: var(--acento-suave);
     border-radius: 50%;
     transition: transform .2s;
 }
@@ -48,7 +48,7 @@
 .photo-drop-texto {
     font-size: clamp(.8125rem, 3.4vw, .875rem);
     font-weight: 500;
-    color: var(--neutral-t50);
+    color: var(--texto-suave);
 }
 
 /* ---------- Prévia do recorte confirmado ---------- */
@@ -58,7 +58,7 @@
     height: clamp(112px, 34vw, 148px);
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid var(--primary-t90);
+    border: 3px solid var(--acento-suave-2);
 }
 
 .photo-previa-acoes {
@@ -74,7 +74,7 @@
     background: none;
     font-size: clamp(.8125rem, 3.4vw, .875rem);
     font-weight: 600;
-    color: var(--primary);
+    color: var(--acento);
     cursor: pointer;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .photo-link.perigo {
-    color: var(--failure-red);
+    color: var(--perigo);
 }
 
 /* ---------- Crop Modal ---------- */
@@ -97,13 +97,13 @@
 .photo-modal-titulo {
     font-size: clamp(.9375rem, 4vw, 1.0625rem);
     font-weight: 700;
-    color: var(--neutral);
+    color: var(--texto);
 }
 
 .photo-modal-area {
     display: flex;
     justify-content: center;
-    background-color: var(--neutral-t95);
+    background-color: var(--superficie-2);
     border-radius: 10px;
     padding: 8px;
     overflow: hidden;
@@ -128,10 +128,10 @@
     justify-content: center;
     gap: 8px;
     padding: 10px 18px;
-    border: 1px solid var(--primary);
+    border: 1px solid var(--acento);
     border-radius: 9px;
-    background-color: var(--primary);
-    color: var(--white);
+    background-color: var(--acento);
+    color: var(--acento-contraste);
     font-size: clamp(.8125rem, 3.4vw, .875rem);
     font-weight: 600;
     cursor: pointer;
@@ -139,8 +139,8 @@
 }
 
 .photo-botao:hover:not(:disabled) {
-    background-color: var(--primary-t30);
-    border-color: var(--primary-t30);
+    background-color: var(--acento);
+    border-color: var(--acento);
 }
 
 .photo-botao:disabled {
@@ -156,19 +156,19 @@
 
 .photo-botao.secundario {
     background: none;
-    color: var(--neutral-t30);
-    border-color: var(--neutral-t90);
+    color: var(--texto-medio);
+    border-color: var(--borda);
 }
 
 .photo-botao.secundario:hover {
-    background-color: var(--neutral-t95);
-    border-color: var(--neutral-t80);
+    background-color: var(--superficie-2);
+    border-color: var(--borda-forte);
 }
 
 /* A sombra do recorte fica contida na área do modal, não na tela inteira. */
 .photo-modal .ReactCrop__crop-selection {
-    border: 2px solid var(--white);
-    box-shadow: 0 0 0 100vmax rgba(10, 19, 28, .5);
+    border: 2px solid var(--acento-contraste);
+    box-shadow: 0 0 0 100vmax var(--recorte-overlay);
 }
 
 .photo-modal .ReactCrop {

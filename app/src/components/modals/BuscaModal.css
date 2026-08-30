@@ -3,15 +3,15 @@
     align-items: center;
     gap: 10px;
     padding: 10px 12px;
-    border: 1px solid var(--neutral-t90);
+    border: 1px solid var(--borda);
     border-radius: 10px;
-    color: var(--neutral-t50);
+    color: var(--texto-suave);
     margin-top: 4px;
 }
 
 .busca-campo:focus-within {
-    border-color: var(--primary);
-    color: var(--primary);
+    border-color: var(--acento);
+    color: var(--acento);
 }
 
 .busca-campo>svg {
@@ -27,7 +27,7 @@
     outline: none;
     background: none;
     font-size: clamp(.8125rem, 3.6vw, .875rem);
-    color: var(--neutral);
+    color: var(--texto);
 }
 
 .busca-campo>input::-webkit-search-cancel-button {
@@ -38,7 +38,7 @@
 .busca-resumo {
     padding: 16px 4px 4px;
     font-size: .75rem;
-    color: var(--neutral-t50);
+    color: var(--texto-suave);
 }
 
 .busca-lista {
@@ -58,7 +58,7 @@
 }
 
 .busca-item:hover {
-    background-color: var(--neutral-t95);
+    background-color: var(--superficie-2);
 }
 
 .busca-item-textos {
@@ -70,7 +70,7 @@
 .busca-item-textos>strong {
     font-size: .875rem;
     font-weight: 600;
-    color: var(--neutral);
+    color: var(--texto);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -78,7 +78,7 @@
 
 .busca-item-textos>small {
     font-size: .75rem;
-    color: var(--neutral-t50);
+    color: var(--texto-suave);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

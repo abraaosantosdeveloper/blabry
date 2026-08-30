@@ -1,6 +1,6 @@
 .post {
     padding: clamp(14px, 4vw, 20px) clamp(12px, 4vw, 20px);
-    border-bottom: 1px solid var(--neutral-t90);
+    border-bottom: 1px solid var(--borda);
 }
 
 .post-cabecalho {
@@ -24,7 +24,7 @@
 .post-nome {
     font-size: clamp(.8125rem, 3.4vw, .875rem);
     font-weight: 700;
-    color: var(--neutral);
+    color: var(--texto);
     text-decoration: none;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -38,13 +38,13 @@
 .post-quando {
     margin-left: auto;
     font-size: .6875rem;
-    color: var(--neutral-t60);
+    color: var(--texto-fraco);
     flex-shrink: 0;
 }
 
 .post-alias {
     font-size: clamp(.75rem, 3.2vw, .8125rem);
-    color: var(--neutral-t50);
+    color: var(--texto-suave);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -54,7 +54,7 @@
     margin: 14px 0;
     font-size: clamp(.8125rem, 3.5vw, .9375rem);
     line-height: 1.6;
-    color: var(--neutral-t10);
+    color: var(--texto-medio);
     white-space: pre-wrap;
     overflow-wrap: anywhere;
 }
@@ -73,7 +73,7 @@
     border: none;
     border-radius: 8px;
     background: none;
-    color: var(--neutral-t40);
+    color: var(--texto-suave);
     font-size: .75rem;
     font-weight: 500;
     cursor: pointer;
@@ -87,8 +87,8 @@
 }
 
 .post-acao:hover {
-    background-color: var(--neutral-t95);
-    color: var(--neutral-t10);
+    background-color: var(--superficie-2);
+    color: var(--texto-medio);
 }
 
 .post-acao:disabled {
@@ -97,14 +97,14 @@
 }
 
 .post-acao.aberta {
-    color: var(--primary);
-    background-color: var(--primary-t95);
+    color: var(--acento);
+    background-color: var(--acento-suave);
 }
 
 .post-acao.ativa {
-    color: var(--failure-red);
+    color: var(--perigo);
 }
 
 .post-acao.ativa>svg {
-    fill: var(--failure-red);
+    fill: var(--perigo);
 }

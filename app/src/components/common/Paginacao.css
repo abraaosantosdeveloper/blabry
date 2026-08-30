@@ -5,16 +5,16 @@
     gap: clamp(8px, 3vw, 16px);
     padding: 14px 12px;
     font-size: .75rem;
-    color: var(--neutral-t50);
+    color: var(--texto-suave);
     flex-wrap: wrap;
 }
 
 .paginacao button {
     padding: 7px 14px;
-    border: 1px solid var(--neutral-t90);
+    border: 1px solid var(--borda);
     border-radius: 8px;
     background: none;
-    color: var(--neutral-t20);
+    color: var(--texto-medio);
     font-size: .75rem;
     font-weight: 600;
     cursor: pointer;
@@ -22,7 +22,7 @@
 }
 
 .paginacao button:hover:not(:disabled) {
-    background-color: var(--neutral-t95);
+    background-color: var(--superficie-2);
 }
 
 .paginacao button:disabled {

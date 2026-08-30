@@ -12,20 +12,20 @@
 .feed-mais {
     padding: 16px;
     border: none;
-    border-top: 1px solid var(--neutral-t90);
+    border-top: 1px solid var(--borda);
     background: none;
-    color: var(--primary);
+    color: var(--acento);
     font-size: .8125rem;
     font-weight: 600;
     cursor: pointer;
 }
 
 .feed-mais:hover:not(:disabled) {
-    background-color: var(--primary-t95);
+    background-color: var(--acento-suave);
 }
 
 .feed-mais:disabled {
-    color: var(--neutral-t50);
+    color: var(--texto-suave);
     cursor: default;
 }
 
@@ -41,15 +41,15 @@
     justify-content: center;
     border: none;
     border-radius: 50%;
-    background-color: var(--primary);
-    color: var(--white);
-    box-shadow: 0 6px 20px rgba(92, 51, 242, .38);
+    background-color: var(--acento);
+    color: var(--acento-contraste);
+    box-shadow: var(--sombra-acento);
     cursor: pointer;
     transition: background-color .15s, transform .15s;
 }
 
 .feed-fab:hover {
-    background-color: var(--primary-t30);
+    background-color: var(--acento);
     transform: translateY(-2px);
 }
 
@@ -61,20 +61,20 @@
     .feed-mais {
     padding: 16px;
     border: none;
-    border-top: 1px solid var(--neutral-t90);
+    border-top: 1px solid var(--borda);
     background: none;
-    color: var(--primary);
+    color: var(--acento);
     font-size: .8125rem;
     font-weight: 600;
     cursor: pointer;
 }
 
 .feed-mais:hover:not(:disabled) {
-    background-color: var(--primary-t95);
+    background-color: var(--acento-suave);
 }
 
 .feed-mais:disabled {
-    color: var(--neutral-t50);
+    color: var(--texto-suave);
     cursor: default;
 }
 
@@ -87,20 +87,20 @@
     .feed-mais {
     padding: 16px;
     border: none;
-    border-top: 1px solid var(--neutral-t90);
+    border-top: 1px solid var(--borda);
     background: none;
-    color: var(--primary);
+    color: var(--acento);
     font-size: .8125rem;
     font-weight: 600;
     cursor: pointer;
 }
 
 .feed-mais:hover:not(:disabled) {
-    background-color: var(--primary-t95);
+    background-color: var(--acento-suave);
 }
 
 .feed-mais:disabled {
-    color: var(--neutral-t50);
+    color: var(--texto-suave);
     cursor: default;
 }
 

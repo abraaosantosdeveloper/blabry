@@ -2,7 +2,7 @@
     display: flex;
     gap: 12px;
     padding: clamp(14px, 4vw, 20px) clamp(12px, 4vw, 20px);
-    border-bottom: 1px solid var(--neutral-t90);
+    border-bottom: 1px solid var(--borda);
 }
 
 .modal-caixa .composer {
@@ -11,7 +11,7 @@
 }
 
 .modal-caixa .composer-campo {
-    border-bottom: 1px solid var(--neutral-t90);
+    border-bottom: 1px solid var(--borda);
 }
 
 .composer-corpo {
@@ -29,13 +29,13 @@
     padding: 9px 0;
     font-size: clamp(.875rem, 3.6vw, .9375rem);
     line-height: 1.5;
-    color: var(--neutral);
+    color: var(--texto);
     background: none;
     overflow-y: auto;
 }
 
 .composer-campo::placeholder {
-    color: var(--neutral-t50);
+    color: var(--texto-suave);
 }
 
 .composer-acoes {
@@ -56,15 +56,15 @@
     border: none;
     border-radius: 8px;
     background: none;
-    color: var(--neutral-t50);
+    color: var(--texto-suave);
     cursor: pointer;
     transition: background-color .15s, color .15s;
 }
 
 .composer-emoji:hover,
 .composer-emoji[aria-expanded="true"] {
-    background-color: var(--primary-t95);
-    color: var(--primary);
+    background-color: var(--acento-suave);
+    color: var(--acento);
 }
 
 .composer-emoji>svg {
@@ -74,12 +74,12 @@
 
 .composer-contador {
     font-size: .75rem;
-    color: var(--neutral-t60);
+    color: var(--texto-fraco);
     font-variant-numeric: tabular-nums;
 }
 
 .composer-contador.excedido {
-    color: var(--failure-red);
+    color: var(--perigo);
     font-weight: 600;
 }
 
@@ -87,8 +87,8 @@
     padding: 8px 20px;
     border: none;
     border-radius: 8px;
-    background-color: var(--primary);
-    color: var(--white);
+    background-color: var(--acento);
+    color: var(--acento-contraste);
     font-size: .8125rem;
     font-weight: 600;
     cursor: pointer;
@@ -96,7 +96,7 @@
 }
 
 .composer-publicar:hover:not(:disabled) {
-    background-color: var(--primary-t30);
+    background-color: var(--acento);
 }
 
 .composer-publicar:disabled {

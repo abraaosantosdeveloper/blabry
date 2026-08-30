@@ -9,7 +9,7 @@ import AuthButton from '../components/buttons/AuthButton'
 import OptionSelect from '../components/inputs/OptionSelect'
 import Toast from '../components/toasts/Toast'
 import PhotoCrop from '../components/upload/PhotoCrop'
-import logo from '../assets/icons/logo_text.svg'
+import Logo from '../components/common/Logo'
 import './NovaConta.css'
 
 const ETAPAS = [
@@ -130,7 +130,7 @@ function NovaConta() {
         <div className="sign-in-form">
             <Toast {...toast} />
 
-            <img src={logo} alt="Logo Blabry" className="logo" />
+            <Logo className="logo" alt="Logo Blabry" />
 
             <div className="etapas-barra" aria-hidden="true">
                 <span className="etapas-progresso" style={{ width: `${((etapa + 1) / ETAPAS.length) * 100}%` }} />

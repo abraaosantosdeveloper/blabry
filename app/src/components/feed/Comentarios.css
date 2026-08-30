@@ -1,7 +1,7 @@
 .comentarios {
     margin-top: 14px;
     padding-top: 12px;
-    border-top: 1px solid var(--neutral-t90);
+    border-top: 1px solid var(--borda);
 }
 
 .comentarios-lista {
@@ -38,7 +38,7 @@
 .comentario-cabecalho>a {
     font-size: .8125rem;
     font-weight: 600;
-    color: var(--neutral);
+    color: var(--texto);
     text-decoration: none;
 }
 
@@ -48,13 +48,13 @@
 
 .comentario-cabecalho>span {
     font-size: .6875rem;
-    color: var(--neutral-t50);
+    color: var(--texto-suave);
 }
 
 .comentario-texto {
     font-size: .8125rem;
     line-height: 1.5;
-    color: var(--neutral-t20);
+    color: var(--texto-medio);
     overflow-wrap: anywhere;
 }
 
@@ -63,7 +63,7 @@
     padding: 6px 0;
     border: none;
     background: none;
-    color: var(--primary);
+    color: var(--acento);
     font-size: .75rem;
     font-weight: 600;
     cursor: pointer;
@@ -80,24 +80,24 @@
     flex: 1;
     min-width: 0;
     padding: 9px 12px;
-    border: 1px solid var(--neutral-t90);
+    border: 1px solid var(--borda);
     border-radius: 999px;
     outline: none;
     font-size: .8125rem;
-    color: var(--neutral);
+    color: var(--texto);
     background: none;
 }
 
 .comentario-form>input:focus {
-    border-color: var(--primary);
+    border-color: var(--acento);
 }
 
 .comentario-form>button {
     padding: 8px 14px;
     border: none;
     border-radius: 999px;
-    background-color: var(--primary);
-    color: var(--white);
+    background-color: var(--acento);
+    color: var(--acento-contraste);
     font-size: .75rem;
     font-weight: 600;
     cursor: pointer;

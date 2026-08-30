@@ -19,7 +19,7 @@
     width: 100%;
     max-width: var(--campo-largura);
     height: 4px;
-    background-color: var(--neutral-t90);
+    background-color: var(--superficie-3);
     border-radius: 999px;
     overflow: hidden;
 }
@@ -27,7 +27,7 @@
 .etapas-progresso {
     display: block;
     height: 100%;
-    background-color: var(--primary);
+    background-color: var(--acento);
     border-radius: 999px;
     transition: width .35s cubic-bezier(.4, 0, .2, 1);
 }
@@ -36,7 +36,7 @@
     margin: 8px 0 4px;
     font-size: 13px;
     font-weight: 500;
-    color: var(--neutral-t60);
+    color: var(--texto-fraco);
 }
 
 /* ---- Conteúdo da etapa ---- */
@@ -94,13 +94,13 @@
     margin-top: 18px;
     font-size: 22px;
     font-weight: 700;
-    color: var(--neutral);
+    color: var(--texto);
 }
 
 .etapa-subtitulo {
     margin: 6px 0 4px;
     font-size: 14px;
-    color: var(--neutral-t50);
+    color: var(--texto-suave);
     text-align: center;
 }
 
@@ -109,7 +109,7 @@
     margin: 12px 2px 0;
     font-size: 12.5px;
     line-height: 1.4;
-    color: var(--neutral-t60);
+    color: var(--texto-fraco);
 }
 
 /* ---- Campo de @ ---- */
@@ -122,7 +122,7 @@
     left: 12px;
     top: 40px;
     font-weight: 600;
-    color: var(--neutral-t60);
+    color: var(--texto-fraco);
     pointer-events: none;
 }
 
@@ -160,11 +160,11 @@
 }
 
 .already-user-link {
-    color: var(--primary);
+    color: var(--acento);
 }
 
 .already-user {
-    color: var(--neutral-t40);
+    color: var(--texto-suave);
     font-size: 14px;
 }
 
@@ -194,12 +194,12 @@
 }
 
 .dica-erro {
-    color: var(--failure-red);
+    color: var(--perigo);
     animation: surgir .25s ease;
 }
 
 .link-acao {
-    color: var(--primary);
+    color: var(--acento);
     font-size: inherit;
     font-weight: 600;
     background: none;

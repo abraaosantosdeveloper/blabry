@@ -18,17 +18,17 @@
     max-width: var(--campo-largura);
     padding: 10px 15px;
     font-size: 15px;
-    color: var(--primary);
+    color: var(--acento);
     display: block;
     text-align: left;
 }
 
 .already-user-link {
-    color: var(--primary);
+    color: var(--acento);
 }
 
 .already-user {
-    color: var(--neutral-t40);
+    color: var(--texto-suave);
 }
 
 #email-input,

@@ -12,8 +12,8 @@ html {
 }
 
 body {
-    background-color: var(--white);
-    color: var(--neutral);
+    background-color: var(--acento-contraste);
+    color: var(--texto);
     overflow-x: hidden;
 }
 
@@ -40,7 +40,7 @@ button {
 }
 
 :focus-visible {
-    outline: 2px solid var(--primary);
+    outline: 2px solid var(--acento);
     outline-offset: 2px;
 }
 
@@ -70,7 +70,7 @@ button {
     font-weight: 500;
     margin: 10px 15px;
     font-size: 14px;
-    color: var(--black);
+    color: var(--texto);
 }
 
 

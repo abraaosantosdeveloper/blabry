@@ -17,7 +17,7 @@
 
 .under-construction-texto {
     font-size: clamp(.875rem, 3.4vw, 1rem);
-    color: var(--neutral-t50);
+    color: var(--texto-suave);
     max-width: 32ch;
     line-height: 1.5;
 }

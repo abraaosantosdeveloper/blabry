@@ -1,7 +1,7 @@
 .modal-overlay {
     position: fixed;
     inset: 0;
-    background-color: rgba(10, 19, 28, .45);
+    background-color: var(--overlay);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -16,10 +16,10 @@
     max-width: 420px;
     max-height: calc(100dvh - 32px);
     overflow-y: auto;
-    background-color: var(--white);
+    background-color: var(--acento-contraste);
     border-radius: 12px;
     padding: clamp(20px, 5vw, 28px);
-    box-shadow: 0 12px 40px rgba(10, 19, 28, .18);
+    box-shadow: var(--sombra-alta);
     animation: modal-subir .2s ease-out;
 }
 
@@ -41,12 +41,12 @@
     border: none;
     border-radius: 8px;
     background: none;
-    color: var(--neutral-t30);
+    color: var(--texto-medio);
     cursor: pointer;
 }
 
 .modal-fechar:hover {
-    background-color: var(--neutral-t95);
+    background-color: var(--superficie-2);
 }
 
 .modal-titulo {
@@ -55,7 +55,7 @@
     gap: 12px;
     font-size: 1.0625rem;
     font-weight: 700;
-    color: var(--neutral);
+    color: var(--texto);
     margin-bottom: 20px;
     padding-right: 32px;
 }
@@ -79,18 +79,18 @@
     width: 100%;
     padding: 14px 4px;
     border: none;
-    border-bottom: 1px solid var(--neutral-t90);
+    border-bottom: 1px solid var(--borda);
     background: none;
     font-size: .875rem;
     font-weight: 600;
-    color: var(--neutral);
+    color: var(--texto);
     text-align: left;
     cursor: pointer;
     transition: background-color .15s;
 }
 
 .modal-item:hover {
-    background-color: var(--neutral-t95);
+    background-color: var(--superficie-2);
 }
 
 .modal-item>svg {
@@ -100,7 +100,7 @@
 }
 
 .modal-item.perigo {
-    color: var(--failure-red);
+    color: var(--perigo);
 }
 
 .modal-secao {
@@ -111,7 +111,7 @@
     margin-bottom: 4px;
     font-size: 1rem;
     font-weight: 700;
-    color: var(--failure-red);
+    color: var(--perigo);
 }
 
 .modal-secao>svg {

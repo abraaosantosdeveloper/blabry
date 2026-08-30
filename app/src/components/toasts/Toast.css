@@ -6,7 +6,7 @@
     top: 24px;
     left: 50%;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--sombra);
     opacity: 0;
     transform: translateX(-50%) translateY(-10px);
     transition: opacity 300ms ease, transform 300ms ease;
@@ -28,21 +28,21 @@
 }
 
 .toast.sucesso {
-    background-color: var(--success-bg);
-    border: 1.5px solid var(--success-border);
+    background-color: var(--sucesso-fundo);
+    border: 1.5px solid var(--sucesso-borda);
 }
 
 .toast.sucesso .toast-content-wrapper {
-    color: var(--success);
+    color: var(--sucesso);
 }
 
 .toast.erro {
-    background-color: var(--failure-bg);
-    border: 1.5px solid var(--failure-red-border);
+    background-color: var(--perigo-fundo);
+    border: 1.5px solid var(--perigo-borda);
 }
 
 .toast.erro .toast-content-wrapper {
-    color: var(--failure-red);
+    color: var(--perigo);
 }
 .toast-content-wrapper svg {
     width: 20px;

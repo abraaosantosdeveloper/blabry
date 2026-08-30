@@ -5,7 +5,7 @@ import useToast from '../hooks/useToast'
 import AuthButton from '../components/buttons/AuthButton'
 import AuthInput from '../components/inputs/AuthInput'
 import Toast from '../components/toasts/Toast'
-import logo from '../assets/icons/logo_text.svg'
+import Logo from '../components/common/Logo'
 import './Login.css'
 
 function Login() {
@@ -36,7 +36,7 @@ function Login() {
         <div className="login-form">
             <Toast {...toast} />
 
-            <img src={logo} alt="Logo Blabry" className="logo" />
+            <Logo className="logo" alt="Logo Blabry" />
 
             <form className="input-wrapper" onSubmit={(e) => { e.preventDefault(); handleLogin() }}>
                 <AuthInput label="Email ou @" placeholder="email@exemplo.com" fieldType="text" fieldId="email-input"
