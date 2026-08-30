@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
 import PerfilView from '../components/perfil/PerfilView'
 import ContaModal from '../components/modals/ContaModal'
+import ExcluirContaModal from '../components/modals/ExcluirContaModal'
 import EstadoLista from '../components/common/EstadoLista'
 import Toast from '../components/toasts/Toast'
 import useToast from '../hooks/useToast'
+import useTema from '../hooks/useTema'
 import { meuPerfil } from '../services/usuarios.service'
 
 function MeuPerfil() {
@@ -11,7 +13,9 @@ function MeuPerfil() {
     const [carregando, setCarregando] = useState(true)
     const [erro, setErro] = useState(null)
     const [opcoesAbertas, setOpcoesAbertas] = useState(false)
+    const [exclusaoAberta, setExclusaoAberta] = useState(false)
     const { toast, mostrarToast } = useToast()
+    const { escuro, alternar } = useTema()
 
     const carregar = useCallback(() => {
         const controller = new AbortController()
@@ -42,7 +46,8 @@ function MeuPerfil() {
                     proprio
                     titulo="Meu Perfil"
                     aoEditar={(campo) => mostrarToast(`A edição de ${campo} ainda está em desenvolvimento.`)}
-                    aoAlternarTema={() => mostrarToast('O tema escuro ainda está em desenvolvimento.')}
+                    temaEscuro={escuro}
+                    aoAlternarTema={alternar}
                     aoAbrirOpcoes={() => setOpcoesAbertas(true)}
                 />
             )}
@@ -53,6 +58,21 @@ function MeuPerfil() {
                 aoAvisar={(mensagem) => {
                     setOpcoesAbertas(false)
                     mostrarToast(mensagem)
+                }}
+                aoExcluirConta={() => {
+                    setOpcoesAbertas(false)
+                    setExclusaoAberta(true)
+                }}
+            />
+
+            <ExcluirContaModal
+                aberto={exclusaoAberta}
+                aoFechar={() => setExclusaoAberta(false)}
+                email={usuario?.email}
+                aoConfirmar={() => {
+                    // TODO: DELETE /users/me quando a rota existir.
+                    setExclusaoAberta(false)
+                    mostrarToast('A exclusão de conta ainda está em desenvolvimento.')
                 }}
             />
         </>

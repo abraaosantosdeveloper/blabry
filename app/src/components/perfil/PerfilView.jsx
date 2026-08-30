@@ -1,6 +1,18 @@
 import Avatar from '../common/Avatar'
 import EditIcon from '../../assets/icons/edit.svg?react'
 import SettingsIcon from '../../assets/icons/settings.svg?react'
+
+const Chevron = (props) => (
+    <svg viewBox="0 0 24 24" fill="none" {...props}>
+        <path d="m9 6 6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+)
+
+const TemaIcon = (props) => (
+    <svg viewBox="0 0 24 24" fill="none" {...props}>
+        <path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
+    </svg>
+)
 import './PerfilView.css'
 
 const compacto = (n) =>
@@ -35,7 +47,7 @@ function Campo({ rotulo, valor, editavel, aoEditar }) {
  * Visualização de perfil compartilhada entre o perfil próprio e o público.
  * `proprio` liga os controles de edição e o bloco de configurações.
  */
-function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoAbrirOpcoes, aoAlternarTema, acaoPrincipal }) {
+function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoAbrirOpcoes, aoAlternarTema, temaEscuro = false, acaoPrincipal }) {
     const {
         nome, alias, fotoUrl, bio, email, nascimento, nacionalidade,
         seguindo = 0, seguidores = 0, desde,
@@ -93,18 +105,31 @@ function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoAbrirOpcoes,
             </section>
 
             {proprio && (
-                <section className="perfil-config">
-                    <button type="button" className="perfil-config-item" onClick={aoAlternarTema}>
-                        <span className="perfil-switch" aria-hidden="true"><span /></span>
+                <section className="perfil-config" aria-label="Ajustes">
+                    <button
+                        type="button"
+                        className="perfil-config-item"
+                        onClick={aoAlternarTema}
+                        role="switch"
+                        aria-checked={temaEscuro}
+                    >
+                        <span className="perfil-config-icone"><TemaIcon aria-hidden="true" /></span>
                         <span className="perfil-config-texto">
                             <strong>Tema</strong>
-                            <small>Claro</small>
+                            <small>{temaEscuro ? 'Escuro' : 'Claro'}</small>
+                        </span>
+                        <span className={`perfil-switch ${temaEscuro ? 'ligado' : ''}`} aria-hidden="true">
+                            <span />
                         </span>
                     </button>
 
-                    <button type="button" className="perfil-config-item centro" onClick={aoAbrirOpcoes}>
-                        <SettingsIcon aria-hidden="true" />
-                        <strong>Mais Opções</strong>
+                    <button type="button" className="perfil-config-item" onClick={aoAbrirOpcoes}>
+                        <span className="perfil-config-icone"><SettingsIcon aria-hidden="true" /></span>
+                        <span className="perfil-config-texto">
+                            <strong>Conta e segurança</strong>
+                            <small>Senha, sessão e exclusão da conta</small>
+                        </span>
+                        <Chevron className="perfil-config-seta" aria-hidden="true" />
                     </button>
                 </section>
             )}

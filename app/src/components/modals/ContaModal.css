@@ -1,0 +1,131 @@
+.conta-lista {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.conta-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 10px;
+    border: none;
+    border-radius: 10px;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    color: var(--texto);
+    transition: background-color .15s;
+}
+
+.conta-item:hover {
+    background-color: var(--superficie-2);
+}
+
+.conta-item-icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background-color: var(--superficie-2);
+    color: var(--texto-medio);
+    flex-shrink: 0;
+}
+
+.conta-item:hover .conta-item-icone {
+    background-color: var(--acento-suave);
+    color: var(--acento);
+}
+
+.conta-item-icone>svg {
+    width: 16px;
+    height: 16px;
+}
+
+.conta-item-textos {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+}
+
+.conta-item-textos>strong {
+    font-size: .875rem;
+    font-weight: 600;
+}
+
+.conta-item-textos>small {
+    font-size: .75rem;
+    color: var(--texto-suave);
+    line-height: 1.35;
+}
+
+.conta-item-seta {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: var(--texto-fraco);
+}
+
+/* ---------- Zona de risco ---------- */
+
+.conta-risco {
+    margin-top: 22px;
+    padding: 16px;
+    border: 1px solid var(--perigo-borda);
+    border-radius: 12px;
+    background-color: var(--perigo-fundo);
+}
+
+.conta-risco>h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: .875rem;
+    font-weight: 700;
+    color: var(--perigo);
+}
+
+.conta-risco>h3>svg {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+}
+
+.conta-risco>p {
+    margin: 8px 0 14px;
+    font-size: .75rem;
+    line-height: 1.5;
+    color: var(--texto-medio);
+}
+
+.conta-risco-botao {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border: 1px solid var(--perigo);
+    border-radius: 9px;
+    background: none;
+    color: var(--perigo);
+    font-size: .8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .15s, color .15s;
+}
+
+.conta-risco-botao:hover {
+    background-color: var(--perigo);
+    color: var(--perigo-contraste);
+}
+
+.conta-risco-botao>svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
