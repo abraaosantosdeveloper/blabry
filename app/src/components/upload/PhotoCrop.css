@@ -1,0 +1,70 @@
+.photo-crop {
+    width: 22rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.photo-crop img {
+    max-height: 260px;
+}
+
+.photo-drop {
+    width: 100%;
+    padding: 28px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    border: 2px dashed var(--neutral-t90);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color .2s, background-color .2s;
+}
+
+.photo-drop:hover {
+    border-color: var(--primary-t70);
+    background-color: var(--primary-t95);
+}
+
+.photo-drop-circulo {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: var(--primary);
+    background-color: var(--primary-t95);
+    border-radius: 50%;
+    transition: transform .2s;
+}
+
+.photo-drop:hover .photo-drop-circulo {
+    transform: scale(1.06);
+}
+
+.photo-drop-texto {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--neutral-t50);
+}
+
+.photo-trocar {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--primary);
+    cursor: pointer;
+}
+
+.photo-crop .ReactCrop__crop-selection {
+    border: 2px solid var(--white);
+    box-shadow: 0 0 0 9999em rgba(10, 19, 28, .55);
+}
+
+@media (max-width: 480px) {
+    .photo-crop {
+        width: 100%;
+    }
+}

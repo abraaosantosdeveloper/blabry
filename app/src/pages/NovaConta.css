@@ -1,37 +1,158 @@
-.logo {
-    width: 172px;
-    height: 65px;
-    margin-bottom: 2.5rem;
-}
-
 .sign-in-form {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 40px 0;
+}
+
+.logo {
+    width: 172px;
+    height: 65px;
+    margin-bottom: 1.6rem;
+}
+
+/* ---- Progresso das etapas ---- */
+.etapas-barra {
+    width: 22rem;
+    height: 4px;
+    background-color: var(--neutral-t90);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.etapas-progresso {
+    display: block;
+    height: 100%;
+    background-color: var(--primary);
+    border-radius: 999px;
+    transition: width .35s cubic-bezier(.4, 0, .2, 1);
+}
+
+.etapas-contador {
+    margin: 8px 0 4px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--neutral-t60);
+}
+
+/* ---- Conteúdo da etapa ---- */
+.etapa-container {
+    width: 22rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.etapa .input-wrapper {
+    width: 100%;
+    padding: 0;
+}
+
+.etapa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.etapa.frente {
+    animation: entrar-direita .32s cubic-bezier(.4, 0, .2, 1);
+}
+
+.etapa.tras {
+    animation: entrar-esquerda .32s cubic-bezier(.4, 0, .2, 1);
+}
+
+@keyframes entrar-direita {
+    from {
+        opacity: 0;
+        transform: translateX(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes entrar-esquerda {
+    from {
+        opacity: 0;
+        transform: translateX(-24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.etapa-titulo {
+    margin-top: 18px;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--neutral);
+}
+
+.etapa-subtitulo {
+    margin: 6px 0 4px;
+    font-size: 14px;
+    color: var(--neutral-t50);
+    text-align: center;
+}
+
+.dica {
+    max-width: 22rem;
+    margin: 12px 2px 0;
+    font-size: 12.5px;
+    line-height: 1.4;
+    color: var(--neutral-t60);
+}
+
+/* ---- Campo de @ ---- */
+.alias-campo {
+    position: relative;
+}
+
+.alias-arroba {
+    position: absolute;
+    left: 12px;
+    top: 40px;
+    font-weight: 600;
+    color: var(--neutral-t60);
+    pointer-events: none;
+}
+
+#apelido-input {
+    padding-left: 28px;
+}
+
+/* ---- Ações ---- */
+.etapa-acoes {
+    display: flex;
+    gap: 12px;
+    margin: 32px 0 16px;
+}
+
+.etapa-acoes .auth-btn {
+    flex: 1;
+    min-width: 140px;
 }
 
 .input-line-wrapper {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    gap: 1rem;
     width: 22rem;
 }
 
-#nome-input,
-#apelido-input,
-#senha-input,
-#confirmar-senha-input,
-#nascimento-input,
-#nacionalidade-input {
-    width: 10.5rem;
-}
-
-#email-input {
-    width: 22rem;
+.input-line-wrapper .field-group,
+.input-line-wrapper .field-group>input,
+.input-line-wrapper .field-group>select {
+    width: 100%;
 }
 
 .already-user-link {
@@ -40,43 +161,58 @@
 
 .already-user {
     color: var(--neutral-t40);
+    font-size: 14px;
 }
 
 @media (max-width: 480px) {
     .sign-in-form {
         justify-content: flex-start;
-        padding-top: 60px;
-        height: auto;
-        min-height: 100vh;
-        padding-bottom: 40px;
-
+        padding: 48px 0 40px;
     }
 
     .logo {
         width: 140px;
         height: auto;
-        margin-bottom: 2rem;
+        margin-bottom: 1.4rem;
+    }
+
+    .etapas-barra,
+    .etapa-container {
+        width: calc(100% - 48px);
     }
 
     .input-line-wrapper {
         flex-direction: column;
         align-items: flex-start;
-        width: 100%;
-        padding: 0;
         gap: 0;
-    }
-
-    .input-line-wrapper .field-group {
         width: 100%;
     }
+}
 
-    #nome-input,
-    #apelido-input,
-    #senha-input,
-    #confirmar-senha-input,
-    #nascimento-input,
-    #nacionalidade-input,
-    #email-input {
-        width: 100%;
+.dica-erro {
+    color: var(--failure-red);
+    animation: surgir .25s ease;
+}
+
+.link-acao {
+    color: var(--primary);
+    font-size: inherit;
+    font-weight: 600;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+@keyframes surgir {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

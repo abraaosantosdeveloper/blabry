@@ -5,6 +5,8 @@ import Chat from './pages/Chat';
 import Feed from './pages/Feed';
 import MeuPerfil from './pages/MeuPerfil';
 import Perfil from './pages/Perfil';
+import EmConstrucao from './pages/EmConstrucao';
+import AppLayout from './components/layout/AppLayout';
 import ProtectedRoute from './components/protectRoutes/ProtectedRoutes';
 
 function App() {
@@ -15,26 +17,20 @@ function App() {
         {/* Descomentar depois de implementar */}
         {/* <Route path='/recuperar-senha' element={<Login />} /> */}
         <Route path='/nova-conta' element={<Cadastro />} />
-        <Route path='/feed' element={
+
+        {/* Rotas autenticadas — compartilham a casca da aplicação */}
+        <Route element={
           <ProtectedRoute>
-            <Feed />
+            <AppLayout />
           </ProtectedRoute>
-        } />
-        <Route path='/chat/:id' element={
-          <ProtectedRoute>
-            <Chat />
-          </ProtectedRoute>
-        } />
-        <Route path='/perfil/me' element={
-          <ProtectedRoute>
-            <MeuPerfil />
-          </ProtectedRoute>
-        } />
-        <Route path='/perfil/:alias' element={
-          <ProtectedRoute>
-            <Perfil />
-          </ProtectedRoute>
-        } />
+        }>
+          <Route path='/feed' element={<Feed />} />
+          <Route path='/conversas' element={<EmConstrucao />} />
+          <Route path='/chat/:id' element={<Chat />} />
+          <Route path='/perfil/me' element={<MeuPerfil />} />
+          <Route path='/perfil/:alias' element={<Perfil />} />
+          <Route path='*' element={<EmConstrucao />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )

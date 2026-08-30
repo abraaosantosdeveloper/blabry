@@ -17,3 +17,29 @@
 .field-group>input::placeholder {
     color: var(--neutral-t60);
 }
+.field-group.com-erro>input,
+.field-group.com-erro>select {
+    border-color: var(--failure-red-border);
+    animation: tremer .3s ease;
+}
+
+.field-group.com-erro>input:focus,
+.field-group.com-erro>select:focus {
+    border-color: var(--failure-red);
+}
+
+@keyframes tremer {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-4px);
+    }
+
+    75% {
+        transform: translateX(4px);
+    }
+}

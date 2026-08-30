@@ -1,0 +1,321 @@
+:root {
+    --topo-altura: 68px;
+    --menu-largura: 265px;
+    --menu-largura-min: 76px;
+    --navbar-altura: 60px;
+    --conteudo-max: 600px;
+}
+
+.app-shell {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+}
+
+/* ---------- Barra superior ---------- */
+
+.app-topo {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    height: var(--topo-altura);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 clamp(12px, 3vw, 24px);
+    background-color: var(--white);
+    border-bottom: 1px solid var(--neutral-t90);
+}
+
+.app-logo {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+
+.app-logo>img {
+    height: clamp(30px, 7.2vw, 40px);
+    width: auto;
+    display: block;
+}
+
+.app-topo-acoes {
+    display: flex;
+    align-items: center;
+    gap: clamp(2px, 1.5vw, 10px);
+}
+
+.icone-botao {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: var(--neutral-t20);
+    cursor: pointer;
+    transition: background-color .15s;
+}
+
+.icone-botao:hover {
+    background-color: var(--neutral-t95);
+}
+
+.icone-botao>svg {
+    width: 19px;
+    height: 19px;
+}
+
+.badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    min-width: 15px;
+    height: 15px;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background-color: var(--failure-red);
+    color: var(--white);
+    font-size: .625rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* ---------- Corpo ---------- */
+
+.app-corpo {
+    flex: 1;
+    display: flex;
+    align-items: stretch;
+    min-height: 0;
+}
+
+/* ---------- Menu lateral (desktop) ---------- */
+
+.app-menu {
+    display: none;
+    flex-direction: column;
+    width: var(--menu-largura);
+    flex-shrink: 0;
+    padding: 24px 0;
+    border-right: 1px solid var(--neutral-t90);
+}
+
+.app-menu-titulo {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--neutral);
+    padding: 0 32px;
+    margin-bottom: 24px;
+}
+
+.app-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 32px;
+    color: var(--neutral-t20);
+    font-size: .9375rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    transition: background-color .15s, color .15s;
+}
+
+.app-menu-item>svg {
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+}
+
+.app-menu-item:hover {
+    background-color: var(--neutral-t95);
+}
+
+.app-menu-item.active {
+    background-color: var(--primary-t95);
+    border-left-color: var(--primary);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* ---------- Área de conteúdo ---------- */
+
+.app-conteudo {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+    padding-bottom: calc(var(--navbar-altura) + 16px);
+}
+
+.app-coluna {
+    width: 100%;
+    max-width: var(--conteudo-max);
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------- Navbar inferior (mobile) ---------- */
+
+.app-navbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    height: calc(var(--navbar-altura) + env(safe-area-inset-bottom));
+    padding-bottom: env(safe-area-inset-bottom);
+    display: flex;
+    background-color: var(--white);
+    border-top: 1px solid var(--neutral-t90);
+}
+
+.app-navbar-item {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 2px;
+    color: var(--neutral-t50);
+    font-size: .6875rem;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.app-navbar-item>svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.app-navbar-item>span {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.app-navbar-item.active {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* ---------- Desktop ---------- */
+
+@media (min-width: 768px) {
+    .app-menu {
+        display: flex;
+    }
+
+    .app-navbar {
+        display: none;
+    }
+
+    .app-conteudo {
+        padding-bottom: 24px;
+        /* Compensa a largura do menu para que a coluna fique no centro
+           óptico da janela, e não no centro do espaço que sobrou. */
+        padding-right: var(--menu-largura-min);
+    }
+
+    /* Menu compacto: só ícones, até haver espaço para os rótulos. */
+    .app-menu {
+        width: var(--menu-largura-min);
+        align-items: center;
+    }
+
+    .app-menu-titulo {
+        display: none;
+    }
+
+    .app-menu-item {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 0;
+        border-left: none;
+        border-radius: 0;
+    }
+
+    .app-menu-item>span {
+        display: none;
+    }
+
+    .app-menu-item.active {
+        border-left: none;
+        box-shadow: inset 3px 0 0 var(--primary);
+    }
+
+    .app-coluna {
+        min-height: 100%;
+    }
+}
+
+/* ---------- Desktop largo: menu com rótulos ---------- */
+
+@media (min-width: 1080px) {
+    .app-menu {
+        width: var(--menu-largura);
+        align-items: stretch;
+    }
+
+    .app-menu-titulo {
+        display: block;
+    }
+
+    .app-menu-item {
+        justify-content: flex-start;
+        padding: 14px 32px;
+        border-left: 3px solid transparent;
+    }
+
+    .app-menu-item>span {
+        display: inline;
+    }
+
+    .app-menu-item.active {
+        border-left-color: var(--primary);
+        box-shadow: none;
+    }
+
+    .app-conteudo {
+        padding-right: 0;
+    }
+}
+
+/* Espaço suficiente para o menu completo e a coluna centralizada. */
+@media (min-width: 1400px) {
+    .app-conteudo {
+        padding-right: var(--menu-largura);
+    }
+}
+
+/* ---------- Telas muito estreitas (<=360px) ---------- */
+
+@media (max-width: 360px) {
+    :root {
+        --navbar-altura: 54px;
+        --topo-altura: 58px;
+    }
+
+    .icone-botao {
+        width: 34px;
+        height: 34px;
+    }
+
+    .app-navbar-item {
+        font-size: .625rem;
+    }
+}

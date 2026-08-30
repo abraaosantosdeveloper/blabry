@@ -1,0 +1,138 @@
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(10, 19, 28, .45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 100;
+    animation: modal-fade .18s ease-out;
+}
+
+.modal-caixa {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: clamp(20px, 5vw, 28px);
+    box-shadow: 0 12px 40px rgba(10, 19, 28, .18);
+    animation: modal-subir .2s ease-out;
+}
+
+.modal-caixa:focus {
+    outline: none;
+}
+
+/* Sem título, o conteúdo começaria embaixo do botão de fechar. */
+.modal-caixa.sem-titulo .modal-conteudo {
+    padding-top: 26px;
+}
+
+.modal-fechar {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    padding: 6px;
+    border: none;
+    border-radius: 8px;
+    background: none;
+    color: var(--neutral-t30);
+    cursor: pointer;
+}
+
+.modal-fechar:hover {
+    background-color: var(--neutral-t95);
+}
+
+.modal-titulo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--neutral);
+    margin-bottom: 20px;
+    padding-right: 32px;
+}
+
+.modal-titulo-icone {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/* Lista de ações reutilizável dentro de qualquer modal */
+.modal-lista {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 4px;
+    border: none;
+    border-bottom: 1px solid var(--neutral-t90);
+    background: none;
+    font-size: .875rem;
+    font-weight: 600;
+    color: var(--neutral);
+    text-align: left;
+    cursor: pointer;
+    transition: background-color .15s;
+}
+
+.modal-item:hover {
+    background-color: var(--neutral-t95);
+}
+
+.modal-item>svg {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+}
+
+.modal-item.perigo {
+    color: var(--failure-red);
+}
+
+.modal-secao {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+    margin-bottom: 4px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--failure-red);
+}
+
+.modal-secao>svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+@keyframes modal-fade {
+    from { opacity: 0 }
+    to { opacity: 1 }
+}
+
+@keyframes modal-subir {
+    from { opacity: 0; transform: translateY(12px) }
+    to { opacity: 1; transform: translateY(0) }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .modal-overlay,
+    .modal-caixa {
+        animation: none;
+    }
+}

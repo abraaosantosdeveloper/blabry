@@ -1,0 +1,23 @@
+.under-construction {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 32px 20px;
+    text-align: center;
+}
+
+.under-construction-logo {
+    width: clamp(96px, 34vw, 168px);
+    height: auto;
+    opacity: .9;
+}
+
+.under-construction-texto {
+    font-size: clamp(.875rem, 3.4vw, 1rem);
+    color: var(--neutral-t50);
+    max-width: 32ch;
+    line-height: 1.5;
+}

@@ -1,0 +1,110 @@
+.post {
+    padding: clamp(14px, 4vw, 20px) clamp(12px, 4vw, 20px);
+    border-bottom: 1px solid var(--neutral-t90);
+}
+
+.post-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.post-avatar-link {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.post-identificacao {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.post-nome {
+    font-size: clamp(.8125rem, 3.4vw, .875rem);
+    font-weight: 700;
+    color: var(--neutral);
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.post-nome:hover {
+    text-decoration: underline;
+}
+
+.post-quando {
+    margin-left: auto;
+    font-size: .6875rem;
+    color: var(--neutral-t60);
+    flex-shrink: 0;
+}
+
+.post-alias {
+    font-size: clamp(.75rem, 3.2vw, .8125rem);
+    color: var(--neutral-t50);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.post-texto {
+    margin: 14px 0;
+    font-size: clamp(.8125rem, 3.5vw, .9375rem);
+    line-height: 1.6;
+    color: var(--neutral-t10);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.post-acoes {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.post-acao {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 10px;
+    border: none;
+    border-radius: 8px;
+    background: none;
+    color: var(--neutral-t40);
+    font-size: .75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color .15s, color .15s;
+}
+
+.post-acao>svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.post-acao:hover {
+    background-color: var(--neutral-t95);
+    color: var(--neutral-t10);
+}
+
+.post-acao:disabled {
+    opacity: .6;
+    cursor: default;
+}
+
+.post-acao.aberta {
+    color: var(--primary);
+    background-color: var(--primary-t95);
+}
+
+.post-acao.ativa {
+    color: var(--failure-red);
+}
+
+.post-acao.ativa>svg {
+    fill: var(--failure-red);
+}

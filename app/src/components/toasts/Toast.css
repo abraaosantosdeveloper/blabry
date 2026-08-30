@@ -2,6 +2,7 @@
     width: 16rem;
     padding: 10px 14px;
     position: fixed;
+    z-index: 200;
     top: 24px;
     left: 50%;
     border-radius: 10px;
@@ -42,4 +43,20 @@
 
 .toast.erro .toast-content-wrapper {
     color: var(--failure-red);
+}
+.toast-content-wrapper svg {
+    width: 20px;
+    height: 20px;
+}
+
+.toast-content-wrapper span {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.35;
+}
+
+@media (max-width: 480px) {
+    .toast {
+        width: calc(100% - 32px);
+    }
 }

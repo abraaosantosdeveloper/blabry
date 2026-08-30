@@ -1,0 +1,110 @@
+.comentarios {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--neutral-t90);
+}
+
+.comentarios-lista {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.comentario {
+    display: flex;
+    gap: 10px;
+    min-width: 0;
+}
+
+.comentario>a {
+    display: flex;
+    flex-shrink: 0;
+}
+
+.comentario-corpo {
+    min-width: 0;
+    flex: 1;
+}
+
+.comentario-cabecalho {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    min-width: 0;
+    flex-wrap: wrap;
+}
+
+.comentario-cabecalho>a {
+    font-size: .8125rem;
+    font-weight: 600;
+    color: var(--neutral);
+    text-decoration: none;
+}
+
+.comentario-cabecalho>a:hover {
+    text-decoration: underline;
+}
+
+.comentario-cabecalho>span {
+    font-size: .6875rem;
+    color: var(--neutral-t50);
+}
+
+.comentario-texto {
+    font-size: .8125rem;
+    line-height: 1.5;
+    color: var(--neutral-t20);
+    overflow-wrap: anywhere;
+}
+
+.comentarios-mais {
+    margin-top: 10px;
+    padding: 6px 0;
+    border: none;
+    background: none;
+    color: var(--primary);
+    font-size: .75rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.comentario-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.comentario-form>input {
+    flex: 1;
+    min-width: 0;
+    padding: 9px 12px;
+    border: 1px solid var(--neutral-t90);
+    border-radius: 999px;
+    outline: none;
+    font-size: .8125rem;
+    color: var(--neutral);
+    background: none;
+}
+
+.comentario-form>input:focus {
+    border-color: var(--primary);
+}
+
+.comentario-form>button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 999px;
+    background-color: var(--primary);
+    color: var(--white);
+    font-size: .75rem;
+    font-weight: 600;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.comentario-form>button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}

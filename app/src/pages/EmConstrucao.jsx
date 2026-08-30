@@ -1,7 +1,7 @@
 import UnderConstruction from '../components/common/UnderConstruction'
 
-function Chat() {
+function EmConstrucao() {
     return <UnderConstruction />
 }
 
-export default Chat
+export default EmConstrucao

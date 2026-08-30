@@ -1,0 +1,105 @@
+.composer {
+    display: flex;
+    gap: 12px;
+    padding: clamp(14px, 4vw, 20px) clamp(12px, 4vw, 20px);
+    border-bottom: 1px solid var(--neutral-t90);
+}
+
+.modal-caixa .composer {
+    padding: 0;
+    border-bottom: none;
+}
+
+.modal-caixa .composer-campo {
+    border-bottom: 1px solid var(--neutral-t90);
+}
+
+.composer-corpo {
+    flex: 1;
+    min-width: 0;
+}
+
+.composer-campo {
+    width: 100%;
+    min-height: 40px;
+    max-height: 40vh;
+    border: none;
+    outline: none;
+    resize: none;
+    padding: 9px 0;
+    font-size: clamp(.875rem, 3.6vw, .9375rem);
+    line-height: 1.5;
+    color: var(--neutral);
+    background: none;
+    overflow-y: auto;
+}
+
+.composer-campo::placeholder {
+    color: var(--neutral-t50);
+}
+
+.composer-acoes {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+.composer-emoji-wrapper {
+    position: relative;
+    margin-right: auto;
+}
+
+.composer-emoji {
+    display: flex;
+    padding: 6px;
+    border: none;
+    border-radius: 8px;
+    background: none;
+    color: var(--neutral-t50);
+    cursor: pointer;
+    transition: background-color .15s, color .15s;
+}
+
+.composer-emoji:hover,
+.composer-emoji[aria-expanded="true"] {
+    background-color: var(--primary-t95);
+    color: var(--primary);
+}
+
+.composer-emoji>svg {
+    width: 20px;
+    height: 20px;
+}
+
+.composer-contador {
+    font-size: .75rem;
+    color: var(--neutral-t60);
+    font-variant-numeric: tabular-nums;
+}
+
+.composer-contador.excedido {
+    color: var(--failure-red);
+    font-weight: 600;
+}
+
+.composer-publicar {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--primary);
+    color: var(--white);
+    font-size: .8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .15s, opacity .15s;
+}
+
+.composer-publicar:hover:not(:disabled) {
+    background-color: var(--primary-t30);
+}
+
+.composer-publicar:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}

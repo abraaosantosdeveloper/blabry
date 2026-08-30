@@ -1,0 +1,297 @@
+.perfil {
+    display: flex;
+    flex-direction: column;
+}
+
+.perfil-titulo {
+    font-size: clamp(1rem, 4.2vw, 1.125rem);
+    font-weight: 700;
+    color: var(--neutral);
+    padding: clamp(16px, 4vw, 24px) clamp(14px, 4vw, 24px) 0;
+}
+
+/* ---------- Topo: identidade + números ---------- */
+
+.perfil-topo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: clamp(16px, 4vw, 24px) clamp(14px, 4vw, 24px) 0;
+}
+
+.perfil-identidade {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+    flex: 1 1 200px;
+}
+
+.perfil-nomes {
+    min-width: 0;
+}
+
+.perfil-nome-linha {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.perfil-nome-linha>h2 {
+    font-size: clamp(.9375rem, 4vw, 1.0625rem);
+    font-weight: 700;
+    color: var(--neutral);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.perfil-alias {
+    display: block;
+    font-size: clamp(.75rem, 3.2vw, .875rem);
+    color: var(--neutral-t50);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.perfil-numeros {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    min-width: 0;
+}
+
+.perfil-contadores {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 4px 16px;
+    font-size: clamp(.75rem, 3.2vw, .8125rem);
+    color: var(--neutral-t40);
+}
+
+.perfil-contadores strong {
+    color: var(--neutral);
+    font-weight: 700;
+}
+
+.perfil-desde {
+    padding: 4px 12px;
+    border-radius: 999px;
+    background-color: var(--primary-t95);
+    color: var(--primary-t30);
+    font-size: .6875rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* ---------- Bio ---------- */
+
+.perfil-bio {
+    padding: clamp(16px, 4vw, 22px) clamp(14px, 4vw, 24px);
+    border-bottom: 1px solid var(--neutral-t90);
+}
+
+.perfil-campo-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.perfil-campo-topo h3 {
+    font-size: clamp(.8125rem, 3.4vw, .875rem);
+    font-weight: 700;
+    color: var(--neutral);
+}
+
+.perfil-bio-texto {
+    margin-top: 8px;
+    font-size: clamp(.8125rem, 3.4vw, .875rem);
+    line-height: 1.6;
+    color: var(--neutral-t40);
+    overflow-wrap: anywhere;
+}
+
+.perfil-editar {
+    display: flex;
+    padding: 5px;
+    border: none;
+    border-radius: 6px;
+    background: none;
+    color: var(--neutral-t40);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.perfil-editar:hover {
+    background-color: var(--neutral-t95);
+    color: var(--primary);
+}
+
+.perfil-editar>svg {
+    width: 15px;
+    height: 15px;
+}
+
+/* ---------- Dados ---------- */
+
+.perfil-dados {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    border-bottom: 1px solid var(--neutral-t90);
+}
+
+.perfil-campo {
+    padding: clamp(14px, 4vw, 18px) clamp(14px, 4vw, 20px);
+    border-right: 1px solid var(--neutral-t90);
+    min-width: 0;
+}
+
+.perfil-campo:last-child {
+    border-right: none;
+}
+
+.perfil-campo-valor {
+    margin-top: 6px;
+    font-size: clamp(.75rem, 3.2vw, .8125rem);
+    color: var(--neutral-t40);
+    overflow-wrap: anywhere;
+}
+
+/* ---------- Configurações (só perfil próprio) ---------- */
+
+.perfil-config {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    padding: clamp(16px, 4vw, 28px) clamp(10px, 3vw, 20px);
+    gap: 8px;
+}
+
+.perfil-config-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: none;
+    color: var(--neutral);
+    cursor: pointer;
+    min-width: 0;
+    transition: background-color .15s;
+}
+
+.perfil-config-item:hover {
+    background-color: var(--neutral-t95);
+}
+
+.perfil-config-item.centro {
+    justify-content: center;
+    border-left: 1px solid var(--neutral-t90);
+    border-radius: 0;
+}
+
+.perfil-config-item>svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.perfil-config-item strong {
+    font-size: clamp(.75rem, 3.2vw, .8125rem);
+    font-weight: 700;
+}
+
+.perfil-config-texto {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+}
+
+.perfil-config-texto small {
+    font-size: .6875rem;
+    color: var(--neutral-t50);
+}
+
+.perfil-switch {
+    display: inline-flex;
+    align-items: center;
+    width: 34px;
+    height: 18px;
+    padding: 2px;
+    border-radius: 999px;
+    background-color: var(--primary);
+    flex-shrink: 0;
+}
+
+.perfil-switch>span {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: var(--white);
+}
+
+/* ---------- Ação principal do perfil público ---------- */
+
+.perfil-acao {
+    padding: 7px 18px;
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    background-color: var(--primary);
+    color: var(--white);
+    font-size: .8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.perfil-acao.secundaria {
+    background-color: transparent;
+    color: var(--primary);
+}
+
+/* ---------- Telas estreitas ---------- */
+
+@media (max-width: 480px) {
+    .perfil-topo {
+        flex-direction: column;
+    }
+
+    .perfil-numeros {
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .perfil-contadores {
+        justify-content: flex-start;
+    }
+
+    .perfil-campo {
+        border-right: none;
+        border-bottom: 1px solid var(--neutral-t90);
+    }
+
+    .perfil-campo:last-child {
+        border-bottom: none;
+    }
+}
+
+@media (max-width: 360px) {
+    .perfil-config {
+        grid-template-columns: 1fr;
+    }
+
+    .perfil-config-item.centro {
+        border-left: none;
+        border-top: 1px solid var(--neutral-t90);
+        justify-content: flex-start;
+    }
+}

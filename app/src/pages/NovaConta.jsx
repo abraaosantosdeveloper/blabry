@@ -1,60 +1,210 @@
-import { useState } from "react"
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { cadastrar } from '../services/auth.service'
-import './NovaConta.css'
-import logo from '../assets/icons/logo_text.svg'
+import { cadastrar, mensagemDeErro } from '../services/auth.service'
+import { enviarFoto } from '../services/usuarios.service'
+import useToast from '../hooks/useToast'
+import usePaises from '../hooks/usePaises'
 import AuthInput from '../components/inputs/AuthInput'
 import AuthButton from '../components/buttons/AuthButton'
 import OptionSelect from '../components/inputs/OptionSelect'
+import Toast from '../components/toasts/Toast'
+import PhotoCrop from '../components/upload/PhotoCrop'
+import logo from '../assets/icons/logo_text.svg'
+import './NovaConta.css'
+
+const ETAPAS = [
+    { titulo: 'Vamos começar', subtitulo: 'Como devemos te chamar?' },
+    { titulo: 'Dados de acesso', subtitulo: 'É com isso que você vai entrar.' },
+    { titulo: 'Escolha seu @', subtitulo: 'É assim que as pessoas vão te encontrar.' },
+    { titulo: 'Foto de perfil', subtitulo: 'Opcional — dá pra adicionar depois.' },
+]
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+const SENHA_RE = /^(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,}$/
+const ALIAS_RE = /^[a-z0-9_]{3,20}$/
+
+const idade = (data) => {
+    const hoje = new Date()
+    const nasc = new Date(data)
+    return (hoje - nasc) / 31557600000
+}
+
+const erro = (mensagem, ...campos) => ({ mensagem, campos })
+
+function validar(etapa, f) {
+    if (etapa === 0) {
+        if (!f.nome.trim()) return erro('Informe seu nome.', 'nome')
+        if (!f.sobrenome.trim()) return erro('Informe seu sobrenome.', 'sobrenome')
+        if (!f.nascimento) return erro('Informe sua data de nascimento.', 'nascimento')
+        if (idade(f.nascimento) < 13) return erro('Você precisa ter pelo menos 13 anos.', 'nascimento')
+        if (!f.nacionalidade) return erro('Selecione sua nacionalidade.', 'nacionalidade')
+    }
+    if (etapa === 1) {
+        if (!EMAIL_RE.test(f.email)) return erro('Digite um email válido.', 'email')
+        if (f.email !== f.confirmarEmail) return erro('Os emails não são iguais.', 'confirmarEmail')
+        if (!SENHA_RE.test(f.senha)) return erro('A senha precisa de 8 caracteres, uma maiúscula e um caractere especial.', 'senha')
+        if (f.senha !== f.confirmarSenha) return erro('As senhas não são iguais.', 'confirmarSenha')
+    }
+    if (etapa === 2 && !ALIAS_RE.test(f.apelido)) {
+        return erro('Use de 3 a 20 caracteres: letras minúsculas, números ou _', 'apelido')
+    }
+    return null
+}
 
 function NovaConta() {
-    const [nome, setNome] = useState('')
-    const [apelido, setApelido] = useState('')
-    const [email, setEmail] = useState('')
-    const [senha, setSenha] = useState('')
-    const [confirmarSenha, setConfirmarSenha] = useState('')
-    const [nascimento, setNascimento] = useState('')
-    const [nacionalidade, setNacionalidade] = useState('')
+    const [form, setForm] = useState({
+        nome: '', sobrenome: '', nascimento: '', nacionalidade: '',
+        email: '', confirmarEmail: '', senha: '', confirmarSenha: '', apelido: '',
+    })
+    const [etapa, setEtapa] = useState(0)
+    const [direcao, setDirecao] = useState('frente')
+    const [invalidos, setInvalidos] = useState([])
+    const [carregando, setCarregando] = useState(false)
+    const [foto, setFoto] = useState(null)
+    const { toast, mostrarToast } = useToast()
+    const { paises, carregando: carregandoPaises, falhou: falhouPaises, recarregar } = usePaises()
     const navigate = useNavigate()
 
-    async function handleCadastro() {
-        const dados = await cadastrar({ nome, apelido, email, senha, nascimento, nacionalidade })
-        if (dados.token) {
+    const campo = (nome) => ({
+        value: form[nome],
+        onChange: (e) => {
+            const valor = nome === 'apelido' ? e.target.value.toLowerCase() : e.target.value
+            setForm((f) => ({ ...f, [nome]: valor }))
+            setInvalidos((atuais) => atuais.filter((c) => c !== nome))
+        },
+        erro: invalidos.includes(nome),
+    })
+
+    const ir = (destino) => {
+        setDirecao(destino > etapa ? 'frente' : 'tras')
+        setInvalidos([])
+        setEtapa(destino)
+    }
+
+    async function avancar() {
+        if (carregando) return
+        const falha = validar(etapa, form)
+        if (falha) {
+            setInvalidos(falha.campos)
+            return mostrarToast(falha.mensagem)
+        }
+        if (etapa < 2) return ir(etapa + 1)
+
+        setCarregando(true)
+        try {
+            const dados = await cadastrar({
+                nome: `${form.nome.trim()} ${form.sobrenome.trim()}`,
+                apelido: form.apelido,
+                email: form.email.trim(),
+                senha: form.senha,
+                nascimento: form.nascimento,
+                nacionalidade: form.nacionalidade,
+            })
+            if (!dados.token) {
+                mostrarToast('Conta criada! Faça login para continuar.', 'sucesso')
+                return setTimeout(() => navigate('/'), 1600)
+            }
             localStorage.setItem('token', dados.token)
             localStorage.setItem('nome', dados.usuario.nome)
+            ir(3)
+        } catch (err) {
+            mostrarToast(mensagemDeErro(err))
+        } finally {
+            setCarregando(false)
+        }
+    }
+
+    async function concluir() {
+        if (!foto) return navigate('/feed')
+        setCarregando(true)
+        try {
+            await enviarFoto(foto)
             navigate('/feed')
+        } catch (err) {
+            mostrarToast(mensagemDeErro(err))
+            setCarregando(false)
         }
     }
 
     return (
         <div className="sign-in-form">
+            <Toast {...toast} />
 
             <img src={logo} alt="Logo Blabry" className="logo" />
-            <div className="input-wrapper">
-                <div className="input-line-wrapper">
-                    <AuthInput label={"Nome"} placeholder={"Seu nome completo"} fieldType={"Text"} fieldId={"nome-input"} value={nome} onChange={(e) => setNome(e.target.value)} />
-                    <AuthInput label={"Apelido"} placeholder={"@um_usuario123"} fieldType={"Text"} fieldId={"apelido-input"} value={apelido} onChange={(e) => setApelido(e.target.value)} />
-                </div>
 
-                <div className="input-line-wrapper">
-                    <AuthInput label={"Email"} placeholder={"email@exemplo.com"} fieldType={"Email"} fieldId={"email-input"} value={email} onChange={(e) => setEmail(e.target.value)} />
-                </div>
-
-                <div className="input-line-wrapper">
-                    <AuthInput label={"Senha"} placeholder={"Nova Senha"} fieldType={"Password"} fieldId={"senha-input"} value={senha} onChange={(e) => setSenha(e.target.value)} />
-                    <AuthInput label={"Confirmar senha"} placeholder={"Sua senha novamente"} fieldType={"Password"} fieldId={"confirmar-senha-input"} value={confirmarSenha} onChange={(e) => setConfirmarSenha(e.target.value)} />
-                </div>
-
-                <div className="input-line-wrapper">
-                    <AuthInput label={"Data de Nascimento"} placeholder={""} fieldType={"Date"} fieldId={"nascimento-input"} value={nascimento} onChange={(e) => setNascimento(e.target.value)} />
-                    <OptionSelect label={"Nacionalidade"} fieldId={"nacionalidade-input"} value={nacionalidade} onChange={(e) => setNacionalidade(e.target.value)} options={[
-                        { value: 'BRA', label: 'Brasil (BR)' },
-                        { value: 'EUA', label: 'Estados Unidos (EUA)' }
-                    ]} />
-                </div>
+            <div className="etapas-barra" aria-hidden="true">
+                <span className="etapas-progresso" style={{ width: `${((etapa + 1) / ETAPAS.length) * 100}%` }} />
             </div>
+            <p className="etapas-contador">Etapa {etapa + 1} de {ETAPAS.length}</p>
 
-            <AuthButton label={"Cadastrar"} onClick={handleCadastro} />
+            <form className="etapa-container" onSubmit={(e) => { e.preventDefault(); etapa === 3 ? concluir() : avancar() }}>
+                <div className={`etapa ${direcao}`} key={etapa}>
+                    <h1 className="etapa-titulo">{ETAPAS[etapa].titulo}</h1>
+                    <p className="etapa-subtitulo">{ETAPAS[etapa].subtitulo}</p>
+
+                    <div className="input-wrapper">
+                        {etapa === 0 && (
+                            <>
+                                <div className="input-line-wrapper">
+                                    <AuthInput label="Nome" placeholder="Seu nome" fieldType="text" fieldId="nome-input" {...campo('nome')} />
+                                    <AuthInput label="Sobrenome" placeholder="Seu sobrenome" fieldType="text" fieldId="sobrenome-input" {...campo('sobrenome')} />
+                                </div>
+                                <div className="input-line-wrapper">
+                                    <AuthInput label="Data de nascimento" fieldType="date" fieldId="nascimento-input" {...campo('nascimento')} />
+                                    <OptionSelect label="Nacionalidade" fieldId="nacionalidade-input"
+                                        options={paises} carregando={carregandoPaises} {...campo('nacionalidade')} />
+                                </div>
+                                {falhouPaises && (
+                                    <p className="dica dica-erro">
+                                        Não foi possível carregar a lista de países.{' '}
+                                        <button type="button" className="link-acao" onClick={recarregar}>Tentar de novo</button>
+                                    </p>
+                                )}
+                            </>
+                        )}
+
+                        {etapa === 1 && (
+                            <>
+                                <AuthInput label="Email" placeholder="email@exemplo.com" fieldType="email" fieldId="email-input" autoComplete="email" {...campo('email')} />
+                                <AuthInput label="Confirmar email" placeholder="Repita o email" fieldType="email" fieldId="confirmar-email-input" {...campo('confirmarEmail')} />
+                                <div className="input-line-wrapper">
+                                    <AuthInput label="Senha" placeholder="Nova senha" fieldType="password" fieldId="senha-input" autoComplete="new-password" {...campo('senha')} />
+                                    <AuthInput label="Confirmar senha" placeholder="Repita a senha" fieldType="password" fieldId="confirmar-senha-input" autoComplete="new-password" {...campo('confirmarSenha')} />
+                                </div>
+                                <p className="dica">Mínimo de 8 caracteres, uma letra maiúscula e um caractere especial.</p>
+                            </>
+                        )}
+
+                        {etapa === 2 && (
+                            <>
+                                <div className="alias-campo">
+                                    <span className="alias-arroba">@</span>
+                                    <AuthInput label="Seu @" placeholder="um_usuario123" fieldType="text" fieldId="apelido-input" maxLength={20} {...campo('apelido')} />
+                                </div>
+                                <p className="dica">Letras minúsculas, números e _ — de 3 a 20 caracteres.</p>
+                            </>
+                        )}
+
+                        {etapa === 3 && <PhotoCrop onCortar={setFoto} />}
+                    </div>
+                </div>
+
+                <div className="etapa-acoes">
+                    {etapa > 0 && etapa < 3 && (
+                        <AuthButton label="Voltar" variante="secundario" compacto onClick={() => ir(etapa - 1)} />
+                    )}
+                    {etapa === 3 && (
+                        <AuthButton label="Pular" variante="secundario" compacto onClick={() => navigate('/feed')} />
+                    )}
+                    <AuthButton
+                        type="submit"
+                        compacto
+                        carregando={carregando}
+                        label={etapa === 2 ? 'Criar conta' : etapa === 3 ? 'Concluir' : 'Continuar'}
+                    />
+                </div>
+            </form>
+
             <p className="already-user">Já tem conta? <Link className="already-user-link" to="/">Fazer login</Link></p>
         </div>
     )

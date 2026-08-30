@@ -1,0 +1,43 @@
+.estado-lista {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 36px 20px;
+    text-align: center;
+    color: var(--neutral-t50);
+    font-size: clamp(.8125rem, 3.4vw, .875rem);
+}
+
+.estado-spinner {
+    width: 26px;
+    height: 26px;
+    border: 2.5px solid var(--neutral-t90);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: estado-girar .7s linear infinite;
+}
+
+.estado-acao {
+    padding: 7px 16px;
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    background: none;
+    color: var(--primary);
+    font-size: .8125rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.estado-acao:hover {
+    background-color: var(--primary-t95);
+}
+
+@keyframes estado-girar {
+    to { transform: rotate(360deg) }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .estado-spinner { animation-duration: 2s }
+}

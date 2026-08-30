@@ -1,45 +1,44 @@
-import { useState, useEffect } from 'react';
-import './Toast.css';
+import { useEffect, useState } from 'react'
+import './Toast.css'
 import InfoIcon from '../../assets/icons/info.svg?react'
+import DangerIcon from '../../assets/icons/danger.svg?react'
 
-function Toast({ mensagem, tipo, visible }) {
-    const [renderizar, setRenderizar] = useState(false);
-    const [mostrando, setMostrando] = useState(false);
+const DURACAO = 3000
+const SAIDA = 300
 
-    useEffect(() => {
-        let timerA;
-        if (visible) {
-            setRenderizar(true);
-            requestAnimationFrame(() => {
-                setMostrando(true);
-            });
-            timerA = setTimeout(() => {
-                setMostrando(false);
-            }, 3000);
-        }
-        return () => clearTimeout(timerA);
-    }, [visible]);
+function Toast({ mensagem, tipo, id }) {
+    const [montado, setMontado] = useState(false)
+    const [visivel, setVisivel] = useState(false)
 
     useEffect(() => {
-        let timerB;
-        if (!mostrando && renderizar) {
-            timerB = setTimeout(() => {
-                setRenderizar(false);
-            }, 300);
+        if (!id) return
+        setMontado(true)
+        const quadro = requestAnimationFrame(() => setVisivel(true))
+        const timer = setTimeout(() => setVisivel(false), DURACAO)
+        return () => {
+            cancelAnimationFrame(quadro)
+            clearTimeout(timer)
         }
-        return () => clearTimeout(timerB);
-    }, [mostrando]);
+    }, [id])
 
-    if (!renderizar) return null;
+    useEffect(() => {
+        if (visivel || !montado) return
+        const timer = setTimeout(() => setMontado(false), SAIDA)
+        return () => clearTimeout(timer)
+    }, [visivel, montado])
+
+    if (!montado) return null
+
+    const Icone = tipo === 'erro' ? DangerIcon : InfoIcon
 
     return (
-        <div className={`toast ${tipo} ${mostrando ? 'show' : ''}`}>
-            <div className='toast-content-wrapper'>
-                <InfoIcon />
+        <div className={`toast ${tipo} ${visivel ? 'show' : ''}`} role="status" aria-live="polite">
+            <div className="toast-content-wrapper">
+                <Icone />
                 <span>{mensagem}</span>
             </div>
         </div>
-    );
+    )
 }
 
 export default Toast

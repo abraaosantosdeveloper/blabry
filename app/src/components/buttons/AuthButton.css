@@ -2,28 +2,81 @@
     width: 180px;
     height: 40px;
     min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--white);
     background-color: var(--secondary);
-    border: 0;
+    border: 2px solid transparent;
     outline: 0;
     border-radius: 8px;
     font-weight: bold;
     font-size: 16px;
-    transition: all .2s;
+    transition: background-color .2s, color .2s, border-color .2s, opacity .2s, transform .1s;
     margin: 45px auto 20px;
     cursor: pointer;
 }
 
-.auth-btn:hover {
+.auth-btn:hover:not(:disabled) {
     background-color: var(--secondary-t40);
 }
 
-.auth-btn:active {
+.auth-btn:active:not(:disabled) {
     background-color: var(--secondary-t30);
+    transform: scale(.98);
+}
+
+.auth-btn.secundario {
+    color: var(--primary);
+    background-color: transparent;
+    border-color: var(--neutral-t90);
+}
+
+.auth-btn.secundario:hover:not(:disabled) {
+    background-color: var(--primary-t95);
+    border-color: var(--primary-t80);
+}
+
+.auth-btn.secundario:active:not(:disabled) {
+    background-color: var(--primary-t90);
+}
+
+.auth-btn.compacto {
+    width: 100%;
+    margin: 0;
+}
+
+.auth-btn:disabled {
+    opacity: .7;
+    cursor: not-allowed;
+}
+
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, .35);
+    border-top-color: var(--white);
+    border-radius: 50%;
+    animation: girar .6s linear infinite;
+}
+
+.auth-btn.secundario .spinner {
+    border-color: var(--primary-t80);
+    border-top-color: var(--primary);
+}
+
+@keyframes girar {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @media (max-width: 480px) {
     .auth-btn {
         width: 80%;
+    }
+
+    .auth-btn.compacto {
+        width: 100%;
     }
 }

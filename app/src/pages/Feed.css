@@ -1,0 +1,110 @@
+.feed {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.feed-lista {
+    display: flex;
+    flex-direction: column;
+}
+
+.feed-mais {
+    padding: 16px;
+    border: none;
+    border-top: 1px solid var(--neutral-t90);
+    background: none;
+    color: var(--primary);
+    font-size: .8125rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.feed-mais:hover:not(:disabled) {
+    background-color: var(--primary-t95);
+}
+
+.feed-mais:disabled {
+    color: var(--neutral-t50);
+    cursor: default;
+}
+
+.feed-fab {
+    position: fixed;
+    right: clamp(14px, 4vw, 32px);
+    bottom: calc(var(--navbar-altura) + 16px + env(safe-area-inset-bottom));
+    z-index: 15;
+    width: clamp(48px, 13vw, 56px);
+    height: clamp(48px, 13vw, 56px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: var(--white);
+    box-shadow: 0 6px 20px rgba(92, 51, 242, .38);
+    cursor: pointer;
+    transition: background-color .15s, transform .15s;
+}
+
+.feed-fab:hover {
+    background-color: var(--primary-t30);
+    transform: translateY(-2px);
+}
+
+.feed-fab:active {
+    transform: translateY(0);
+}
+
+@media (min-width: 768px) {
+    .feed-mais {
+    padding: 16px;
+    border: none;
+    border-top: 1px solid var(--neutral-t90);
+    background: none;
+    color: var(--primary);
+    font-size: .8125rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.feed-mais:hover:not(:disabled) {
+    background-color: var(--primary-t95);
+}
+
+.feed-mais:disabled {
+    color: var(--neutral-t50);
+    cursor: default;
+}
+
+.feed-fab {
+        bottom: 32px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .feed-mais {
+    padding: 16px;
+    border: none;
+    border-top: 1px solid var(--neutral-t90);
+    background: none;
+    color: var(--primary);
+    font-size: .8125rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.feed-mais:hover:not(:disabled) {
+    background-color: var(--primary-t95);
+}
+
+.feed-mais:disabled {
+    color: var(--neutral-t50);
+    cursor: default;
+}
+
+.feed-fab {
+        transition: none;
+    }
+}
