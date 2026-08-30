@@ -1,14 +1,28 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/blabry/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>app</title>
-    <script type="module" crossorigin src="/blabry/assets/index-DDdxwTyl.js"></script>
-    <link rel="stylesheet" crossorigin href="/blabry/assets/index-N5JGv5Ij.css">
+    <title>Blabry</title>
+    <script type="module" crossorigin src="/blabry/assets/index-1NXhXojY.js"></script>
+    <link rel="stylesheet" crossorigin href="/blabry/assets/index-CGRNJCRM.css">
   </head>
   <body>
+    <script>
+      /* Antes de qualquer pintura: evita o flash branco ao abrir no tema escuro. */
+      (function () {
+        try {
+          var salvo = localStorage.getItem('tema');
+          var escuro = salvo
+            ? salvo === 'escuro'
+            : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.tema = escuro ? 'escuro' : 'claro';
+        } catch (e) {
+          document.documentElement.dataset.tema = 'claro';
+        }
+      })();
+    </script>
     <div id="root"></div>
   </body>
 </html>
