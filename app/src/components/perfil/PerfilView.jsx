@@ -124,30 +124,17 @@ function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, 
                 <p className="perfil-bio-texto">{bio || 'Sem bio por enquanto.'}</p>
             </section>
 
-            {/* O e-mail é dado de contato e só existe no próprio perfil: o
-                servidor o devolve como null para visitantes, e aqui o container
-                nem é renderizado — caixa vazia com um travessão anuncia que há
-                algo escondido ali. Nascimento e nacionalidade são apresentação
-                e aparecem para todos. */}
-            <section className="perfil-dados">
-                {proprio && (
+            {/* Dados pessoais existem apenas no próprio perfil. O servidor já
+                os devolve como null para visitantes; aqui a seção inteira não é
+                renderizada, porque caixa vazia com um travessão anuncia que há
+                algo escondido ali. O perfil público termina na bio. */}
+            {proprio && (
+                <section className="perfil-dados">
                     <Campo rotulo="E-mail" valor={email} editavel aoEditar={() => aoEditar?.('email')} />
-                )}
-
-                <Campo
-                    rotulo="Nascimento"
-                    valor={dataBR(nascimento)}
-                    editavel={proprio}
-                    aoEditar={() => aoEditar?.('nascimento')}
-                />
-
-                <Campo
-                    rotulo="Nacionalidade"
-                    valor={nacionalidade}
-                    editavel={proprio}
-                    aoEditar={() => aoEditar?.('nacionalidade')}
-                />
-            </section>
+                    <Campo rotulo="Nascimento" valor={dataBR(nascimento)} editavel aoEditar={() => aoEditar?.('nascimento')} />
+                    <Campo rotulo="Nacionalidade" valor={nacionalidade} editavel aoEditar={() => aoEditar?.('nacionalidade')} />
+                </section>
+            )}
 
             {proprio && (
                 <section className="perfil-config" aria-label="Ajustes">
