@@ -1,0 +1,34 @@
+.abas {
+    display: flex;
+    border-bottom: 1px solid var(--borda);
+}
+
+.abas-item {
+    flex: 1;
+    padding: 10px 8px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    background: none;
+    color: var(--texto-suave);
+    font-size: clamp(.75rem, 3.2vw, .8125rem);
+    font-weight: 600;
+    cursor: pointer;
+    transition: color .15s, border-color .15s, background-color .15s;
+}
+
+.abas-item:hover {
+    color: var(--texto-medio);
+    background-color: var(--superficie-2);
+}
+
+.abas-item.ativa {
+    color: var(--acento);
+    border-bottom-color: var(--acento);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .abas-item {
+        transition: none;
+    }
+}

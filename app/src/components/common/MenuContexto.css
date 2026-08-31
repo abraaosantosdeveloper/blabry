@@ -1,0 +1,78 @@
+.menu-contexto {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.menu-contexto-botao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: var(--texto-fraco);
+    cursor: pointer;
+    transition: background-color .15s, color .15s;
+}
+
+.menu-contexto-botao:hover,
+.menu-contexto-botao[aria-expanded="true"] {
+    background-color: var(--superficie-2);
+    color: var(--texto-medio);
+}
+
+.menu-contexto-botao>svg {
+    width: 15px;
+    height: 15px;
+}
+
+.menu-contexto-lista {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    z-index: 25;
+    min-width: 172px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--superficie);
+    border: 1px solid var(--borda);
+    border-radius: 10px;
+    box-shadow: var(--sombra-media);
+}
+
+.menu-contexto-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border: none;
+    border-radius: 7px;
+    background: none;
+    color: var(--texto-medio);
+    font-size: .8125rem;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.menu-contexto-item:hover {
+    background-color: var(--superficie-2);
+}
+
+.menu-contexto-item>svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+
+.menu-contexto-item.perigo {
+    color: var(--perigo);
+}
+
+.menu-contexto-item.perigo:hover {
+    background-color: var(--perigo-fundo);
+}

@@ -1,0 +1,84 @@
+.confirmar {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.confirmar-cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.confirmar-icone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--perigo-fundo);
+    color: var(--perigo);
+    flex-shrink: 0;
+}
+
+.confirmar-icone>svg {
+    width: 18px;
+    height: 18px;
+}
+
+.confirmar-cabecalho h2 {
+    font-size: clamp(.9375rem, 4vw, 1.0625rem);
+    font-weight: 700;
+    color: var(--texto);
+}
+
+.confirmar-mensagem {
+    font-size: clamp(.8125rem, 3.4vw, .875rem);
+    line-height: 1.55;
+    color: var(--texto-medio);
+}
+
+.confirmar-acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.confirmar-botao {
+    padding: 10px 18px;
+    border: 1px solid var(--borda);
+    border-radius: 9px;
+    background: none;
+    color: var(--texto-medio);
+    font-size: clamp(.8125rem, 3.4vw, .875rem);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .15s, opacity .15s;
+}
+
+.confirmar-botao.neutro:hover {
+    background-color: var(--superficie-2);
+}
+
+.confirmar-botao.perigo {
+    background-color: var(--perigo);
+    border-color: var(--perigo);
+    color: var(--perigo-contraste);
+}
+
+.confirmar-botao:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+@media (max-width: 360px) {
+    .confirmar-acoes {
+        flex-direction: column-reverse;
+    }
+
+    .confirmar-botao {
+        width: 100%;
+    }
+}
