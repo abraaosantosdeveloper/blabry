@@ -185,3 +185,14 @@
     opacity: .45;
     cursor: not-allowed;
 }
+
+/* O horário vira link para a página do post; herda a cor para não virar
+   um azul solto no cabeçalho — só sublinha ao passar o mouse. */
+.post-quando-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.post-quando-link:hover {
+    text-decoration: underline;
+}

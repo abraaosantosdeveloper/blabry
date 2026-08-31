@@ -8,6 +8,25 @@ export const listarPosts = ({ pagina = 1, limite = 10, signal } = {}) =>
 export const buscarPosts = ({ q, pagina = 1, limite = 8, signal } = {}) =>
     request(`/posts${query({ q, pagina, limite })}`, null, { auth: true, signal })
 
+/**
+ * GET /posts/:id — uma publicação específica, para a página dedicada.
+ *
+ * Aceita `signal` porque a página pode ser abandonada antes da resposta
+ * chegar; sem ele, o React tentaria atualizar um componente desmontado.
+ */
+export const buscarPost = (id, { signal } = {}) =>
+    request(`/posts/${id}`, null, { auth: true, signal })
+
+/**
+ * GET /users/:alias/posts — publicações de um autor, paginadas.
+ *
+ * Alimenta a seção de publicações do perfil. O mesmo endpoint serve o
+ * próprio perfil e o de terceiros: publicação é conteúdo público, então
+ * não há duas respostas diferentes a distinguir aqui.
+ */
+export const listarPostsDoUsuario = (alias, { pagina = 1, limite = 10, signal } = {}) =>
+    request(`/users/${alias}/posts${query({ pagina, limite })}`, null, { auth: true, signal })
+
 /** POST /posts — cria uma publicação. */
 export const criarPost = (texto) =>
     request('/posts', { texto }, { auth: true })

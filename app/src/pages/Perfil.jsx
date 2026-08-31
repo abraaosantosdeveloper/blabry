@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import PerfilView from '../components/perfil/PerfilView'
+import PostsDoPerfil from '../components/perfil/PostsDoPerfil'
 import EstadoLista from '../components/common/EstadoLista'
 import Toast from '../components/toasts/Toast'
 import useToast from '../hooks/useToast'
@@ -93,7 +94,19 @@ function Perfil() {
             )}
 
             {usuario && (
-                <PerfilView usuario={usuario} titulo="Perfil" acaoPrincipal={botaoSeguir} />
+                <>
+                    <PerfilView usuario={usuario} titulo="Perfil" acaoPrincipal={botaoSeguir} />
+
+                    {/* A seção só monta depois do perfil carregar. Antes disso
+                        não se sabe se o @ da URL existe, e disparar a busca
+                        de publicações às cegas produziria um 404 na tela
+                        mesmo quando o problema é apenas ordem de chegada. */}
+                    <PostsDoPerfil
+                        alias={usuario.alias}
+                        autorAtual={usuarioAtual}
+                        aoErro={mostrarToast}
+                    />
+                </>
             )}
         </>
     )

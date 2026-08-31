@@ -1,0 +1,97 @@
+.pagina-post {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.pagina-post-topo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagina-post-topo h1 {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--texto);
+}
+
+.pagina-post-voltar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: var(--texto-medio);
+    cursor: pointer;
+    transition: background-color .15s;
+}
+
+.pagina-post-voltar:hover {
+    background-color: var(--superficie-2);
+}
+
+.pagina-post-voltar>svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* ---------- Cartão do autor ---------- */
+
+.pagina-post-autor {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px;
+    border: 1px solid var(--borda);
+    border-radius: 14px;
+    background-color: var(--superficie);
+    text-decoration: none;
+    color: var(--texto);
+    transition: background-color .15s;
+}
+
+.pagina-post-autor:hover {
+    background-color: var(--superficie-2);
+}
+
+.pagina-post-autor-textos {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    /* min-width: 0 permite que o texto encolha dentro do flex — sem isso
+       uma bio longa empurra o cartão e cria rolagem horizontal. */
+    min-width: 0;
+}
+
+.pagina-post-autor-textos>strong {
+    font-size: .9375rem;
+    font-weight: 700;
+}
+
+.pagina-post-autor-textos>small {
+    font-size: .8125rem;
+    color: var(--texto-suave);
+}
+
+.pagina-post-autor-bio {
+    margin-top: 6px;
+    font-size: .8125rem;
+    line-height: 1.5;
+    color: var(--texto-medio);
+    /* Duas linhas no máximo: a bio aqui é contexto, não o assunto da tela. */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.pagina-post-data {
+    padding: 0 4px;
+    font-size: .75rem;
+    color: var(--texto-suave);
+}

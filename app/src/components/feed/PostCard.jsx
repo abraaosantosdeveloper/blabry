@@ -42,10 +42,21 @@ const quando = (iso) => {
  * exibidos são os que o backend devolve, nunca calculados localmente,
  * exceto pela atualização otimista enquanto a requisição está em voo.
  */
-function PostCard({ post, autorAtual, aoAtualizar, aoEditar, aoExcluir, aoErro }) {
+/**
+ * @param {boolean} [linkParaPost=true] quando falso, o horário deixa de ser
+ *   link. É o caso da própria página do post: um link que aponta para a
+ *   página onde já se está não leva a lugar nenhum e confunde a navegação.
+ * @param {boolean} [comentariosIniciaisAbertos=false] a página dedicada
+ *   abre os comentários de saída, porque eles são metade do motivo de ela
+ *   existir; no feed continuam recolhidos, para caber mais posts na tela.
+ */
+function PostCard({
+    post, autorAtual, aoAtualizar, aoEditar, aoExcluir, aoErro,
+    linkParaPost = true, comentariosIniciaisAbertos = false,
+}) {
     const { id, autor, texto, criadoEm, editadoEm, curtidas = 0, comentarios = 0, curtido = false } = post
     const [ocupado, setOcupado] = useState(false)
-    const [comentariosAbertos, setComentariosAbertos] = useState(false)
+    const [comentariosAbertos, setComentariosAbertos] = useState(comentariosIniciaisAbertos)
     const [confirmandoExclusao, setConfirmandoExclusao] = useState(false)
     const [editando, setEditando] = useState(false)
     const [rascunho, setRascunho] = useState(texto)
@@ -118,8 +129,22 @@ function PostCard({ post, autorAtual, aoAtualizar, aoEditar, aoExcluir, aoErro }
                 </div>
 
                 {criadoEm && (
-                    <time className="post-quando" dateTime={criadoEm}>
-                        {quando(criadoEm)}
+                    /* O horário é o ponto de entrada para a página do post.
+                       É a convenção da categoria (Twitter, Threads, Mastodon
+                       fazem assim), e evita transformar o cartão inteiro em
+                       link — o que quebraria os links do autor e os botões
+                       de curtir e comentar aninhados dentro dele.
+
+                       `title` completo porque o rótulo visível é relativo
+                       ("3h") e perde o sentido depois de algum tempo. */
+                    <time
+                        className="post-quando"
+                        dateTime={criadoEm}
+                        title={new Date(criadoEm).toLocaleString('pt-BR')}
+                    >
+                        {linkParaPost
+                            ? <Link to={`/post/${id}`} className="post-quando-link">{quando(criadoEm)}</Link>
+                            : quando(criadoEm)}
                         {editadoEm && (
                             <span
                                 className="post-editado"

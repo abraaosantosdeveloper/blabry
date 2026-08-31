@@ -135,7 +135,11 @@ function BuscaModal({ aberto, aoFechar }) {
                                     ))
                                     : itens.map((p) => (
                                         <li key={p.id}>
-                                            <Link to={`/perfil/${p.autor.alias}`} className="busca-item alinhado-topo" onClick={fechar}>
+                                            {/* Resultado de post leva ao post, não ao perfil do
+                                                autor: quem buscou uma palavra quer ver a
+                                                publicação que a contém. O nome do autor
+                                                aparece como informação, não como destino. */}
+                                            <Link to={`/post/${p.id}`} className="busca-item alinhado-topo" onClick={fechar}>
                                                 <Avatar src={p.autor.fotoUrl} nome={p.autor.nome} tamanho={38} />
                                                 <span className="busca-item-textos">
                                                     <strong>
