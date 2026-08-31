@@ -50,27 +50,6 @@
     margin-right: auto;
 }
 
-.composer-emoji {
-    display: flex;
-    padding: 6px;
-    border: none;
-    border-radius: 8px;
-    background: none;
-    color: var(--texto-suave);
-    cursor: pointer;
-    transition: background-color .15s, color .15s;
-}
-
-.composer-emoji:hover,
-.composer-emoji[aria-expanded="true"] {
-    background-color: var(--acento-suave);
-    color: var(--acento);
-}
-
-.composer-emoji>svg {
-    width: 20px;
-    height: 20px;
-}
 
 .composer-contador {
     font-size: .75rem;

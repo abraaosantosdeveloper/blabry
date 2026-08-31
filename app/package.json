@@ -1,7 +1,7 @@
 {
   "name": "app",
   "private": true,
-  "version": "0.5.0",
+  "version": "0.7.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,7 +15,8 @@
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-image-crop": "^11.1.2",
-    "react-router-dom": "^7.18.2"
+    "react-router-dom": "^7.18.2",
+    "unicode-emoji-json": "^0.9.0"
   },
   "devDependencies": {
     "@types/react": "^19.2.17",

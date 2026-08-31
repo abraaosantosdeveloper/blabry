@@ -1,18 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import Avatar from '../common/Avatar'
-import EmojiPicker from '../common/EmojiPicker'
+import EmojiPicker, { EmojiIcon } from '../common/EmojiPicker'
 import './PostComposer.css'
 
 const LIMITE = 280
-
-const EmojiIcon = (props) => (
-    <svg viewBox="0 0 24 24" fill="none" {...props}>
-        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.7" />
-        <path d="M8.5 14.5c.9 1.2 2.1 1.8 3.5 1.8s2.6-.6 3.5-1.8" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-        <circle cx="9" cy="10" r="1.1" fill="currentColor" />
-        <circle cx="15" cy="10" r="1.1" fill="currentColor" />
-    </svg>
-)
 
 /**
  * Campo de nova publicação. Usado inline no feed e dentro do modal do FAB.
@@ -23,6 +14,7 @@ function PostComposer({ autor, aoPublicar, focoAutomatico = false, aoErro }) {
     const [enviando, setEnviando] = useState(false)
     const [emojisAbertos, setEmojisAbertos] = useState(false)
     const campoRef = useRef(null)
+    const emojiBotaoRef = useRef(null)
 
     const restantes = LIMITE - texto.length
     const podePublicar = texto.trim().length > 0 && restantes >= 0 && !enviando
@@ -93,7 +85,8 @@ function PostComposer({ autor, aoPublicar, focoAutomatico = false, aoErro }) {
                     <div className="composer-emoji-wrapper">
                         <button
                             type="button"
-                            className="composer-emoji"
+                            ref={emojiBotaoRef}
+                            className="emoji-gatilho"
                             onClick={() => setEmojisAbertos((a) => !a)}
                             aria-label="Inserir emoji"
                             aria-expanded={emojisAbertos}
@@ -102,7 +95,11 @@ function PostComposer({ autor, aoPublicar, focoAutomatico = false, aoErro }) {
                         </button>
 
                         {emojisAbertos && (
-                            <EmojiPicker aoEscolher={inserirEmoji} aoFechar={() => setEmojisAbertos(false)} />
+                            <EmojiPicker
+                                ancoraRef={emojiBotaoRef}
+                                aoEscolher={inserirEmoji}
+                                aoFechar={() => setEmojisAbertos(false)}
+                            />
                         )}
                     </div>
 

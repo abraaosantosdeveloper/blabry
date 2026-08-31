@@ -1,29 +1,141 @@
+/* Botão que abre o painel. Compartilhado pelo compositor de blabs e pelo
+   campo de comentário. */
+.emoji-gatilho {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border: none;
+    border-radius: 8px;
+    background: none;
+    color: var(--texto-suave);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color .15s, color .15s;
+}
+
+.emoji-gatilho:hover,
+.emoji-gatilho[aria-expanded="true"] {
+    background-color: var(--acento-suave);
+    color: var(--acento);
+}
+
+.emoji-gatilho>svg {
+    width: 20px;
+    height: 20px;
+}
+
 .emoji-painel {
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 0;
-    z-index: 30;
-    width: min(300px, calc(100vw - 32px));
-    max-height: 260px;
-    overflow-y: auto;
-    padding: 12px;
-    background-color: var(--acento-contraste);
+    /* fixed em vez de absolute: o painel não é recortado pelo overflow do
+       modal, e as coordenadas vêm do botão que o abriu. */
+    position: fixed;
+    z-index: 120;
+    width: min(320px, calc(100vw - 24px));
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: var(--superficie);
     border: 1px solid var(--borda);
     border-radius: 12px;
     box-shadow: var(--sombra-media);
 }
 
-.emoji-grupo+.emoji-grupo {
-    margin-top: 12px;
+/* ---------- Busca ---------- */
+
+.emoji-busca {
+    padding: 10px 10px 8px;
+    border-bottom: 1px solid var(--borda);
+    flex-shrink: 0;
 }
 
-.emoji-grupo>h4 {
+.emoji-busca>input {
+    width: 100%;
+    height: 2rem;
+    padding: 0 10px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    outline: 0;
+    background: none;
+    color: var(--texto);
+    font-size: .8125rem;
+}
+
+.emoji-busca>input:focus {
+    border-color: var(--acento);
+}
+
+.emoji-busca>input::placeholder {
+    color: var(--texto-fraco);
+}
+
+/* ---------- Abas de categoria ---------- */
+
+.emoji-categorias {
+    display: flex;
+    gap: 2px;
+    padding: 6px 6px 0;
+    border-bottom: 1px solid var(--borda);
+    flex-shrink: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.emoji-categorias::-webkit-scrollbar {
+    display: none;
+}
+
+.emoji-categoria {
+    flex: 1 0 auto;
+    min-width: 30px;
+    padding: 5px 0 7px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    background: none;
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    filter: grayscale(1);
+    opacity: .55;
+    transition: opacity .15s, filter .15s, border-color .15s;
+}
+
+.emoji-categoria:hover {
+    opacity: .85;
+    filter: grayscale(.3);
+}
+
+.emoji-categoria.ativa {
+    opacity: 1;
+    filter: none;
+    border-bottom-color: var(--acento);
+}
+
+/* ---------- Lista ---------- */
+
+.emoji-conteudo {
+    flex: 1;
+    /* Piso equivalente a três linhas de emoji (34px + 2px de intervalo). */
+    min-height: 110px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 10px;
+}
+
+.emoji-titulo {
     font-size: .6875rem;
     font-weight: 600;
     color: var(--texto-suave);
     text-transform: uppercase;
     letter-spacing: .04em;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+}
+
+.emoji-aviso {
+    padding: 18px 4px;
+    text-align: center;
+    font-size: .75rem;
+    color: var(--texto-suave);
 }
 
 .emoji-grade {
@@ -40,11 +152,17 @@
     border: none;
     border-radius: 8px;
     background: none;
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     line-height: 1;
     cursor: pointer;
 }
 
 .emoji-item:hover {
     background-color: var(--superficie-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .emoji-categoria {
+        transition: none;
+    }
 }
