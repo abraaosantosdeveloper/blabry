@@ -12,6 +12,10 @@ export const buscarPosts = ({ q, pagina = 1, limite = 8, signal } = {}) =>
 export const criarPost = (texto) =>
     request('/posts', { texto }, { auth: true })
 
+/** PATCH /posts/:id — só o autor, nos primeiros 15 minutos. */
+export const editarPost = (id, texto) =>
+    request(`/posts/${id}`, { texto }, { metodo: 'PATCH', auth: true })
+
 /** DELETE /posts/:id */
 export const excluirPost = (id) =>
     request(`/posts/${id}`, null, { metodo: 'DELETE', auth: true })

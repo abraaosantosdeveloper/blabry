@@ -4,7 +4,9 @@ import Avatar from '../common/Avatar'
 import Comentarios from './Comentarios'
 import MenuContexto from '../common/MenuContexto'
 import ConfirmarModal from '../modals/ConfirmarModal'
+import EditIcon from '../../assets/icons/edit.svg?react'
 import TrashIcon from '../../assets/icons/trash.svg?react'
+import { dentroDaJanela } from '../../utils/janelaEdicao'
 import { alternarCurtida } from '../../services/posts.service'
 import { mensagemDeErro } from '../../services/http'
 import './PostCard.css'
@@ -40,15 +42,46 @@ const quando = (iso) => {
  * exibidos são os que o backend devolve, nunca calculados localmente,
  * exceto pela atualização otimista enquanto a requisição está em voo.
  */
-function PostCard({ post, autorAtual, aoAtualizar, aoExcluir, aoErro }) {
-    const { id, autor, texto, criadoEm, curtidas = 0, comentarios = 0, curtido = false } = post
+function PostCard({ post, autorAtual, aoAtualizar, aoEditar, aoExcluir, aoErro }) {
+    const { id, autor, texto, criadoEm, editadoEm, curtidas = 0, comentarios = 0, curtido = false } = post
     const [ocupado, setOcupado] = useState(false)
     const [comentariosAbertos, setComentariosAbertos] = useState(false)
     const [confirmandoExclusao, setConfirmandoExclusao] = useState(false)
+    const [editando, setEditando] = useState(false)
+    const [rascunho, setRascunho] = useState(texto)
+    const [salvando, setSalvando] = useState(false)
+    const [erroEdicao, setErroEdicao] = useState(null)
 
     /* O alias é único, então comparar com o do usuário autenticado basta.
        Se o @ um dia virar editável, troque por um campo vindo do servidor. */
     const souAutor = Boolean(autorAtual?.alias) && autorAtual.alias === autor.alias
+
+    /* Reavaliado a cada render: some quando o prazo expira com a tela aberta. */
+    const podeEditar = souAutor && dentroDaJanela(criadoEm)
+
+    function abrirEdicao() {
+        setRascunho(texto)
+        setErroEdicao(null)
+        setEditando(true)
+    }
+
+    async function salvarEdicao(e) {
+        e.preventDefault()
+        const conteudo = rascunho.trim()
+        if (!conteudo || salvando) return
+        if (conteudo === texto) return setEditando(false)
+
+        setSalvando(true)
+        setErroEdicao(null)
+        try {
+            await aoEditar?.(id, conteudo)
+            setEditando(false)
+        } catch (err) {
+            setErroEdicao(err?.message || 'Não foi possível salvar.')
+        } finally {
+            setSalvando(false)
+        }
+    }
 
     async function curtir() {
         if (ocupado) return
@@ -84,12 +117,27 @@ function PostCard({ post, autorAtual, aoAtualizar, aoExcluir, aoErro }) {
                     <span className="post-alias">@{autor.alias}</span>
                 </div>
 
-                {criadoEm && <time className="post-quando" dateTime={criadoEm}>{quando(criadoEm)}</time>}
+                {criadoEm && (
+                    <time className="post-quando" dateTime={criadoEm}>
+                        {quando(criadoEm)}
+                        {editadoEm && (
+                            <span
+                                className="post-editado"
+                                title={`Editado em ${new Date(editadoEm).toLocaleString('pt-BR')}`}
+                            >
+                                {' · editado'}
+                            </span>
+                        )}
+                    </time>
+                )}
 
-                {souAutor && (
+                {souAutor && !editando && (
                     <MenuContexto
                         rotulo="Ações da publicação"
                         itens={[
+                            ...(podeEditar
+                                ? [{ rotulo: 'Editar', Icone: EditIcon, aoClicar: abrirEdicao }]
+                                : []),
                             {
                                 rotulo: 'Excluir',
                                 Icone: TrashIcon,
@@ -101,7 +149,33 @@ function PostCard({ post, autorAtual, aoAtualizar, aoExcluir, aoErro }) {
                 )}
             </header>
 
-            <p className="post-texto">{texto}</p>
+            {editando ? (
+                <form className="post-edicao" onSubmit={salvarEdicao}>
+                    <textarea
+                        value={rascunho}
+                        maxLength={280}
+                        rows={3}
+                        autoFocus
+                        onChange={(e) => setRascunho(e.target.value)}
+                        onKeyDown={(e) => { if (e.key === 'Escape') setEditando(false) }}
+                        aria-label="Editar publicação"
+                    />
+
+                    {erroEdicao && <p className="post-edicao-erro" role="alert">{erroEdicao}</p>}
+
+                    <div className="post-edicao-acoes">
+                        <span className="post-edicao-contador">{280 - rascunho.length}</span>
+                        <button type="button" className="neutro" onClick={() => setEditando(false)}>
+                            Cancelar
+                        </button>
+                        <button type="submit" disabled={!rascunho.trim() || salvando}>
+                            {salvando ? 'Salvando...' : 'Salvar'}
+                        </button>
+                    </div>
+                </form>
+            ) : (
+                <p className="post-texto">{texto}</p>
+            )}
 
             <footer className="post-acoes">
                 <button

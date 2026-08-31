@@ -109,3 +109,79 @@
 .post-acao.ativa>svg {
     fill: var(--perigo);
 }
+
+/* ---------- Marca de edição e edição no lugar ---------- */
+
+.post-editado {
+    color: var(--texto-fraco);
+    font-style: italic;
+    cursor: help;
+}
+
+.post-edicao {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 14px 0;
+}
+
+.post-edicao>textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--acento);
+    border-radius: 10px;
+    outline: none;
+    resize: vertical;
+    min-height: 5rem;
+    background: none;
+    color: var(--texto);
+    font-family: inherit;
+    font-size: clamp(.8125rem, 3.5vw, .9375rem);
+    line-height: 1.6;
+}
+
+.post-edicao-erro {
+    font-size: .75rem;
+    line-height: 1.4;
+    color: var(--perigo);
+}
+
+.post-edicao-acoes {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.post-edicao-contador {
+    margin-right: auto;
+    font-size: .75rem;
+    color: var(--texto-suave);
+    font-variant-numeric: tabular-nums;
+}
+
+.post-edicao-acoes>button {
+    padding: 8px 16px;
+    border: 1px solid var(--acento);
+    border-radius: 8px;
+    background-color: var(--acento);
+    color: var(--acento-contraste);
+    font-size: .8125rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.post-edicao-acoes>button.neutro {
+    background: none;
+    color: var(--texto-medio);
+    border-color: var(--borda);
+}
+
+.post-edicao-acoes>button.neutro:hover {
+    background-color: var(--superficie-2);
+}
+
+.post-edicao-acoes>button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}

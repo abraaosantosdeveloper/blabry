@@ -7,7 +7,7 @@ import Toast from '../components/toasts/Toast'
 import useToast from '../hooks/useToast'
 import usePaginado from '../hooks/usePaginado'
 import useUsuarioAtual from '../hooks/useUsuarioAtual'
-import { listarPosts, criarPost, excluirPost } from '../services/posts.service'
+import { listarPosts, criarPost, editarPost, excluirPost } from '../services/posts.service'
 import { mensagemDeErro } from '../services/http'
 import './Feed.css'
 
@@ -27,6 +27,13 @@ function Feed() {
     const atualizarPost = useCallback((id, campos) => {
         setItens((atuais) => atuais.map((p) => (p.id === id ? { ...p, ...campos } : p)))
     }, [setItens])
+
+    /** Substitui o post pelo que o servidor devolveu já normalizado. */
+    async function editar(id, texto) {
+        const atualizado = await editarPost(id, texto)
+        setItens((atuais) => atuais.map((p) => (p.id === id ? atualizado : p)))
+        mostrarToast('Blab atualizado.', 'sucesso')
+    }
 
     async function excluir(id) {
         await excluirPost(id)
@@ -59,6 +66,7 @@ function Feed() {
                         post={post}
                         autorAtual={usuario}
                         aoAtualizar={atualizarPost}
+                        aoEditar={editar}
                         aoExcluir={excluir}
                         aoErro={mostrarToast}
                     />
