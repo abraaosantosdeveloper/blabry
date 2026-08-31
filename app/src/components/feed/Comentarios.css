@@ -1,25 +1,57 @@
+/* A linha vertical nasce alinhada ao centro do avatar do post (44px / 2 = 22px)
+   e desce ligando a publicação aos seus comentários — o mesmo recurso visual
+   do X e do YouTube para indicar que um bloco pertence a outro.
+
+   --recuo é a distância entre a linha e o conteúdo; --afastamento é a folga
+   que o traço curvo deixa antes de tocar o avatar. Os dois vivem aqui para
+   que a curva de cada comentário se calcule a partir deles. */
 .comentarios {
+    --recuo: clamp(16px, 4.5vw, 22px);
+    --afastamento: 6px;
+
+    position: relative;
     margin-top: 14px;
-    padding-top: 12px;
-    border-top: 1px solid var(--borda);
+    margin-left: 21px;
+    padding-left: var(--recuo);
+    border-left: 1px solid var(--borda);
 }
 
 .comentarios-lista {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
+    padding-top: 4px;
 }
 
 .comentario {
     display: flex;
+    align-items: flex-start;
     gap: 10px;
     min-width: 0;
 }
 
-.comentario>a {
+/* Curva que ramifica da linha vertical até perto do avatar do comentário.
+   É desenhada com duas bordas de um retângulo invisível e um raio no canto
+   inferior esquerdo — o mesmo "└" arredondado do YouTube. A margem à direita
+   garante que o traço não encoste na foto. */
+.comentario-avatar {
+    position: relative;
     display: flex;
     flex-shrink: 0;
+}
+
+.comentario-avatar::before {
+    content: '';
+    position: absolute;
+    right: 100%;
+    bottom: 50%;
+    margin-right: var(--afastamento);
+    width: calc(var(--recuo) - var(--afastamento));
+    height: 15px;
+    border-left: 1px solid var(--borda);
+    border-bottom: 1px solid var(--borda);
+    border-bottom-left-radius: 10px;
 }
 
 .comentario-corpo {
@@ -46,12 +78,14 @@
     text-decoration: underline;
 }
 
-.comentario-cabecalho>span {
+.comentario-cabecalho>span,
+.comentario-cabecalho>time {
     font-size: .6875rem;
     color: var(--texto-suave);
 }
 
 .comentario-texto {
+    margin-top: 2px;
     font-size: .8125rem;
     line-height: 1.5;
     color: var(--texto-medio);
@@ -59,7 +93,7 @@
 }
 
 .comentarios-mais {
-    margin-top: 10px;
+    margin-top: 12px;
     padding: 6px 0;
     border: none;
     background: none;
@@ -69,11 +103,14 @@
     cursor: pointer;
 }
 
+/* ---------- Campo de novo comentário ---------- */
+
 .comentario-form {
     display: flex;
     align-items: center;
     gap: 8px;
     margin-top: 14px;
+    padding-bottom: 2px;
 }
 
 .comentario-form>input {
@@ -86,6 +123,10 @@
     font-size: .8125rem;
     color: var(--texto);
     background: none;
+}
+
+.comentario-form>input::placeholder {
+    color: var(--texto-fraco);
 }
 
 .comentario-form>input:focus {
@@ -105,6 +146,72 @@
 }
 
 .comentario-form>button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+/* ---------- Marca de edição e edição no lugar ---------- */
+
+.comentario-editado {
+    font-size: .6875rem;
+    color: var(--texto-fraco);
+    font-style: italic;
+    cursor: help;
+}
+
+.comentario-edicao {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.comentario-edicao>input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--acento);
+    border-radius: 8px;
+    outline: none;
+    background: none;
+    color: var(--texto);
+    font-size: .8125rem;
+    font-family: inherit;
+}
+
+.comentario-erro {
+    font-size: .6875rem;
+    line-height: 1.4;
+    color: var(--perigo);
+}
+
+.comentario-edicao-acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.comentario-edicao-acoes>button {
+    padding: 6px 14px;
+    border: 1px solid var(--acento);
+    border-radius: 999px;
+    background-color: var(--acento);
+    color: var(--acento-contraste);
+    font-size: .75rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.comentario-edicao-acoes>button.neutro {
+    background: none;
+    color: var(--texto-medio);
+    border-color: var(--borda);
+}
+
+.comentario-edicao-acoes>button.neutro:hover {
+    background-color: var(--superficie-2);
+}
+
+.comentario-edicao-acoes>button:disabled {
     opacity: .45;
     cursor: not-allowed;
 }

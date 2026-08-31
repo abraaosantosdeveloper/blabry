@@ -7,7 +7,7 @@ import Toast from '../components/toasts/Toast'
 import useToast from '../hooks/useToast'
 import usePaginado from '../hooks/usePaginado'
 import useUsuarioAtual from '../hooks/useUsuarioAtual'
-import { listarPosts, criarPost } from '../services/posts.service'
+import { listarPosts, criarPost, excluirPost } from '../services/posts.service'
 import { mensagemDeErro } from '../services/http'
 import './Feed.css'
 
@@ -27,6 +27,12 @@ function Feed() {
     const atualizarPost = useCallback((id, campos) => {
         setItens((atuais) => atuais.map((p) => (p.id === id ? { ...p, ...campos } : p)))
     }, [setItens])
+
+    async function excluir(id) {
+        await excluirPost(id)
+        setItens((atuais) => atuais.filter((p) => p.id !== id))
+        mostrarToast('Blab excluído.', 'sucesso')
+    }
 
     async function publicar(texto) {
         const novo = await criarPost(texto)
@@ -53,6 +59,7 @@ function Feed() {
                         post={post}
                         autorAtual={usuario}
                         aoAtualizar={atualizarPost}
+                        aoExcluir={excluir}
                         aoErro={mostrarToast}
                     />
                 ))}

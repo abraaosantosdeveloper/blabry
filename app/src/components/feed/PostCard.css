@@ -37,6 +37,7 @@
 
 .post-quando {
     margin-left: auto;
+    padding-left: 8px;
     font-size: .6875rem;
     color: var(--texto-fraco);
     flex-shrink: 0;

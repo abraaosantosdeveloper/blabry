@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Avatar from '../common/Avatar'
 import Comentarios from './Comentarios'
+import MenuContexto from '../common/MenuContexto'
+import ConfirmarModal from '../modals/ConfirmarModal'
+import TrashIcon from '../../assets/icons/trash.svg?react'
 import { alternarCurtida } from '../../services/posts.service'
 import { mensagemDeErro } from '../../services/http'
 import './PostCard.css'
@@ -37,10 +40,15 @@ const quando = (iso) => {
  * exibidos são os que o backend devolve, nunca calculados localmente,
  * exceto pela atualização otimista enquanto a requisição está em voo.
  */
-function PostCard({ post, autorAtual, aoAtualizar, aoErro }) {
+function PostCard({ post, autorAtual, aoAtualizar, aoExcluir, aoErro }) {
     const { id, autor, texto, criadoEm, curtidas = 0, comentarios = 0, curtido = false } = post
     const [ocupado, setOcupado] = useState(false)
     const [comentariosAbertos, setComentariosAbertos] = useState(false)
+    const [confirmandoExclusao, setConfirmandoExclusao] = useState(false)
+
+    /* O alias é único, então comparar com o do usuário autenticado basta.
+       Se o @ um dia virar editável, troque por um campo vindo do servidor. */
+    const souAutor = Boolean(autorAtual?.alias) && autorAtual.alias === autor.alias
 
     async function curtir() {
         if (ocupado) return
@@ -77,6 +85,20 @@ function PostCard({ post, autorAtual, aoAtualizar, aoErro }) {
                 </div>
 
                 {criadoEm && <time className="post-quando" dateTime={criadoEm}>{quando(criadoEm)}</time>}
+
+                {souAutor && (
+                    <MenuContexto
+                        rotulo="Ações da publicação"
+                        itens={[
+                            {
+                                rotulo: 'Excluir',
+                                Icone: TrashIcon,
+                                perigo: true,
+                                aoClicar: () => setConfirmandoExclusao(true),
+                            },
+                        ]}
+                    />
+                )}
             </header>
 
             <p className="post-texto">{texto}</p>
@@ -105,6 +127,23 @@ function PostCard({ post, autorAtual, aoAtualizar, aoErro }) {
                     {comentarios > 0 && <span>{comentarios}</span>}
                 </button>
             </footer>
+
+            <ConfirmarModal
+                aberto={confirmandoExclusao}
+                aoFechar={() => setConfirmandoExclusao(false)}
+                titulo="Excluir publicação"
+                mensagem="Esta publicação, suas curtidas e seus comentários serão removidos. Não é possível desfazer."
+                rotuloConfirmar="Excluir"
+                aoConfirmar={async () => {
+                    try {
+                        await aoExcluir?.(id)
+                        setConfirmandoExclusao(false)
+                    } catch (err) {
+                        setConfirmandoExclusao(false)
+                        aoErro?.(mensagemDeErro(err))
+                    }
+                }}
+            />
 
             {comentariosAbertos && (
                 <Comentarios

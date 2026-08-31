@@ -1,9 +1,11 @@
-import { useCallback, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useCallback, useRef, useState } from 'react'
 import Avatar from '../common/Avatar'
 import EstadoLista from '../common/EstadoLista'
+import EmojiPicker, { EmojiIcon } from '../common/EmojiPicker'
+import ConfirmarModal from '../modals/ConfirmarModal'
+import Comentario from './Comentario'
 import usePaginado from '../../hooks/usePaginado'
-import { listarComentarios, comentar } from '../../services/posts.service'
+import { listarComentarios, comentar, editarComentario, excluirComentario } from '../../services/posts.service'
 import { mensagemDeErro } from '../../services/http'
 import './Comentarios.css'
 
@@ -12,6 +14,26 @@ const LIMITE = 280
 function Comentarios({ postId, autorAtual, aoContarMudar, aoErro }) {
     const [texto, setTexto] = useState('')
     const [enviando, setEnviando] = useState(false)
+    const [excluindo, setExcluindo] = useState(null)
+    const [emojisAbertos, setEmojisAbertos] = useState(false)
+    const campoRef = useRef(null)
+    const emojiBotaoRef = useRef(null)
+
+    /** Insere na posição do cursor, não no fim do texto. */
+    function inserirEmoji(emoji) {
+        const campo = campoRef.current
+        const inicio = campo?.selectionStart ?? texto.length
+        const fim = campo?.selectionEnd ?? texto.length
+
+        setTexto(texto.slice(0, inicio) + emoji + texto.slice(fim))
+        setEmojisAbertos(false)
+
+        requestAnimationFrame(() => {
+            campo?.focus()
+            const posicao = inicio + emoji.length
+            campo?.setSelectionRange(posicao, posicao)
+        })
+    }
 
     const buscar = useCallback(
         ({ pagina, signal }) => listarComentarios(postId, { pagina, signal }),
@@ -41,31 +63,46 @@ function Comentarios({ postId, autorAtual, aoContarMudar, aoErro }) {
         }
     }
 
+    /** Substitui o comentário pelo que o servidor devolveu já normalizado. */
+    async function editar(comentarioId, texto) {
+        const atualizado = await editarComentario(postId, comentarioId, texto)
+        setItens((atuais) => atuais.map((c) => (c.id === comentarioId ? atualizado : c)))
+    }
+
+    async function excluir(comentarioId) {
+        try {
+            await excluirComentario(postId, comentarioId)
+            setItens((atuais) => atuais.filter((c) => c.id !== comentarioId))
+            aoContarMudar?.(Math.max(0, total - 1))
+        } catch (err) {
+            aoErro?.(mensagemDeErro(err))
+        } finally {
+            setExcluindo(null)
+        }
+    }
+
+    const souAutor = (c) => Boolean(autorAtual?.alias) && autorAtual.alias === c.autor.alias
+
     return (
         <section className="comentarios">
             <EstadoLista
                 carregando={carregando && comentarios.length === 0}
                 erro={erro}
                 vazio={!carregando && !erro && comentarios.length === 0}
-                mensagemVazio="Seja o primeiro a comentar."
+                mensagemVazio="Nenhum comentário ainda. Seja o primeiro!"
                 aoTentarDeNovo={recarregar}
             />
 
             {comentarios.length > 0 && (
                 <ul className="comentarios-lista">
                     {comentarios.map((c) => (
-                        <li key={c.id} className="comentario">
-                            <Link to={`/perfil/${c.autor.alias}`}>
-                                <Avatar src={c.autor.fotoUrl} nome={c.autor.nome} tamanho={30} />
-                            </Link>
-                            <div className="comentario-corpo">
-                                <p className="comentario-cabecalho">
-                                    <Link to={`/perfil/${c.autor.alias}`}>{c.autor.nome}</Link>
-                                    <span>@{c.autor.alias}</span>
-                                </p>
-                                <p className="comentario-texto">{c.texto}</p>
-                            </div>
-                        </li>
+                        <Comentario
+                            key={c.id}
+                            comentario={c}
+                            souAutor={souAutor(c)}
+                            aoEditar={editar}
+                            aoExcluir={setExcluindo}
+                        />
                     ))}
                 </ul>
             )}
@@ -81,16 +118,46 @@ function Comentarios({ postId, autorAtual, aoContarMudar, aoErro }) {
                 <label htmlFor={`comentar-${postId}`} className="sr-only">Escrever comentário</label>
                 <input
                     id={`comentar-${postId}`}
+                    ref={campoRef}
                     type="text"
                     placeholder="Escreva um comentário..."
                     value={texto}
                     maxLength={LIMITE}
                     onChange={(e) => setTexto(e.target.value)}
                 />
+
+                <button
+                    type="button"
+                    ref={emojiBotaoRef}
+                    className="emoji-gatilho"
+                    onClick={() => setEmojisAbertos((a) => !a)}
+                    aria-label="Inserir emoji"
+                    aria-expanded={emojisAbertos}
+                >
+                    <EmojiIcon aria-hidden="true" />
+                </button>
+
+                {emojisAbertos && (
+                    <EmojiPicker
+                        ancoraRef={emojiBotaoRef}
+                        aoEscolher={inserirEmoji}
+                        aoFechar={() => setEmojisAbertos(false)}
+                    />
+                )}
+
                 <button type="submit" disabled={!texto.trim() || enviando}>
                     {enviando ? '...' : 'Enviar'}
                 </button>
             </form>
+
+            <ConfirmarModal
+                aberto={Boolean(excluindo)}
+                aoFechar={() => setExcluindo(null)}
+                titulo="Excluir comentário"
+                mensagem="Este comentário será removido permanentemente."
+                rotuloConfirmar="Excluir"
+                aoConfirmar={() => excluir(excluindo)}
+            />
         </section>
     )
 }
