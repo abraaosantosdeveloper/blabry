@@ -1,14 +1,16 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import PerfilView from '../components/perfil/PerfilView'
 import EstadoLista from '../components/common/EstadoLista'
 import Toast from '../components/toasts/Toast'
 import useToast from '../hooks/useToast'
+import useUsuarioAtual from '../hooks/useUsuarioAtual'
 import { perfilPorAlias, alternarSeguir } from '../services/usuarios.service'
 import { mensagemDeErro } from '../services/http'
 
 function Perfil() {
     const { alias } = useParams()
+    const usuarioAtual = useUsuarioAtual()
     const [usuario, setUsuario] = useState(null)
     const [carregando, setCarregando] = useState(true)
     const [erro, setErro] = useState(null)
@@ -56,7 +58,10 @@ function Perfil() {
         }
     }
 
-    const botaoSeguir = usuario && (
+    /* O servidor devolve seguindoEste como null no próprio perfil — a
+       pergunta não faz sentido ali. Serve como segunda barreira caso o
+       redirecionamento acima não tenha acontecido. */
+    const botaoSeguir = usuario && usuario.seguindoEste !== null && (
         <button
             type="button"
             className={`perfil-acao ${usuario.seguindoEste ? 'secundaria' : ''}`}
@@ -66,6 +71,18 @@ function Perfil() {
             {usuario.seguindoEste ? 'Seguindo' : 'Seguir'}
         </button>
     )
+
+    /* Chegar ao próprio perfil pela URL pública é normal — basta clicar no
+       seu nome em um post. Redirecionar para /perfil/me evita uma segunda
+       tela do mesmo perfil, sem os lápis de edição e com um botão de seguir
+       que a API recusaria.
+
+       A comparação espera o alias carregar: no primeiro render ele pode
+       estar vazio, e redirecionar aí levaria todo mundo para o próprio
+       perfil. */
+    if (usuarioAtual?.alias && usuarioAtual.alias === alias) {
+        return <Navigate to="/perfil/me" replace />
+    }
 
     return (
         <>
