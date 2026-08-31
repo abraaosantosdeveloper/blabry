@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import PerfilView from '../components/perfil/PerfilView'
+import PostsDoPerfil from '../components/perfil/PostsDoPerfil'
 import ContaModal from '../components/modals/ContaModal'
 import ExcluirContaModal from '../components/modals/ExcluirContaModal'
 import EditarCampoModal from '../components/modals/EditarCampoModal'
@@ -8,7 +9,13 @@ import EstadoLista from '../components/common/EstadoLista'
 import Toast from '../components/toasts/Toast'
 import useToast from '../hooks/useToast'
 import useTema from '../hooks/useTema'
-import { meuPerfil, atualizarPerfil, enviarFoto } from '../services/usuarios.service'
+import useUsuarioAtual from '../hooks/useUsuarioAtual'
+import {
+    meuPerfil, atualizarPerfil, enviarFoto,
+    solicitarCodigoExclusao, excluirConta,
+} from '../services/usuarios.service'
+import { mensagemDeErro } from '../services/http'
+import { useNavigate } from 'react-router-dom'
 
 function MeuPerfil() {
     const [usuario, setUsuario] = useState(null)
@@ -20,6 +27,8 @@ function MeuPerfil() {
     const [fotoAberta, setFotoAberta] = useState(false)
     const { toast, mostrarToast } = useToast()
     const { escuro, alternar } = useTema()
+    const usuarioAtual = useUsuarioAtual()
+    const navigate = useNavigate()
 
     const carregar = useCallback(() => {
         const controller = new AbortController()
@@ -45,6 +54,7 @@ function MeuPerfil() {
             )}
 
             {usuario && (
+                <>
                 <PerfilView
                     usuario={usuario}
                     proprio
@@ -55,6 +65,17 @@ function MeuPerfil() {
                     aoAlternarTema={alternar}
                     aoAbrirOpcoes={() => setOpcoesAbertas(true)}
                 />
+
+                {/* Mesmo componente do perfil de terceiros. O que muda —
+                    poder editar ou excluir — é decidido dentro do PostCard,
+                    comparando o autor da publicação com o usuário do token,
+                    e não por uma variante desta tela. */}
+                <PostsDoPerfil
+                    alias={usuario.alias}
+                    autorAtual={usuarioAtual ?? usuario}
+                    aoErro={mostrarToast}
+                />
+                </>
             )}
 
             <FotoPerfilModal
@@ -87,9 +108,15 @@ function MeuPerfil() {
             <ContaModal
                 aberto={opcoesAbertas}
                 aoFechar={() => setOpcoesAbertas(false)}
-                aoAvisar={(mensagem) => {
+                aoAlterarSenha={() => {
                     setOpcoesAbertas(false)
-                    mostrarToast(mensagem)
+                    /* A troca de senha reaproveita a mesma tela pública de
+                       recuperação: o fluxo é idêntico (código por e-mail e
+                       nova senha), e manter duas telas para a mesma operação
+                       seria manter duas chances de divergirem.
+
+                       O e-mail segue pelo `state`, não pela URL. */
+                    navigate('/recuperar-senha', { state: { email: usuario?.email } })
                 }}
                 aoExcluirConta={() => {
                     setOpcoesAbertas(false)
@@ -101,10 +128,22 @@ function MeuPerfil() {
                 aberto={exclusaoAberta}
                 aoFechar={() => setExclusaoAberta(false)}
                 email={usuario?.email}
-                aoConfirmar={() => {
-                    // TODO: DELETE /users/me quando a rota existir.
-                    setExclusaoAberta(false)
-                    mostrarToast('A exclusão de conta ainda está em desenvolvimento.')
+                /* O modal só exibe; quem fala com a API é a página. Assim o
+                   componente continua reutilizável e testável sem rede. */
+                aoPedirCodigo={solicitarCodigoExclusao}
+                aoConfirmar={async ({ codigo }) => {
+                    try {
+                        await excluirConta(codigo)
+
+                        /* A sessão morre junto com a conta: o token continuaria
+                           válido pela assinatura até expirar, mas não há mais
+                           conta por trás dele. Limpar aqui evita uma tela
+                           autenticada apontando para um usuário inexistente. */
+                        localStorage.clear()
+                        navigate('/', { replace: true })
+                    } catch (err) {
+                        mostrarToast(mensagemDeErro(err))
+                    }
                 }}
             />
         </>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Modal from './Modal'
+import CampoCodigo, { TAMANHO_CODIGO } from '../verificacao/CampoCodigo'
 import DangerIcon from '../../assets/icons/danger.svg?react'
 import './ExcluirContaModal.css'
 
@@ -15,30 +16,64 @@ const CONSEQUENCIAS = [
  * Exclusão de conta em três etapas.
  *
  * A fricção é deliberada: a ação é irreversível, então o usuário precisa
- * demonstrar intenção — entender o efeito, provar identidade e digitar a
- * palavra de confirmação. Nenhuma etapa pode ser pulada.
+ * demonstrar intenção — entender o efeito, provar que está de fato ali, e
+ * digitar a palavra de confirmação. Nenhuma etapa pode ser pulada.
+ *
+ * A etapa do meio deixou de pedir e-mail e senha e passou a pedir um código
+ * enviado por e-mail. O motivo: senha é algo que o navegador já preenche
+ * sozinho e que fica salva em um computador deixado aberto — ela não
+ * distingue o dono de quem se sentou na cadeira dele. O código exige acesso
+ * à caixa de entrada no momento da ação.
+ *
+ * @param {(dados: {codigo: string}) => Promise<void>} aoConfirmar
+ * @param {() => Promise<{email: string}>} aoPedirCodigo devolve o e-mail
+ *   mascarado para exibição
  */
-function ExcluirContaModal({ aberto, aoFechar, email, aoConfirmar }) {
+function ExcluirContaModal({ aberto, aoFechar, email, aoConfirmar, aoPedirCodigo }) {
     const [etapa, setEtapa] = useState(0)
-    const [senha, setSenha] = useState('')
-    const [emailDigitado, setEmailDigitado] = useState('')
+    const [codigo, setCodigo] = useState('')
     const [palavra, setPalavra] = useState('')
     const [enviando, setEnviando] = useState(false)
+    const [pedindoCodigo, setPedindoCodigo] = useState(false)
+    // E-mail mascarado devolvido pelo servidor (a*****@gmail.com).
+    const [destino, setDestino] = useState('')
+    const [erroCodigo, setErroCodigo] = useState(null)
 
+    /* Tudo volta ao início quando o modal fecha. Sem isso, reabrir traria o
+       código já digitado e a etapa em que se parou — estado antigo em uma
+       ação irreversível é exatamente o que não se quer. */
     useEffect(() => {
         if (aberto) return
-        setEtapa(0); setSenha(''); setEmailDigitado(''); setPalavra(''); setEnviando(false)
+        setEtapa(0); setCodigo(''); setPalavra(''); setEnviando(false)
+        setPedindoCodigo(false); setDestino(''); setErroCodigo(null)
     }, [aberto])
 
-    const emailConfere = emailDigitado.trim().toLowerCase() === String(email ?? '').toLowerCase()
-    const podeAvancar = etapa === 1 ? emailConfere && senha.length > 0 : true
+    const podeAvancar = etapa === 1 ? codigo.length === TAMANHO_CODIGO : true
     const podeExcluir = palavra === PALAVRA && !enviando
+
+    /** Etapa 0 → 1: pede o código antes de mostrar o campo. */
+    async function avancarParaCodigo() {
+        if (pedindoCodigo) return
+        setPedindoCodigo(true)
+        setErroCodigo(null)
+        try {
+            const dados = await aoPedirCodigo?.()
+            setDestino(dados?.email ?? '')
+            setEtapa(1)
+        } catch (err) {
+            // O erro fica dentro do modal, e não em um toast atrás dele:
+            // o usuário precisa vê-lo sem fechar o fluxo.
+            setErroCodigo(err?.message || 'Não foi possível enviar o código.')
+        } finally {
+            setPedindoCodigo(false)
+        }
+    }
 
     async function excluir() {
         if (!podeExcluir) return
         setEnviando(true)
         try {
-            await aoConfirmar?.({ email: emailDigitado.trim(), senha })
+            await aoConfirmar?.({ codigo })
         } finally {
             setEnviando(false)
         }
@@ -63,40 +98,32 @@ function ExcluirContaModal({ aberto, aoFechar, email, aoConfirmar }) {
                         <ul className="excluir-lista">
                             {CONSEQUENCIAS.map((item) => <li key={item}>{item}</li>)}
                         </ul>
+
+                        <p className="excluir-ajuda">
+                            No próximo passo enviaremos um código para o e-mail da conta.
+                        </p>
+
+                        {erroCodigo && <p className="excluir-aviso" role="alert">{erroCodigo}</p>}
                     </>
                 )}
 
                 {etapa === 1 && (
                     <>
                         <p className="excluir-texto">
-                            Confirme que é você digitando o e-mail e a senha da conta.
+                            Enviamos um código de {TAMANHO_CODIGO} dígitos para{' '}
+                            <strong>{destino || email}</strong>. Ele vale por 15 minutos.
                         </p>
 
-                        <label className="excluir-campo">
-                            <span>E-mail da conta</span>
-                            <input
-                                type="email"
-                                value={emailDigitado}
-                                onChange={(e) => setEmailDigitado(e.target.value)}
-                                autoComplete="off"
-                                placeholder="seu@email.com"
-                            />
-                        </label>
+                        <CampoCodigo
+                            valor={codigo}
+                            aoMudar={setCodigo}
+                            desabilitado={enviando}
+                            id="excluir-codigo"
+                        />
 
-                        <label className="excluir-campo">
-                            <span>Senha</span>
-                            <input
-                                type="password"
-                                value={senha}
-                                onChange={(e) => setSenha(e.target.value)}
-                                autoComplete="current-password"
-                                placeholder="Sua senha"
-                            />
-                        </label>
-
-                        {emailDigitado && !emailConfere && (
-                            <p className="excluir-aviso">O e-mail não confere com o da conta.</p>
-                        )}
+                        <p className="excluir-ajuda">
+                            Confira a caixa de spam se o código não aparecer.
+                        </p>
                     </>
                 )}
 
@@ -136,10 +163,12 @@ function ExcluirContaModal({ aberto, aoFechar, email, aoConfirmar }) {
                         <button
                             type="button"
                             className="excluir-botao"
-                            onClick={() => setEtapa((e) => e + 1)}
-                            disabled={!podeAvancar}
+                            /* Da etapa 0 para a 1 o código precisa ser pedido
+                               ao servidor antes; da 1 para a 2 basta avançar. */
+                            onClick={etapa === 0 ? avancarParaCodigo : () => setEtapa((e) => e + 1)}
+                            disabled={!podeAvancar || pedindoCodigo}
                         >
-                            Continuar
+                            {pedindoCodigo ? 'Enviando código...' : 'Continuar'}
                         </button>
                     ) : (
                         <button

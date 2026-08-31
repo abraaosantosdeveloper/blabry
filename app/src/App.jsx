@@ -5,7 +5,11 @@ import Chat from './pages/Chat';
 import Feed from './pages/Feed';
 import MeuPerfil from './pages/MeuPerfil';
 import Perfil from './pages/Perfil';
+import Post from './pages/Post';
 import EmConstrucao from './pages/EmConstrucao';
+import PoliticaPrivacidade from './pages/PoliticaPrivacidade';
+import VerificarEmail from './pages/VerificarEmail';
+import RecuperarSenha from './pages/RecuperarSenha';
 import AppLayout from './components/layout/AppLayout';
 import ProtectedRoute from './components/protectRoutes/ProtectedRoutes';
 
@@ -14,9 +18,16 @@ function App() {
     <BrowserRouter basename="/blabry">
       <Routes>
         <Route path='/' element={<Login />} />
-        {/* Descomentar depois de implementar */}
-        {/* <Route path='/recuperar-senha' element={<Login />} /> */}
+        {/* Públicas por necessidade: quem precisa confirmar o e-mail ou
+            recuperar a senha, por definição, ainda não tem sessão. */}
+        <Route path='/verificar-email' element={<VerificarEmail />} />
+        <Route path='/recuperar-senha' element={<RecuperarSenha />} />
         <Route path='/nova-conta' element={<Cadastro />} />
+
+        {/* Pública de propósito: o cadastro exige aceitar a política, e
+            exigir login para ler o que se está aceitando seria um ciclo
+            impossível de fechar. Fica fora do ProtectedRoute. */}
+        <Route path='/politica-de-privacidade' element={<PoliticaPrivacidade />} />
 
         {/* Rotas autenticadas — compartilham a casca da aplicação */}
         <Route element={
@@ -27,6 +38,9 @@ function App() {
           <Route path='/feed' element={<Feed />} />
           <Route path='/conversas' element={<EmConstrucao />} />
           <Route path='/chat/:id' element={<Chat />} />
+          {/* Endereço próprio da publicação: compartilhável e recarregável.
+              Fica dentro da casca autenticada porque a API exige token. */}
+          <Route path='/post/:id' element={<Post />} />
           <Route path='/perfil/me' element={<MeuPerfil />} />
           <Route path='/perfil/:alias' element={<Perfil />} />
           <Route path='*' element={<EmConstrucao />} />
