@@ -199,11 +199,30 @@ function PoliticaPrivacidade() {
 
             <Secao id="retencao" titulo="Por quanto tempo guardamos">
                 <p>
-                    Enquanto sua conta existir. Ao excluí-la, os dados de cadastro e o
-                    conteúdo publicado deixam de ser exibidos e são removidos dos nossos
-                    registros ativos. Cópias residuais podem permanecer por curto período
-                    em backups automáticos dos serviços de infraestrutura até serem
-                    sobrescritas pelo ciclo normal desses backups.
+                    Enquanto sua conta existir. Ao excluí-la, acontecem duas coisas.
+                </p>
+                <p>
+                    Suas publicações, comentários e curtidas são <strong>apagados</strong> do
+                    banco de dados. Não ficam ocultos: deixam de existir.
+                </p>
+                <p>
+                    Seus dados de cadastro são <strong>anonimizados</strong>. Nome, e-mail,
+                    data de nascimento, nacionalidade, bio e foto são esvaziados, e o
+                    registro que resta não permite identificar você — o que a Lei Geral de
+                    Proteção de Dados, no artigo 12, trata como dado fora do seu alcance.
+                    Seu e-mail e seu @ voltam a ficar livres, então você pode se cadastrar
+                    de novo com eles se quiser.
+                </p>
+                <p>
+                    Optamos por anonimizar em vez de apagar a linha por uma razão concreta:
+                    apagá-la removeria em cascata as curtidas que você deu em publicações de
+                    outras pessoas, e os contadores delas cairiam sem que ninguém tivesse
+                    pedido. Encerrar a sua conta não deve alterar o conteúdo de terceiros.
+                </p>
+                <p>
+                    Cópias residuais podem permanecer por curto período em backups
+                    automáticos dos serviços de infraestrutura até serem sobrescritas pelo
+                    ciclo normal desses backups.
                 </p>
             </Secao>
 
