@@ -14,7 +14,7 @@ export const buscarUsuarios = ({ q, pagina = 1, limite = 8, signal } = {}) =>
 
 /** PATCH /users/me — atualiza campos do próprio perfil. */
 export const atualizarPerfil = (campos) =>
-    request('/users/me', campos, { metodo: 'PATCH', auth: true })
+    request('/users/me', campos, { metodo: 'PATCH', auth: true, mantemSessao: true })
 
 /** POST|DELETE /users/:alias/follow */
 export const alternarSeguir = (alias, seguindo) =>

@@ -22,6 +22,42 @@
     flex: 1 1 200px;
 }
 
+.perfil-avatar-botao {
+    position: relative;
+    display: flex;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.perfil-avatar-camera {
+    position: absolute;
+    right: -2px;
+    bottom: -2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid var(--superficie);
+    background-color: var(--acento);
+    color: var(--acento-contraste);
+    transition: background-color .15s;
+}
+
+.perfil-avatar-camera>svg {
+    width: 12px;
+    height: 12px;
+}
+
+.perfil-avatar-botao:hover .perfil-avatar-camera {
+    background-color: var(--acento-hover);
+}
+
 .perfil-nomes {
     min-width: 0;
 }

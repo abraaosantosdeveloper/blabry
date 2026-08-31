@@ -1,0 +1,139 @@
+.editar {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.editar-titulo {
+    font-size: clamp(.9375rem, 4vw, 1.0625rem);
+    font-weight: 700;
+    color: var(--texto);
+}
+
+.editar-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.editar-campo>span {
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--texto-medio);
+}
+
+.editar-campo input,
+.editar-campo select,
+.editar-campo textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid var(--borda);
+    border-radius: 8px;
+    outline: 0;
+    background: none;
+    color: var(--texto);
+    font-size: .875rem;
+    font-weight: 500;
+    font-family: inherit;
+    transition: border-color .2s;
+}
+
+.editar-campo input,
+.editar-campo select {
+    height: 2.5rem;
+}
+
+.editar-campo textarea {
+    resize: vertical;
+    min-height: 5.5rem;
+    line-height: 1.5;
+}
+
+.editar-campo input:focus,
+.editar-campo select:focus,
+.editar-campo textarea:focus {
+    border-color: var(--acento-foco);
+}
+
+.editar-campo input::placeholder,
+.editar-campo textarea::placeholder {
+    color: var(--texto-fraco);
+}
+
+.editar-contador {
+    align-self: flex-end;
+    margin-top: -8px;
+    font-size: .6875rem;
+    color: var(--texto-suave);
+    font-variant-numeric: tabular-nums;
+}
+
+.editar-contador.excedido {
+    color: var(--perigo);
+    font-weight: 600;
+}
+
+.editar-ajuda {
+    font-size: .6875rem;
+    line-height: 1.45;
+    color: var(--texto-suave);
+}
+
+.editar-erro {
+    padding: 10px 12px;
+    border: 1px solid var(--perigo-borda);
+    border-radius: 8px;
+    background-color: var(--perigo-fundo);
+    color: var(--perigo);
+    font-size: .75rem;
+    line-height: 1.45;
+}
+
+.editar-acoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+}
+
+.editar-botao {
+    padding: 10px 18px;
+    border: 1px solid var(--acento);
+    border-radius: 9px;
+    background-color: var(--acento);
+    color: var(--acento-contraste);
+    font-size: clamp(.8125rem, 3.4vw, .875rem);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .15s, opacity .15s;
+}
+
+.editar-botao:hover:not(:disabled) {
+    background-color: var(--acento-hover);
+}
+
+.editar-botao:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+.editar-botao.neutro {
+    background: none;
+    color: var(--texto-medio);
+    border-color: var(--borda);
+}
+
+.editar-botao.neutro:hover {
+    background-color: var(--superficie-2);
+}
+
+@media (max-width: 360px) {
+    .editar-acoes {
+        flex-direction: column-reverse;
+    }
+
+    .editar-botao {
+        width: 100%;
+    }
+}

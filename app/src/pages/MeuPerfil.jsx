@@ -2,11 +2,13 @@ import { useCallback, useEffect, useState } from 'react'
 import PerfilView from '../components/perfil/PerfilView'
 import ContaModal from '../components/modals/ContaModal'
 import ExcluirContaModal from '../components/modals/ExcluirContaModal'
+import EditarCampoModal from '../components/modals/EditarCampoModal'
+import FotoPerfilModal from '../components/modals/FotoPerfilModal'
 import EstadoLista from '../components/common/EstadoLista'
 import Toast from '../components/toasts/Toast'
 import useToast from '../hooks/useToast'
 import useTema from '../hooks/useTema'
-import { meuPerfil } from '../services/usuarios.service'
+import { meuPerfil, atualizarPerfil, enviarFoto } from '../services/usuarios.service'
 
 function MeuPerfil() {
     const [usuario, setUsuario] = useState(null)
@@ -14,6 +16,8 @@ function MeuPerfil() {
     const [erro, setErro] = useState(null)
     const [opcoesAbertas, setOpcoesAbertas] = useState(false)
     const [exclusaoAberta, setExclusaoAberta] = useState(false)
+    const [campoEditando, setCampoEditando] = useState(null)
+    const [fotoAberta, setFotoAberta] = useState(false)
     const { toast, mostrarToast } = useToast()
     const { escuro, alternar } = useTema()
 
@@ -45,12 +49,40 @@ function MeuPerfil() {
                     usuario={usuario}
                     proprio
                     titulo="Meu Perfil"
-                    aoEditar={(campo) => mostrarToast(`A edição de ${campo} ainda está em desenvolvimento.`)}
+                    aoEditar={setCampoEditando}
+                    aoEditarFoto={() => setFotoAberta(true)}
                     temaEscuro={escuro}
                     aoAlternarTema={alternar}
                     aoAbrirOpcoes={() => setOpcoesAbertas(true)}
                 />
             )}
+
+            <FotoPerfilModal
+                aberto={fotoAberta}
+                aoFechar={() => setFotoAberta(false)}
+                aoSalvar={async (blob) => {
+                    const { fotoUrl } = await enviarFoto(blob)
+                    setUsuario((atual) => ({ ...atual, fotoUrl }))
+                    localStorage.setItem('fotoUrl', fotoUrl)
+                    setFotoAberta(false)
+                    mostrarToast('Foto atualizada!', 'sucesso')
+                }}
+            />
+
+            <EditarCampoModal
+                aberto={Boolean(campoEditando)}
+                campo={campoEditando}
+                usuario={usuario}
+                aoFechar={() => setCampoEditando(null)}
+                aoSalvar={async (corpo) => {
+                    // O servidor devolve o perfil já normalizado — é ele que
+                    // vira o novo estado, não o que foi digitado.
+                    const atualizado = await atualizarPerfil(corpo)
+                    setUsuario(atualizado)
+                    setCampoEditando(null)
+                    mostrarToast('Perfil atualizado!', 'sucesso')
+                }}
+            />
 
             <ContaModal
                 aberto={opcoesAbertas}

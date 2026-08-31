@@ -8,6 +8,14 @@ const Chevron = (props) => (
     </svg>
 )
 
+const CameraIcon = (props) => (
+    <svg viewBox="0 0 24 24" fill="none" {...props}>
+        <path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2.2l1.1-2h8.4l1.1 2h2.2A1.5 1.5 0 0 1 21 8.5v9A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5v-9Z"
+            stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+        <circle cx="12" cy="13" r="3.4" stroke="currentColor" strokeWidth="1.8" />
+    </svg>
+)
+
 const TemaIcon = (props) => (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
         <path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
@@ -47,7 +55,7 @@ function Campo({ rotulo, valor, editavel, aoEditar }) {
  * Visualização de perfil compartilhada entre o perfil próprio e o público.
  * `proprio` liga os controles de edição e o bloco de configurações.
  */
-function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoAbrirOpcoes, aoAlternarTema, temaEscuro = false, acaoPrincipal }) {
+function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, aoAbrirOpcoes, aoAlternarTema, temaEscuro = false, acaoPrincipal }) {
     const {
         nome, alias, fotoUrl, bio, email, nascimento, nacionalidade,
         seguindo = 0, seguidores = 0, desde,
@@ -61,7 +69,21 @@ function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoAbrirOpcoes,
 
             <section className="perfil-topo">
                 <div className="perfil-identidade">
-                    <Avatar src={fotoUrl} nome={nome} tamanho={64} />
+                    {proprio ? (
+                        <button
+                            type="button"
+                            className="perfil-avatar-botao"
+                            onClick={aoEditarFoto}
+                            aria-label="Alterar foto de perfil"
+                        >
+                            <Avatar src={fotoUrl} nome={nome} tamanho={64} />
+                            <span className="perfil-avatar-camera" aria-hidden="true">
+                                <CameraIcon />
+                            </span>
+                        </button>
+                    ) : (
+                        <Avatar src={fotoUrl} nome={nome} tamanho={64} />
+                    )}
 
                     <div className="perfil-nomes">
                         <div className="perfil-nome-linha">
