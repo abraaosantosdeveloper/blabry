@@ -29,9 +29,9 @@ export function query(params = {}) {
  * Requisição única da aplicação.
  * @param {string} rota caminho a partir da raiz da API
  * @param {object} corpo JSON ou FormData
- * @param {{metodo?: string, formData?: boolean, auth?: boolean, signal?: AbortSignal}} opcoes
+ * @param {{metodo?: string, formData?: boolean, auth?: boolean, signal?: AbortSignal, mantemSessao?: boolean}} opcoes
  */
-export async function request(rota, corpo, { metodo, formData = false, auth = false, signal } = {}) {
+export async function request(rota, corpo, { metodo, formData = false, auth = false, signal, mantemSessao = false } = {}) {
     const headers = {}
     if (corpo && !formData) headers['Content-Type'] = 'application/json'
     if (auth) headers.Authorization = `Bearer ${localStorage.getItem('token')}`
@@ -49,7 +49,10 @@ export async function request(rota, corpo, { metodo, formData = false, auth = fa
         throw Object.assign(new Error('Falha de rede'), { status: 0 })
     }
 
-    if (res.status === 401 && auth) {
+    /* 401 normalmente significa token expirado — daí a limpeza da sessão.
+       Mas há rotas em que 401 é uma reautenticação pontual ("informe a senha
+       atual"): ali o token continua válido e derrubar a sessão seria errado. */
+    if (res.status === 401 && auth && !mantemSessao) {
         localStorage.removeItem('token')
         localStorage.removeItem('nome')
     }

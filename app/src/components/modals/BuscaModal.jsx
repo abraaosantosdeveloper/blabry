@@ -1,31 +1,69 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Modal from './Modal'
+import Abas from '../common/Abas'
 import Avatar from '../common/Avatar'
 import EstadoLista from '../common/EstadoLista'
 import Paginacao from '../common/Paginacao'
 import useDebounce from '../../hooks/useDebounce'
 import usePaginado from '../../hooks/usePaginado'
 import { buscarUsuarios } from '../../services/usuarios.service'
+import { buscarPosts } from '../../services/posts.service'
 import MagnifierIcon from '../../assets/icons/magnifier.svg?react'
 import './BuscaModal.css'
 
-const MINIMO = 2
+/* Usuários usa LIKE com prefixo; posts usa índice FULLTEXT, cujo
+   innodb_ft_min_token_size padrão é 3 — palavras menores são ignoradas
+   na indexação e a busca voltaria vazia sem explicação. */
+const MINIMO_POR_ABA = { posts: 3, usuarios: 2 }
+
+const ABAS = [
+    { id: 'posts', rotulo: 'Posts' },
+    { id: 'usuarios', rotulo: 'Usuários' },
+]
+
+const CAMPO_POR_ABA = { posts: 'posts', usuarios: 'usuarios' }
+
+const trecho = (texto, termo, tamanho = 160) => {
+    const conteudo = String(texto ?? '')
+    const posicao = conteudo.toLowerCase().indexOf(termo.toLowerCase())
+    if (posicao <= tamanho / 2) return conteudo.slice(0, tamanho) + (conteudo.length > tamanho ? '…' : '')
+    const inicio = Math.max(0, posicao - tamanho / 2)
+    return '…' + conteudo.slice(inicio, inicio + tamanho) + '…'
+}
 
 function BuscaModal({ aberto, aoFechar }) {
     const [termo, setTermo] = useState('')
-    const termoDebounced = useDebounce(termo.trim(), 400)
-    const ativo = aberto && termoDebounced.length >= MINIMO
+    const [aba, setAba] = useState('posts')
+
+    /* Atalho: digitar "@" salta para Usuários e sai da consulta. O usuário
+       não precisa saber disso — as abas continuam visíveis e clicáveis. */
+    const comArroba = termo.trimStart().startsWith('@')
+    const consulta = (comArroba ? termo.trimStart().slice(1) : termo).trim()
+
+    useEffect(() => {
+        if (comArroba) setAba('usuarios')
+    }, [comArroba])
+
+    const termoDebounced = useDebounce(consulta, 400)
+    const minimo = MINIMO_POR_ABA[aba]
+    const ativo = aberto && termoDebounced.length >= minimo
 
     const buscar = useCallback(
-        ({ pagina, signal }) => buscarUsuarios({ q: termoDebounced, pagina, signal }),
-        [termoDebounced]
+        ({ pagina, signal }) => (aba === 'usuarios'
+            ? buscarUsuarios({ q: termoDebounced, pagina, signal })
+            : buscarPosts({ q: termoDebounced, pagina, signal })),
+        [aba, termoDebounced]
     )
 
     const {
-        itens: usuarios, pagina, totalPaginas, total,
+        itens, pagina, totalPaginas, total,
         carregando, erro, anterior, proxima, recarregar,
-    } = usePaginado(buscar, { campo: 'usuarios', ativo, deps: [termoDebounced] })
+    } = usePaginado(buscar, {
+        campo: CAMPO_POR_ABA[aba],
+        ativo,
+        deps: [aba, termoDebounced],
+    })
 
     const resumo = useMemo(() => {
         if (!ativo || carregando || erro) return null
@@ -34,6 +72,7 @@ function BuscaModal({ aberto, aoFechar }) {
 
     const fechar = useCallback(() => {
         setTermo('')
+        setAba('posts')
         aoFechar()
     }, [aoFechar])
 
@@ -41,11 +80,11 @@ function BuscaModal({ aberto, aoFechar }) {
         <Modal aberto={aberto} aoFechar={fechar} rotulo="Pesquisar">
             <div className="busca-campo">
                 <MagnifierIcon aria-hidden="true" />
-                <label htmlFor="busca-input" className="sr-only">Pesquisar usuários</label>
+                <label htmlFor="busca-input" className="sr-only">Pesquisar</label>
                 <input
                     id="busca-input"
                     type="search"
-                    placeholder="Pesquisar usuários..."
+                    placeholder={aba === 'usuarios' ? 'Nome ou @ do usuário...' : 'Buscar nos blabs...'}
                     value={termo}
                     onChange={(e) => setTermo(e.target.value)}
                     autoFocus
@@ -53,51 +92,76 @@ function BuscaModal({ aberto, aoFechar }) {
                 />
             </div>
 
-            {!ativo && (
-                <p className="busca-dica">
-                    {termo.trim().length === 0
-                        ? 'Digite um nome ou @ para começar.'
-                        : `Digite pelo menos ${MINIMO} caracteres.`}
-                </p>
-            )}
+            <Abas itens={ABAS} ativa={aba} aoTrocar={setAba} rotulo="Tipo de resultado" />
 
-            {ativo && (
-                <>
-                    {resumo && <p className="busca-resumo">{resumo}</p>}
+            <div id={`painel-${aba}`} role="tabpanel" aria-labelledby={`aba-${aba}`}>
+                {!ativo && (
+                    <p className="busca-dica">
+                        {consulta.length === 0
+                            ? (aba === 'usuarios'
+                                ? 'Digite um nome ou @ para começar.'
+                                : 'Digite uma palavra para buscar nos blabs.')
+                            : `Digite pelo menos ${minimo} caracteres.`}
+                    </p>
+                )}
 
-                    <EstadoLista
-                        carregando={carregando}
-                        erro={erro}
-                        vazio={!carregando && !erro && usuarios.length === 0}
-                        mensagemVazio="Nenhum usuário encontrado."
-                        aoTentarDeNovo={recarregar}
-                    />
+                {ativo && (
+                    <>
+                        {resumo && <p className="busca-resumo">{resumo}</p>}
 
-                    {!carregando && !erro && usuarios.length > 0 && (
-                        <ul className="busca-lista">
-                            {usuarios.map((u) => (
-                                <li key={u.alias}>
-                                    <Link to={`/perfil/${u.alias}`} className="busca-item" onClick={fechar}>
-                                        <Avatar src={u.fotoUrl} nome={u.nome} tamanho={38} />
-                                        <span className="busca-item-textos">
-                                            <strong>{u.nome}</strong>
-                                            <small>@{u.alias}</small>
-                                        </span>
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
+                        <EstadoLista
+                            carregando={carregando}
+                            erro={erro}
+                            vazio={!carregando && !erro && itens.length === 0}
+                            mensagemVazio={aba === 'usuarios'
+                                ? 'Nenhum usuário encontrado.'
+                                : 'Nenhum blab encontrado.'}
+                            aoTentarDeNovo={recarregar}
+                        />
 
-                    <Paginacao
-                        pagina={pagina}
-                        totalPaginas={totalPaginas}
-                        aoAnterior={anterior}
-                        aoProxima={proxima}
-                        ocupado={carregando}
-                    />
-                </>
-            )}
+                        {!carregando && !erro && itens.length > 0 && (
+                            <ul className="busca-lista">
+                                {aba === 'usuarios'
+                                    ? itens.map((u) => (
+                                        <li key={u.alias}>
+                                            <Link to={`/perfil/${u.alias}`} className="busca-item" onClick={fechar}>
+                                                <Avatar src={u.fotoUrl} nome={u.nome} tamanho={38} />
+                                                <span className="busca-item-textos">
+                                                    <strong>{u.nome}</strong>
+                                                    <small>@{u.alias}</small>
+                                                </span>
+                                            </Link>
+                                        </li>
+                                    ))
+                                    : itens.map((p) => (
+                                        <li key={p.id}>
+                                            <Link to={`/perfil/${p.autor.alias}`} className="busca-item alinhado-topo" onClick={fechar}>
+                                                <Avatar src={p.autor.fotoUrl} nome={p.autor.nome} tamanho={38} />
+                                                <span className="busca-item-textos">
+                                                    <strong>
+                                                        {p.autor.nome}
+                                                        <span className="busca-item-alias">@{p.autor.alias}</span>
+                                                    </strong>
+                                                    <span className="busca-item-trecho">
+                                                        {trecho(p.texto, termoDebounced)}
+                                                    </span>
+                                                </span>
+                                            </Link>
+                                        </li>
+                                    ))}
+                            </ul>
+                        )}
+
+                        <Paginacao
+                            pagina={pagina}
+                            totalPaginas={totalPaginas}
+                            aoAnterior={anterior}
+                            aoProxima={proxima}
+                            ocupado={carregando}
+                        />
+                    </>
+                )}
+            </div>
         </Modal>
     )
 }
