@@ -16,7 +16,7 @@
     max-width: 420px;
     max-height: calc(100dvh - 32px);
     overflow-y: auto;
-    background-color: var(--acento-contraste);
+    background-color: var(--superficie);
     border-radius: 12px;
     padding: clamp(20px, 5vw, 28px);
     box-shadow: var(--sombra-alta);

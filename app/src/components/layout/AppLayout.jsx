@@ -15,8 +15,16 @@ const NAVEGACAO = [
     { para: '/perfil/me', rotulo: 'Perfil', Icone: AvatarIcon },
 ]
 
-/** Casca da aplicação: topo fixo, menu lateral no desktop e navbar inferior no mobile. */
-function AppLayout({ naoLidas = 1 }) {
+/**
+ * Casca da aplicação: topo fixo, menu lateral no desktop e navbar inferior
+ * no mobile.
+ *
+ * @param {number} naoLidas Quantidade de CONVERSAS com mensagens não lidas —
+ *   não o total de mensagens. Três conversas não lidas exibem 3, mesmo que
+ *   somem centenas de mensagens entre elas.
+ *   Fica em zero até a rota de notificações existir.
+ */
+function AppLayout({ naoLidas = 0 }) {
     const [buscaAberta, setBuscaAberta] = useState(false)
 
     return (
@@ -37,7 +45,11 @@ function AppLayout({ naoLidas = 1 }) {
                     </button>
                     <button type="button" className="icone-botao" aria-label="Novidades">
                         <BellIcon aria-hidden="true" />
-                        {naoLidas > 0 && <span className="badge" aria-label={`${naoLidas} não lidas`}>{naoLidas}</span>}
+                        {naoLidas > 0 && (
+                            <span className="badge" aria-label={`${naoLidas} conversas não lidas`}>
+                                {naoLidas > 9 ? '9+' : naoLidas}
+                            </span>
+                        )}
                     </button>
                 </div>
             </header>
