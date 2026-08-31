@@ -58,7 +58,7 @@ function Campo({ rotulo, valor, editavel, aoEditar }) {
 function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, aoAbrirOpcoes, aoAlternarTema, temaEscuro = false, acaoPrincipal }) {
     const {
         nome, alias, fotoUrl, bio, email, nascimento, nacionalidade,
-        seguindo = 0, seguidores = 0, desde,
+        seguindo = 0, seguidores = 0, desde, teSegue,
     } = usuario
 
     return (
@@ -95,6 +95,10 @@ function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, 
                             )}
                         </div>
                         <span className="perfil-alias">@{alias}</span>
+
+                        {/* Só aparece em perfil de terceiros: no próprio, o
+                            servidor devolve null e a pergunta não faz sentido. */}
+                        {teSegue && <span className="perfil-te-segue">segue você</span>}
                     </div>
                 </div>
 
@@ -120,10 +124,29 @@ function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, 
                 <p className="perfil-bio-texto">{bio || 'Sem bio por enquanto.'}</p>
             </section>
 
+            {/* O e-mail é dado de contato e só existe no próprio perfil: o
+                servidor o devolve como null para visitantes, e aqui o container
+                nem é renderizado — caixa vazia com um travessão anuncia que há
+                algo escondido ali. Nascimento e nacionalidade são apresentação
+                e aparecem para todos. */}
             <section className="perfil-dados">
-                <Campo rotulo="E-mail" valor={email} editavel={proprio} aoEditar={() => aoEditar?.('email')} />
-                <Campo rotulo="Nascimento" valor={dataBR(nascimento)} editavel={proprio} aoEditar={() => aoEditar?.('nascimento')} />
-                <Campo rotulo="Nacionalidade" valor={nacionalidade} editavel={proprio} aoEditar={() => aoEditar?.('nacionalidade')} />
+                {proprio && (
+                    <Campo rotulo="E-mail" valor={email} editavel aoEditar={() => aoEditar?.('email')} />
+                )}
+
+                <Campo
+                    rotulo="Nascimento"
+                    valor={dataBR(nascimento)}
+                    editavel={proprio}
+                    aoEditar={() => aoEditar?.('nascimento')}
+                />
+
+                <Campo
+                    rotulo="Nacionalidade"
+                    valor={nacionalidade}
+                    editavel={proprio}
+                    aoEditar={() => aoEditar?.('nacionalidade')}
+                />
             </section>
 
             {proprio && (

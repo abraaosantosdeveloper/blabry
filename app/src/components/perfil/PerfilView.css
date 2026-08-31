@@ -87,6 +87,16 @@
     white-space: nowrap;
 }
 
+/* Marca discreta abaixo do @: informa a relação sem competir com o botão de
+   seguir, que é a ação principal da tela. */
+.perfil-te-segue {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: .6875rem;
+    font-style: italic;
+    color: var(--texto-suave);
+}
+
 .perfil-numeros {
     display: flex;
     flex-direction: column;
@@ -174,6 +184,17 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     border-bottom: 1px solid var(--borda);
+}
+
+/* No perfil público sobra apenas a nacionalidade: sem um campo ao lado, a
+   divisória vertical separaria conteúdo de vazio. */
+.perfil-dados:has(> .perfil-campo:only-child) .perfil-campo {
+    border-right: none;
+}
+
+/* Seção sem nenhum campo não deve deixar uma linha solta na tela. */
+.perfil-dados:empty {
+    display: none;
 }
 
 .perfil-campo {
