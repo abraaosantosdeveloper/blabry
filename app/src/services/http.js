@@ -12,8 +12,28 @@ const MENSAGENS = {
     429: 'Muitas tentativas. Aguarde um instante.',
 }
 
-export const mensagemDeErro = (err) =>
-    MENSAGENS[err?.status] ?? err?.message ?? 'Algo deu errado. Tente novamente.'
+/* Mensagens de reserva por status, para quando o servidor não explicar o
+   motivo — ou quando nem chegamos a falar com ele. */
+
+/**
+ * Texto a exibir para um erro.
+ *
+ * A mensagem da API tem prioridade: ela conhece o contexto ("Você não pode
+ * seguir a si mesmo", "A edição só é possível nos primeiros 15 minutos") e o
+ * mapa por status, não. O mapa entra quando a resposta não trouxe motivo —
+ * falha de rede, ou um erro sem corpo.
+ */
+export const mensagemDeErro = (err) => {
+    const daApi = err?.message
+
+    // 'Erro' e 'Falha de rede' são os textos que o próprio request inventa
+    // quando não recebeu explicação nenhuma; não servem ao usuário.
+    const generica = !daApi || daApi === 'Erro' || daApi === 'Falha de rede'
+
+    if (!generica) return daApi
+
+    return MENSAGENS[err?.status] ?? 'Algo deu errado. Tente novamente.'
+}
 
 /** Monta uma query string ignorando valores vazios. */
 export function query(params = {}) {
