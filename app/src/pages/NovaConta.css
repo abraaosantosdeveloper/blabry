@@ -220,3 +220,41 @@
         transform: translateY(0);
     }
 }
+
+/* ---------- Aceite da política ---------- */
+
+.aceite {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 14px;
+    font-size: .8125rem;
+    line-height: 1.5;
+    color: var(--texto-medio);
+    cursor: pointer;
+}
+
+.aceite input[type="checkbox"] {
+    /* accent-color pinta o check nativo com a cor da marca sem trocar o
+       controle por um desenho próprio — mantém teclado e leitor de tela. */
+    accent-color: var(--acento);
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.aceite a {
+    color: var(--acento);
+    font-weight: 600;
+}
+
+.aceite-erro {
+    color: var(--perigo);
+}
+
+.aceite-erro input[type="checkbox"] {
+    outline: 2px solid var(--perigo);
+    outline-offset: 2px;
+}

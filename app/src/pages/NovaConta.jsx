@@ -45,8 +45,14 @@ function validar(etapa, f) {
         if (!SENHA_RE.test(f.senha)) return erro('A senha precisa de 8 caracteres, uma maiúscula e um caractere especial.', 'senha')
         if (f.senha !== f.confirmarSenha) return erro('As senhas não são iguais.', 'confirmarSenha')
     }
-    if (etapa === 2 && !ALIAS_RE.test(f.apelido)) {
-        return erro('Use de 3 a 20 caracteres: letras minúsculas, números ou _', 'apelido')
+    if (etapa === 2) {
+        if (!ALIAS_RE.test(f.apelido))
+            return erro('Use de 3 a 20 caracteres: letras minúsculas, números ou _', 'apelido')
+        /* O aceite é validado na última etapa antes do envio porque é ela que
+           cria a conta. O back-end repete essa checagem: a interface é
+           conveniência, a API é a fronteira real. */
+        if (!f.aceitouPolitica)
+            return erro('É preciso aceitar a política de privacidade para criar a conta.', 'aceitouPolitica')
     }
     return null
 }
@@ -55,6 +61,9 @@ function NovaConta() {
     const [form, setForm] = useState({
         nome: '', sobrenome: '', nascimento: '', nacionalidade: '',
         email: '', confirmarEmail: '', senha: '', confirmarSenha: '', apelido: '',
+        // Começa falso e nunca é pré-marcado: consentimento pré-marcado não é
+        // consentimento, é distração. O usuário precisa executar a ação.
+        aceitouPolitica: false,
     })
     const [etapa, setEtapa] = useState(0)
     const [direcao, setDirecao] = useState('frente')
@@ -99,14 +108,21 @@ function NovaConta() {
                 senha: form.senha,
                 nascimento: form.nascimento,
                 nacionalidade: form.nacionalidade,
+                // Enviado como booleano de verdade. O serviço compara com
+                // `=== true`, então a string "true" seria recusada.
+                aceitouPolitica: form.aceitouPolitica,
             })
-            if (!dados.token) {
-                mostrarToast('Conta criada! Faça login para continuar.', 'sucesso')
-                return setTimeout(() => navigate('/'), 1600)
-            }
-            localStorage.setItem('token', dados.token)
-            localStorage.setItem('nome', dados.usuario.nome)
-            ir(3)
+            /* O cadastro não devolve mais token: a conta nasce pendente de
+               confirmação por e-mail. A etapa da foto fica para depois da
+               verificação, porque enviar foto exige token.
+
+               O e-mail vai pelo `state` da navegação, nunca na URL — lá ele
+               ficaria no histórico do navegador. */
+            mostrarToast('Conta criada! Enviamos um código para seu e-mail.', 'sucesso')
+            return setTimeout(
+                () => navigate('/verificar-email', { state: { email: form.email.trim() } }),
+                1200
+            )
         } catch (err) {
             mostrarToast(mensagemDeErro(err))
         } finally {
@@ -182,6 +198,29 @@ function NovaConta() {
                                     <AuthInput label="Seu @" placeholder="um_usuario123" fieldType="text" fieldId="apelido-input" maxLength={20} {...campo('apelido')} />
                                 </div>
                                 <p className="dica">Letras minúsculas, números e _ — de 3 a 20 caracteres.</p>
+
+                                {/* O label envolve o input: a área clicável passa a
+                                    incluir o texto, o que importa no celular, onde
+                                    acertar um quadrado de 16px é difícil. */}
+                                <label className={`aceite ${invalidos.includes('aceitouPolitica') ? 'aceite-erro' : ''}`}>
+                                    <input
+                                        type="checkbox"
+                                        checked={form.aceitouPolitica}
+                                        onChange={(e) => {
+                                            const marcado = e.target.checked
+                                            setForm((f) => ({ ...f, aceitouPolitica: marcado }))
+                                            setInvalidos((atuais) => atuais.filter((c) => c !== 'aceitouPolitica'))
+                                        }}
+                                    />
+                                    <span>
+                                        Li e aceito a{' '}
+                                        {/* target="_blank" para não destruir o formulário
+                                            já preenchido ao abrir a política. */}
+                                        <Link to="/politica-de-privacidade" target="_blank" rel="noopener noreferrer">
+                                            política de privacidade
+                                        </Link>.
+                                    </span>
+                                </label>
                             </>
                         )}
 

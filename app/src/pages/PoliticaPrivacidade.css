@@ -1,0 +1,236 @@
+/* Página de leitura longa: coluna estreita (~68ch) porque linha muito larga
+   faz o olho perder o começo da linha seguinte. */
+.pp {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 24px 20px 64px;
+    color: var(--texto);
+    background-color: var(--fundo);
+    min-height: 100vh;
+}
+
+.pp-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.pp-logo {
+    width: 120px;
+    height: auto;
+    display: block;
+}
+
+.pp-voltar {
+    padding: 8px 16px;
+    border: 1px solid var(--borda);
+    border-radius: 9px;
+    background: none;
+    color: var(--texto-medio);
+    font-size: .8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .15s, color .15s;
+}
+
+.pp-voltar:hover {
+    background-color: var(--superficie-2);
+    color: var(--texto);
+}
+
+.pp-titulo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.pp-data {
+    margin-top: 6px;
+    font-size: .8125rem;
+    color: var(--texto-suave);
+}
+
+/* ---------- Sumário ---------- */
+
+.pp-sumario {
+    margin: 28px 0 8px;
+    padding: 16px 18px;
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    background-color: var(--superficie);
+}
+
+.pp-sumario ol {
+    margin: 0;
+    padding-left: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px 20px;
+    font-size: .875rem;
+}
+
+.pp-sumario a {
+    color: var(--texto-medio);
+    text-decoration: none;
+}
+
+.pp-sumario a:hover {
+    color: var(--acento);
+    text-decoration: underline;
+}
+
+/* ---------- Seções ---------- */
+
+.pp-secao {
+    margin-top: 32px;
+    /* scroll-margin evita que a âncora do sumário jogue o título
+       exatamente na borda superior da janela, colado no topo. */
+    scroll-margin-top: 16px;
+}
+
+.pp-secao h2 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.pp-secao p {
+    font-size: .9375rem;
+    line-height: 1.7;
+    color: var(--texto-medio);
+}
+
+.pp-secao p+p {
+    margin-top: 12px;
+}
+
+.pp-secao strong {
+    color: var(--texto);
+}
+
+.pp-secao a {
+    color: var(--acento);
+}
+
+.pp-secao code {
+    padding: 1px 6px;
+    border-radius: 5px;
+    background-color: var(--superficie-2);
+    font-size: .875em;
+}
+
+.pp-lista {
+    margin: 12px 0 0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: .9375rem;
+    line-height: 1.65;
+    color: var(--texto-medio);
+}
+
+/* ---------- Rodapé ---------- */
+
+.pp-rodape {
+    margin-top: 48px;
+    padding-top: 28px;
+    border-top: 1px solid var(--borda);
+}
+
+.pp-rodape h2 {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.pp-rodape-nota {
+    margin-top: 6px;
+    font-size: .8125rem;
+    line-height: 1.6;
+    color: var(--texto-suave);
+}
+
+.pp-servicos {
+    list-style: none;
+    margin-top: 18px;
+    padding: 0;
+    display: grid;
+    /* auto-fit + minmax: 2 ou 3 colunas em telas largas, 1 no celular,
+       sem precisar de media query para o grid em si. */
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 12px;
+}
+
+.pp-servico {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid var(--borda);
+    border-radius: 11px;
+    background-color: var(--superficie);
+}
+
+.selo-servico {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    /* A cor da marca entra por variável inline vinda do componente; aqui
+       ela só é consumida, o que mantém a paleta de terceiros fora do CSS. */
+    background-color: var(--selo-cor);
+    color: #FFFFFF;
+    font-size: .8125rem;
+    font-weight: 700;
+    letter-spacing: .02em;
+}
+
+.pp-servico-textos {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.pp-servico-textos a {
+    font-size: .875rem;
+    font-weight: 600;
+    color: var(--texto);
+    text-decoration: none;
+}
+
+.pp-servico-textos a:hover {
+    color: var(--acento);
+    text-decoration: underline;
+}
+
+.pp-servico-textos small {
+    font-size: .75rem;
+    line-height: 1.4;
+    color: var(--texto-suave);
+}
+
+.pp-rodape-fim {
+    margin-top: 24px;
+    font-size: .8125rem;
+    color: var(--texto-suave);
+}
+
+.pp-rodape-fim a {
+    color: var(--acento);
+}
+
+@media (max-width: 480px) {
+    .pp-sumario ol {
+        grid-template-columns: 1fr;
+    }
+
+    .pp-titulo {
+        font-size: 1.5rem;
+    }
+}

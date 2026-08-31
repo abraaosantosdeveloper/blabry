@@ -1,7 +1,8 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Modal from './Modal'
 import AvatarIcon from '../../assets/icons/avatar.svg?react'
 import LockIcon from '../../assets/icons/lock.svg?react'
+import InfoIcon from '../../assets/icons/info.svg?react'
 import LogoffIcon from '../../assets/icons/logoff.svg?react'
 import DangerIcon from '../../assets/icons/danger.svg?react'
 import TrashIcon from '../../assets/icons/trash.svg?react'
@@ -20,7 +21,7 @@ const Chevron = (props) => (
  * separada e visualmente contida, e não executa nada por conta própria —
  * ela abre o fluxo de confirmação.
  */
-function ContaModal({ aberto, aoFechar, aoAvisar, aoExcluirConta }) {
+function ContaModal({ aberto, aoFechar, aoAlterarSenha, aoExcluirConta }) {
     const navigate = useNavigate()
 
     function sair() {
@@ -38,15 +39,35 @@ function ContaModal({ aberto, aoFechar, aoAvisar, aoExcluirConta }) {
                     <button
                         type="button"
                         className="conta-item"
-                        onClick={() => aoAvisar?.('Alterar senha ainda está em desenvolvimento.')}
+                        onClick={aoAlterarSenha}
                     >
                         <span className="conta-item-icone"><LockIcon aria-hidden="true" /></span>
                         <span className="conta-item-textos">
                             <strong>Alterar senha</strong>
-                            <small>Defina uma nova senha de acesso.</small>
+                            <small>Enviamos um código para o seu e-mail.</small>
                         </span>
                         <Chevron className="conta-item-seta" aria-hidden="true" />
                     </button>
+                </li>
+
+                <li>
+                    {/* Link, e não button+navigate: é navegação de verdade, então
+                        deve permitir abrir em nova aba e ser lida como link pelo
+                        leitor de tela. target="_blank" preserva o estado da tela
+                        atual, já que a política é leitura de apoio. */}
+                    <Link
+                        className="conta-item"
+                        to="/politica-de-privacidade"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <span className="conta-item-icone"><InfoIcon aria-hidden="true" /></span>
+                        <span className="conta-item-textos">
+                            <strong>Política de privacidade</strong>
+                            <small>Quais dados guardamos e como são tratados.</small>
+                        </span>
+                        <Chevron className="conta-item-seta" aria-hidden="true" />
+                    </Link>
                 </li>
 
                 <li>
