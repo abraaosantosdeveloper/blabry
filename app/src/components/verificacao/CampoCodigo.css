@@ -1,0 +1,38 @@
+.campo-codigo>input {
+    width: 100%;
+    padding: 14px 12px;
+    border: 1px solid var(--borda);
+    border-radius: 12px;
+    background-color: var(--superficie);
+    color: var(--texto);
+    /* Fonte monoespaçada: com dígitos de larguras diferentes o código
+       "dança" enquanto é digitado. */
+    font-family: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    /* O espaçamento faz os seis dígitos lerem como um código, e não como um
+       número. O padding-left compensa o espaço que o letter-spacing adiciona
+       depois do último dígito e que descentralizaria o texto. */
+    letter-spacing: 12px;
+    padding-left: 24px;
+}
+
+.campo-codigo>input::placeholder {
+    color: var(--texto-fraco);
+    font-weight: 400;
+}
+
+.campo-codigo>input:focus {
+    outline: 2px solid var(--acento);
+    outline-offset: 1px;
+    border-color: transparent;
+}
+
+.campo-codigo>input:disabled {
+    opacity: .6;
+}
+
+.campo-codigo.com-erro>input {
+    border-color: var(--perigo);
+}

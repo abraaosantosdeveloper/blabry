@@ -26,6 +26,19 @@ function Login() {
             localStorage.setItem('nome', dados.usuario.nome)
             navigate('/feed')
         } catch (err) {
+            /* 403 significa "sabemos quem é você, mas falta confirmar o
+               e-mail" — distinto do 401 de credencial errada. Como a senha
+               já foi validada pelo servidor antes desse status, mandar o
+               usuário para a tela de código aqui não revela nada a quem não
+               conhece a senha.
+
+               O e-mail vai pelo `state` da navegação, e não na URL: na barra
+               de endereço ele ficaria no histórico e nos registros de
+               qualquer proxy no caminho. */
+            if (err?.status === 403) {
+                mostrarToast('Confirme seu e-mail para entrar.')
+                return navigate('/verificar-email', { state: { email: email.trim() } })
+            }
             mostrarToast(mensagemDeErro(err))
         } finally {
             setCarregando(false)
