@@ -12,7 +12,7 @@ import './Comentarios.css'
 const LIMITE = 280
 
 function Comentarios({ postId, autorAtual, aoContarMudar, aoErro }) {
-    const [texto, setTexto] = useState('')
+    const [text, setTexto] = useState('')
     const [enviando, setEnviando] = useState(false)
     const [excluindo, setExcluindo] = useState(null)
     const [emojisAbertos, setEmojisAbertos] = useState(false)
@@ -22,10 +22,10 @@ function Comentarios({ postId, autorAtual, aoContarMudar, aoErro }) {
     /** Insere na posição do cursor, não no fim do texto. */
     function inserirEmoji(emoji) {
         const campo = campoRef.current
-        const inicio = campo?.selectionStart ?? texto.length
-        const fim = campo?.selectionEnd ?? texto.length
+        const inicio = campo?.selectionStart ?? text.length
+        const fim = campo?.selectionEnd ?? text.length
 
-        setTexto(texto.slice(0, inicio) + emoji + texto.slice(fim))
+        setTexto(text.slice(0, inicio) + emoji + text.slice(fim))
         setEmojisAbertos(false)
 
         requestAnimationFrame(() => {
@@ -36,18 +36,18 @@ function Comentarios({ postId, autorAtual, aoContarMudar, aoErro }) {
     }
 
     const buscar = useCallback(
-        ({ pagina, signal }) => listarComentarios(postId, { pagina, signal }),
+        ({ page, signal }) => listarComentarios(postId, { page, signal }),
         [postId]
     )
 
     const {
-        itens: comentarios, setItens, carregando, erro,
+        itens: comments, setItens, carregando, erro,
         temMais, proxima, recarregar, total,
-    } = usePaginado(buscar, { campo: 'comentarios', acumular: true, deps: [postId] })
+    } = usePaginado(buscar, { campo: 'comments', acumular: true, deps: [postId] })
 
     async function enviar(e) {
         e.preventDefault()
-        const conteudo = texto.trim()
+        const conteudo = text.trim()
         if (!conteudo || enviando) return
 
         setEnviando(true)
@@ -64,8 +64,8 @@ function Comentarios({ postId, autorAtual, aoContarMudar, aoErro }) {
     }
 
     /** Substitui o comentário pelo que o servidor devolveu já normalizado. */
-    async function editar(comentarioId, texto) {
-        const atualizado = await editarComentario(postId, comentarioId, texto)
+    async function editar(comentarioId, text) {
+        const atualizado = await editarComentario(postId, comentarioId, text)
         setItens((atuais) => atuais.map((c) => (c.id === comentarioId ? atualizado : c)))
     }
 
@@ -81,21 +81,21 @@ function Comentarios({ postId, autorAtual, aoContarMudar, aoErro }) {
         }
     }
 
-    const souAutor = (c) => Boolean(autorAtual?.alias) && autorAtual.alias === c.autor.alias
+    const souAutor = (c) => Boolean(autorAtual?.alias) && autorAtual.alias === c.author.alias
 
     return (
-        <section className="comentarios">
+        <section className="comments">
             <EstadoLista
-                carregando={carregando && comentarios.length === 0}
+                carregando={carregando && comments.length === 0}
                 erro={erro}
-                vazio={!carregando && !erro && comentarios.length === 0}
+                vazio={!carregando && !erro && comments.length === 0}
                 mensagemVazio="Nenhum comentário ainda. Seja o primeiro!"
                 aoTentarDeNovo={recarregar}
             />
 
-            {comentarios.length > 0 && (
+            {comments.length > 0 && (
                 <ul className="comentarios-lista">
-                    {comentarios.map((c) => (
+                    {comments.map((c) => (
                         <Comentario
                             key={c.id}
                             comentario={c}
@@ -114,14 +114,14 @@ function Comentarios({ postId, autorAtual, aoContarMudar, aoErro }) {
             )}
 
             <form className="comentario-form" onSubmit={enviar}>
-                <Avatar src={autorAtual?.fotoUrl} nome={autorAtual?.nome} tamanho={30} />
+                <Avatar src={autorAtual?.photoUrl} name={autorAtual?.name} tamanho={30} />
                 <label htmlFor={`comentar-${postId}`} className="sr-only">Escrever comentário</label>
                 <input
                     id={`comentar-${postId}`}
                     ref={campoRef}
                     type="text"
                     placeholder="Escreva um comentário..."
-                    value={texto}
+                    value={text}
                     maxLength={LIMITE}
                     onChange={(e) => setTexto(e.target.value)}
                 />
@@ -145,7 +145,7 @@ function Comentarios({ postId, autorAtual, aoContarMudar, aoErro }) {
                     />
                 )}
 
-                <button type="submit" disabled={!texto.trim() || enviando}>
+                <button type="submit" disabled={!text.trim() || enviando}>
                     {enviando ? '...' : 'Enviar'}
                 </button>
             </form>

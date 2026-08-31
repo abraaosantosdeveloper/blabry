@@ -65,10 +65,10 @@ function Post() {
         setPost((atual) => (atual ? { ...atual, ...campos } : atual))
     }, [])
 
-    async function editar(_id, texto) {
+    async function editar(_id, text) {
         // O servidor devolve a publicação já normalizada — é ela que vira o
         // novo estado, e não o texto digitado: só assim `editadoEm` aparece.
-        const atualizado = await editarPost(id, texto)
+        const atualizado = await editarPost(id, text)
         setPost(atualizado)
         mostrarToast('Blab atualizado.', 'sucesso')
     }
@@ -81,7 +81,7 @@ function Post() {
         navigate('/feed', { replace: true })
     }
 
-    const autor = post?.autor
+    const author = post?.author
 
     return (
         <div className="pagina-post">
@@ -111,15 +111,15 @@ function Post() {
                     {/* ---- Cartão do autor ----
                         Acima do post, e não abaixo: quem abre um link de
                         publicação de fora do app costuma não conhecer o
-                        autor, e saber quem escreveu muda como se lê o texto. */}
-                    <Link to={`/perfil/${autor.alias}`} className="pagina-post-autor">
-                        <Avatar src={autor.fotoUrl} nome={autor.nome} tamanho={52} />
+                        author, e saber quem escreveu muda como se lê o text. */}
+                    <Link to={`/perfil/${author.alias}`} className="pagina-post-autor">
+                        <Avatar src={author.photoUrl} name={author.name} tamanho={52} />
                         <span className="pagina-post-autor-textos">
-                            <strong>{autor.nome}</strong>
-                            <small>@{autor.alias}</small>
+                            <strong>{author.name}</strong>
+                            <small>@{author.alias}</small>
                             {/* A bio só é renderizada se existir — um espaço
                                 vazio anuncia que falta alguma coisa ali. */}
-                            {autor.bio && <span className="pagina-post-autor-bio">{autor.bio}</span>}
+                            {author.bio && <span className="pagina-post-autor-bio">{author.bio}</span>}
                         </span>
                     </Link>
 
@@ -139,9 +139,9 @@ function Post() {
                     />
 
                     <p className="pagina-post-data">
-                        <time dateTime={post.criadoEm}>{dataPorExtenso(post.criadoEm)}</time>
-                        {post.editadoEm && (
-                            <> · editado em <time dateTime={post.editadoEm}>{dataPorExtenso(post.editadoEm)}</time></>
+                        <time dateTime={post.createdAt}>{dataPorExtenso(post.createdAt)}</time>
+                        {post.editedAt && (
+                            <> · editado em <time dateTime={post.editedAt}>{dataPorExtenso(post.editedAt)}</time></>
                         )}
                     </p>
                 </>

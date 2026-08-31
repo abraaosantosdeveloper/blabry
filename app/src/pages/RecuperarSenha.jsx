@@ -35,7 +35,7 @@ function RecuperarSenha() {
     const [email, setEmail] = useState(state?.email ?? '')
     const [etapa, setEtapa] = useState(0)
     const [codigo, setCodigo] = useState('')
-    const [novaSenha, setNovaSenha] = useState('')
+    const [newPassword, setNovaSenha] = useState('')
     const [confirmarSenha, setConfirmarSenha] = useState('')
     const [enviando, setEnviando] = useState(false)
     const [espera, setEspera] = useState(0)
@@ -78,15 +78,15 @@ function RecuperarSenha() {
         if (codigo.length < TAMANHO_CODIGO)
             return mostrarToast('Digite o código completo.')
 
-        if (!SENHA_RE.test(novaSenha))
+        if (!SENHA_RE.test(newPassword))
             return mostrarToast('A senha precisa de 8 caracteres, uma maiúscula e um caractere especial.')
 
-        if (novaSenha !== confirmarSenha)
+        if (newPassword !== confirmarSenha)
             return mostrarToast('As senhas não são iguais.')
 
         setEnviando(true)
         try {
-            await trocarSenha({ email: email.trim(), codigo, novaSenha })
+            await trocarSenha({ email: email.trim(), codigo, newPassword })
             mostrarToast('Senha alterada! Faça login com a nova senha.', 'sucesso')
             /* Não emitimos token aqui de propósito. Quem trocou a senha deve
                entrar com ela — é a confirmação prática de que a nova senha
@@ -145,7 +145,7 @@ function RecuperarSenha() {
                         fieldType="password"
                         fieldId="recuperar-senha"
                         autoComplete="new-password"
-                        value={novaSenha}
+                        value={newPassword}
                         onChange={(e) => setNovaSenha(e.target.value)}
                     />
 

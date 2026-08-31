@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { cadastrar, mensagemDeErro } from '../services/auth.service'
-import { enviarFoto } from '../services/usuarios.service'
+import { enviarFoto } from '../services/users.service'
 import useToast from '../hooks/useToast'
 import usePaises from '../hooks/usePaises'
 import AuthInput from '../components/inputs/AuthInput'
@@ -33,11 +33,11 @@ const erro = (mensagem, ...campos) => ({ mensagem, campos })
 
 function validar(etapa, f) {
     if (etapa === 0) {
-        if (!f.nome.trim()) return erro('Informe seu nome.', 'nome')
+        if (!f.name.trim()) return erro('Informe seu nome.', 'name')
         if (!f.sobrenome.trim()) return erro('Informe seu sobrenome.', 'sobrenome')
-        if (!f.nascimento) return erro('Informe sua data de nascimento.', 'nascimento')
-        if (idade(f.nascimento) < 13) return erro('Você precisa ter pelo menos 13 anos.', 'nascimento')
-        if (!f.nacionalidade) return erro('Selecione sua nacionalidade.', 'nacionalidade')
+        if (!f.birthDate) return erro('Informe sua data de nascimento.', 'birthDate')
+        if (idade(f.birthDate) < 13) return erro('Você precisa ter pelo menos 13 anos.', 'birthDate')
+        if (!f.nationality) return erro('Selecione sua nacionalidade.', 'nationality')
     }
     if (etapa === 1) {
         if (!EMAIL_RE.test(f.email)) return erro('Digite um email válido.', 'email')
@@ -46,24 +46,24 @@ function validar(etapa, f) {
         if (f.senha !== f.confirmarSenha) return erro('As senhas não são iguais.', 'confirmarSenha')
     }
     if (etapa === 2) {
-        if (!ALIAS_RE.test(f.apelido))
-            return erro('Use de 3 a 20 caracteres: letras minúsculas, números ou _', 'apelido')
+        if (!ALIAS_RE.test(f.alias))
+            return erro('Use de 3 a 20 caracteres: letras minúsculas, números ou _', 'alias')
         /* O aceite é validado na última etapa antes do envio porque é ela que
            cria a conta. O back-end repete essa checagem: a interface é
            conveniência, a API é a fronteira real. */
-        if (!f.aceitouPolitica)
-            return erro('É preciso aceitar a política de privacidade para criar a conta.', 'aceitouPolitica')
+        if (!f.acceptedPolicy)
+            return erro('É preciso aceitar a política de privacidade para criar a conta.', 'acceptedPolicy')
     }
     return null
 }
 
 function NovaConta() {
     const [form, setForm] = useState({
-        nome: '', sobrenome: '', nascimento: '', nacionalidade: '',
-        email: '', confirmarEmail: '', senha: '', confirmarSenha: '', apelido: '',
+        name: '', sobrenome: '', birthDate: '', nationality: '',
+        email: '', confirmarEmail: '', senha: '', confirmarSenha: '', alias: '',
         // Começa falso e nunca é pré-marcado: consentimento pré-marcado não é
         // consentimento, é distração. O usuário precisa executar a ação.
-        aceitouPolitica: false,
+        acceptedPolicy: false,
     })
     const [etapa, setEtapa] = useState(0)
     const [direcao, setDirecao] = useState('frente')
@@ -74,14 +74,14 @@ function NovaConta() {
     const { paises, carregando: carregandoPaises, falhou: falhouPaises, recarregar } = usePaises()
     const navigate = useNavigate()
 
-    const campo = (nome) => ({
-        value: form[nome],
+    const campo = (name) => ({
+        value: form[name],
         onChange: (e) => {
-            const valor = nome === 'apelido' ? e.target.value.toLowerCase() : e.target.value
-            setForm((f) => ({ ...f, [nome]: valor }))
-            setInvalidos((atuais) => atuais.filter((c) => c !== nome))
+            const valor = name === 'alias' ? e.target.value.toLowerCase() : e.target.value
+            setForm((f) => ({ ...f, [name]: valor }))
+            setInvalidos((atuais) => atuais.filter((c) => c !== name))
         },
-        erro: invalidos.includes(nome),
+        erro: invalidos.includes(name),
     })
 
     const ir = (destino) => {
@@ -102,15 +102,15 @@ function NovaConta() {
         setCarregando(true)
         try {
             const dados = await cadastrar({
-                nome: `${form.nome.trim()} ${form.sobrenome.trim()}`,
-                apelido: form.apelido,
+                name: `${form.name.trim()} ${form.sobrenome.trim()}`,
+                alias: form.alias,
                 email: form.email.trim(),
-                senha: form.senha,
-                nascimento: form.nascimento,
-                nacionalidade: form.nacionalidade,
+                password: form.senha,
+                birthDate: form.birthDate,
+                nationality: form.nationality,
                 // Enviado como booleano de verdade. O serviço compara com
                 // `=== true`, então a string "true" seria recusada.
-                aceitouPolitica: form.aceitouPolitica,
+                acceptedPolicy: form.acceptedPolicy,
             })
             /* O cadastro não devolve mais token: a conta nasce pendente de
                confirmação por e-mail. A etapa da foto fica para depois da
@@ -162,13 +162,13 @@ function NovaConta() {
                         {etapa === 0 && (
                             <>
                                 <div className="input-line-wrapper">
-                                    <AuthInput label="Nome" placeholder="Seu nome" fieldType="text" fieldId="nome-input" {...campo('nome')} />
+                                    <AuthInput label="Nome" placeholder="Seu name" fieldType="text" fieldId="nome-input" {...campo('name')} />
                                     <AuthInput label="Sobrenome" placeholder="Seu sobrenome" fieldType="text" fieldId="sobrenome-input" {...campo('sobrenome')} />
                                 </div>
                                 <div className="input-line-wrapper">
-                                    <AuthInput label="Data de nascimento" fieldType="date" fieldId="nascimento-input" {...campo('nascimento')} />
+                                    <AuthInput label="Data de nascimento" fieldType="date" fieldId="nascimento-input" {...campo('birthDate')} />
                                     <OptionSelect label="Nacionalidade" fieldId="nacionalidade-input"
-                                        options={paises} carregando={carregandoPaises} {...campo('nacionalidade')} />
+                                        options={paises} carregando={carregandoPaises} {...campo('nationality')} />
                                 </div>
                                 {falhouPaises && (
                                     <p className="dica dica-erro">
@@ -195,21 +195,21 @@ function NovaConta() {
                             <>
                                 <div className="alias-campo">
                                     <span className="alias-arroba">@</span>
-                                    <AuthInput label="Seu @" placeholder="um_usuario123" fieldType="text" fieldId="apelido-input" maxLength={20} {...campo('apelido')} />
+                                    <AuthInput label="Seu @" placeholder="um_usuario123" fieldType="text" fieldId="apelido-input" maxLength={20} {...campo('alias')} />
                                 </div>
                                 <p className="dica">Letras minúsculas, números e _ — de 3 a 20 caracteres.</p>
 
                                 {/* O label envolve o input: a área clicável passa a
-                                    incluir o texto, o que importa no celular, onde
+                                    incluir o text, o que importa no celular, onde
                                     acertar um quadrado de 16px é difícil. */}
-                                <label className={`aceite ${invalidos.includes('aceitouPolitica') ? 'aceite-erro' : ''}`}>
+                                <label className={`aceite ${invalidos.includes('acceptedPolicy') ? 'aceite-erro' : ''}`}>
                                     <input
                                         type="checkbox"
-                                        checked={form.aceitouPolitica}
+                                        checked={form.acceptedPolicy}
                                         onChange={(e) => {
                                             const marcado = e.target.checked
-                                            setForm((f) => ({ ...f, aceitouPolitica: marcado }))
-                                            setInvalidos((atuais) => atuais.filter((c) => c !== 'aceitouPolitica'))
+                                            setForm((f) => ({ ...f, acceptedPolicy: marcado }))
+                                            setInvalidos((atuais) => atuais.filter((c) => c !== 'acceptedPolicy'))
                                         }}
                                     />
                                     <span>

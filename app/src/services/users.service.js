@@ -9,29 +9,29 @@ export const perfilPorAlias = (alias, { signal } = {}) =>
     request(`/users/${encodeURIComponent(alias)}`, null, { auth: true, signal })
 
 /** GET /users?q= — busca paginada por nome ou @. */
-export const buscarUsuarios = ({ q, pagina = 1, limite = 8, signal } = {}) =>
-    request(`/users${query({ q, pagina, limite })}`, null, { auth: true, signal })
+export const buscarUsuarios = ({ q, page = 1, limit = 8, signal } = {}) =>
+    request(`/users${query({ q, page, limit })}`, null, { auth: true, signal })
 
 /** PATCH /users/me — atualiza campos do próprio perfil. */
 export const atualizarPerfil = (campos) =>
     request('/users/me', campos, { metodo: 'PATCH', auth: true, mantemSessao: true })
 
 /** POST|DELETE /users/:alias/follow */
-export const alternarSeguir = (alias, seguindo) =>
+export const alternarSeguir = (alias, following) =>
     request(`/users/${encodeURIComponent(alias)}/follow`, null, {
-        metodo: seguindo ? 'DELETE' : 'POST',
+        metodo: following ? 'DELETE' : 'POST',
         auth: true,
     })
 
-/** POST /users/photo — multipart com o campo `foto`. */
+/** POST /users/photo — multipart com o campo `photo`. */
 export function enviarFoto(blob) {
     const form = new FormData()
-    form.append('foto', blob, 'perfil.jpg')
+    form.append('photo', blob, 'perfil.jpg')
     return request('/users/photo', form, { formData: true, auth: true })
 }
 
 /**
- * POST /users/me/exclusao/codigo — envia o código que autoriza a exclusão.
+ * POST /users/me/deletion/code — envia o código que autoriza a exclusão.
  *
  * Devolve o e-mail mascarado (`a*****@gmail.com`) para a interface confirmar
  * o destino sem escrever o endereço inteiro na tela.
@@ -43,7 +43,7 @@ export const solicitarCodigoExclusao = () =>
        banco, nada precisa ser enviado. Sem o verbo explícito sairia um GET
        para uma rota que só aceita POST, e o 404 apareceria na interface
        como "não foi possível enviar o código". */
-    request('/users/me/exclusao/codigo', null, { metodo: 'POST', auth: true })
+    request('/users/me/deletion/code', null, { metodo: 'POST', auth: true })
 
 /**
  * DELETE /users/me — exclui a conta autenticada.
@@ -52,8 +52,8 @@ export const solicitarCodigoExclusao = () =>
  * aceito pelo servidor, mas alguns intermediários descartam o corpo de um
  * DELETE. A query atravessa qualquer um deles.
  */
-export const excluirConta = (codigo) =>
-    request(`/users/me?codigo=${encodeURIComponent(codigo)}`, null, {
+export const excluirConta = (code) =>
+    request(`/users/me?code=${encodeURIComponent(code)}`, null, {
         metodo: 'DELETE',
         auth: true,
     })

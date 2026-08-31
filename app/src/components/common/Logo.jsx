@@ -8,7 +8,7 @@ import logoMarcaEscuro from '../../assets/icons/logo_dark_theme.svg'
  * Logo da aplicação, trocando o arquivo conforme o tema.
  * @param {'texto'|'marca'} variante
  */
-function Logo({ variante = 'texto', className = '', alt = 'Blabry' }) {
+function Logo({ variante = 'text', className = '', alt = 'Blabry' }) {
     const { escuro } = useTema()
 
     const arquivo = variante === 'marca'

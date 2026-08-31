@@ -8,8 +8,8 @@
 export const JANELA_MINUTOS = 15
 const JANELA_MS = JANELA_MINUTOS * 60 * 1000
 
-export function dentroDaJanela(criadoEm) {
-    const criado = new Date(criadoEm).getTime()
+export function dentroDaJanela(createdAt) {
+    const criado = new Date(createdAt).getTime()
     if (Number.isNaN(criado)) return false
     return Date.now() - criado <= JANELA_MS
 }

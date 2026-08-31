@@ -45,16 +45,16 @@ function MenuContexto({ itens, rotulo = 'Mais ações' }) {
 
             {aberto && (
                 <div className="menu-contexto-lista" id={id} role="menu">
-                    {itens.map(({ rotulo: texto, Icone, perigo, aoClicar }) => (
+                    {itens.map(({ rotulo: text, Icone, perigo, aoClicar }) => (
                         <button
-                            key={texto}
+                            key={text}
                             type="button"
                             role="menuitem"
                             className={`menu-contexto-item ${perigo ? 'perigo' : ''}`}
                             onClick={() => { setAberto(false); aoClicar() }}
                         >
                             {Icone && <Icone aria-hidden="true" />}
-                            {texto}
+                            {text}
                         </button>
                     ))}
                 </div>

@@ -10,8 +10,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
  */
 export default function usePaginado(buscar, { campo, ativo = true, acumular = false, deps = [] }) {
     const [itens, setItens] = useState([])
-    const [pagina, setPagina] = useState(1)
-    const [totalPaginas, setTotalPaginas] = useState(1)
+    const [page, setPagina] = useState(1)
+    const [totalPages, setTotalPaginas] = useState(1)
     const [total, setTotal] = useState(0)
     const [carregando, setCarregando] = useState(ativo)
     const [erro, setErro] = useState(null)
@@ -26,10 +26,10 @@ export default function usePaginado(buscar, { campo, ativo = true, acumular = fa
         setCarregando(true)
         setErro(null)
         try {
-            const dados = await buscar({ pagina: numeroPagina, signal: controller.signal })
+            const dados = await buscar({ page: numeroPagina, signal: controller.signal })
             const lista = dados?.[campo] ?? []
             setItens((atuais) => (acumular && numeroPagina > 1 ? [...atuais, ...lista] : lista))
-            setTotalPaginas(dados?.totalPaginas ?? 1)
+            setTotalPaginas(dados?.totalPages ?? 1)
             setTotal(dados?.total ?? lista.length)
             setPagina(numeroPagina)
         } catch (err) {
@@ -55,15 +55,15 @@ export default function usePaginado(buscar, { campo, ativo = true, acumular = fa
     return {
         itens,
         setItens,
-        pagina,
-        totalPaginas,
+        page,
+        totalPages,
         total,
         carregando,
         erro,
-        temMais: pagina < totalPaginas,
+        temMais: page < totalPages,
         irPara: carregar,
-        proxima: () => carregar(pagina + 1),
-        anterior: () => carregar(Math.max(1, pagina - 1)),
+        proxima: () => carregar(page + 1),
+        anterior: () => carregar(Math.max(1, page - 1)),
         recarregar: () => carregar(1),
     }
 }

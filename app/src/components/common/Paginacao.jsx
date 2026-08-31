@@ -1,18 +1,18 @@
 import './Paginacao.css'
 
 /** Controles de página. Some quando há uma página só. */
-function Paginacao({ pagina, totalPaginas, aoAnterior, aoProxima, ocupado = false }) {
-    if (totalPaginas <= 1) return null
+function Paginacao({ page, totalPages, aoAnterior, aoProxima, ocupado = false }) {
+    if (totalPages <= 1) return null
 
     return (
         <nav className="paginacao" aria-label="Paginação">
-            <button type="button" onClick={aoAnterior} disabled={pagina <= 1 || ocupado}>
+            <button type="button" onClick={aoAnterior} disabled={page <= 1 || ocupado}>
                 Anterior
             </button>
 
-            <span aria-live="polite">Página {pagina} de {totalPaginas}</span>
+            <span aria-live="polite">Página {page} de {totalPages}</span>
 
-            <button type="button" onClick={aoProxima} disabled={pagina >= totalPaginas || ocupado}>
+            <button type="button" onClick={aoProxima} disabled={page >= totalPages || ocupado}>
                 Próxima
             </button>
         </nav>

@@ -74,10 +74,10 @@ export async function request(rota, corpo, { metodo, formData = false, auth = fa
        atual"): ali o token continua válido e derrubar a sessão seria errado. */
     if (res.status === 401 && auth && !mantemSessao) {
         localStorage.removeItem('token')
-        localStorage.removeItem('nome')
+        localStorage.removeItem('name')
     }
 
     const dados = await res.json().catch(() => ({}))
-    if (!res.ok) throw Object.assign(new Error(dados.erro || 'Erro'), { status: res.status })
+    if (!res.ok) throw Object.assign(new Error(dados.error || 'Erro'), { status: res.status })
     return dados
 }

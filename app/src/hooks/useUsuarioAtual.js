@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { meuPerfil } from '../services/usuarios.service'
+import { meuPerfil } from '../services/users.service'
 
 /**
  * Dados do usuário autenticado.
@@ -8,9 +8,9 @@ import { meuPerfil } from '../services/usuarios.service'
  */
 export default function useUsuarioAtual() {
     const [usuario, setUsuario] = useState(() => ({
-        nome: localStorage.getItem('nome') || '',
+        name: localStorage.getItem('name') || '',
         alias: localStorage.getItem('alias') || '',
-        fotoUrl: localStorage.getItem('fotoUrl') || null,
+        photoUrl: localStorage.getItem('photoUrl') || null,
     }))
 
     useEffect(() => {
@@ -19,9 +19,9 @@ export default function useUsuarioAtual() {
         meuPerfil({ signal: controller.signal })
             .then((dados) => {
                 setUsuario(dados)
-                if (dados.nome) localStorage.setItem('nome', dados.nome)
+                if (dados.name) localStorage.setItem('name', dados.name)
                 if (dados.alias) localStorage.setItem('alias', dados.alias)
-                if (dados.fotoUrl) localStorage.setItem('fotoUrl', dados.fotoUrl)
+                if (dados.photoUrl) localStorage.setItem('photoUrl', dados.photoUrl)
             })
             .catch(() => { /* mantém o que veio do localStorage */ })
 

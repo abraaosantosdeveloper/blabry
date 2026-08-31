@@ -64,8 +64,8 @@ function VerificarEmail() {
 
             // A confirmação já devolve o token: o usuário entra direto.
             localStorage.setItem('token', dados.token)
-            localStorage.setItem('nome', dados.usuario.nome)
-            localStorage.setItem('alias', dados.usuario.apelido ?? dados.usuario.alias ?? '')
+            localStorage.setItem('name', dados.user.name)
+            localStorage.setItem('alias', dados.user.alias ?? '')
 
             mostrarToast('E-mail confirmado! Bem-vindo ao Blabry.', 'sucesso')
             setTimeout(() => navigate('/feed', { replace: true }), 900)

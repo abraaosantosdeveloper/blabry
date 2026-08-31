@@ -13,7 +13,7 @@ import useUsuarioAtual from '../hooks/useUsuarioAtual'
 import {
     meuPerfil, atualizarPerfil, enviarFoto,
     solicitarCodigoExclusao, excluirConta,
-} from '../services/usuarios.service'
+} from '../services/users.service'
 import { mensagemDeErro } from '../services/http'
 import { useNavigate } from 'react-router-dom'
 
@@ -68,7 +68,7 @@ function MeuPerfil() {
 
                 {/* Mesmo componente do perfil de terceiros. O que muda —
                     poder editar ou excluir — é decidido dentro do PostCard,
-                    comparando o autor da publicação com o usuário do token,
+                    comparando o author da publicação com o usuário do token,
                     e não por uma variante desta tela. */}
                 <PostsDoPerfil
                     alias={usuario.alias}
@@ -82,9 +82,9 @@ function MeuPerfil() {
                 aberto={fotoAberta}
                 aoFechar={() => setFotoAberta(false)}
                 aoSalvar={async (blob) => {
-                    const { fotoUrl } = await enviarFoto(blob)
-                    setUsuario((atual) => ({ ...atual, fotoUrl }))
-                    localStorage.setItem('fotoUrl', fotoUrl)
+                    const { photoUrl } = await enviarFoto(blob)
+                    setUsuario((atual) => ({ ...atual, photoUrl }))
+                    localStorage.setItem('photoUrl', photoUrl)
                     setFotoAberta(false)
                     mostrarToast('Foto atualizada!', 'sucesso')
                 }}
@@ -131,9 +131,9 @@ function MeuPerfil() {
                 /* O modal só exibe; quem fala com a API é a página. Assim o
                    componente continua reutilizável e testável sem rede. */
                 aoPedirCodigo={solicitarCodigoExclusao}
-                aoConfirmar={async ({ codigo }) => {
+                aoConfirmar={async ({ code }) => {
                     try {
-                        await excluirConta(codigo)
+                        await excluirConta(code)
 
                         /* A sessão morre junto com a conta: o token continuaria
                            válido pela assinatura até expirar, mas não há mais

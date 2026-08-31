@@ -15,7 +15,7 @@ const CATEGORIAS = {
     flags: { ordem: 9, rotulo: 'Bandeiras', icone: '🏳️' },
 }
 
-const chave = (nome) => String(nome).toLowerCase().replace(/[^a-z]/g, '')
+const chave = (name) => String(name).toLowerCase().replace(/[^a-z]/g, '')
 
 /**
  * Normaliza o formato do pacote para o que a interface precisa.
@@ -29,17 +29,17 @@ function normalizar(dados) {
         : Object.entries(dados)
 
     return bruto
-        .map(([nome, lista]) => {
-            const categoria = CATEGORIAS[chave(nome)]
+        .map(([name, lista]) => {
+            const categoria = CATEGORIAS[chave(name)]
             if (!categoria) return null   // descarta "Component" (tons de pele)
 
             return {
-                id: chave(nome),
+                id: chave(name),
                 ...categoria,
                 emojis: (lista ?? [])
                     .map((e) => ({
                         char: typeof e === 'string' ? e : e.emoji,
-                        nome: typeof e === 'string' ? '' : (e.name ?? e.slug ?? ''),
+                        name: typeof e === 'string' ? '' : (e.name ?? e.slug ?? ''),
                     }))
                     .filter((e) => e.char),
             }

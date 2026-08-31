@@ -57,8 +57,8 @@ function Campo({ rotulo, valor, editavel, aoEditar }) {
  */
 function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, aoAbrirOpcoes, aoAlternarTema, temaEscuro = false, acaoPrincipal }) {
     const {
-        nome, alias, fotoUrl, bio, email, nascimento, nacionalidade,
-        seguindo = 0, seguidores = 0, desde, teSegue,
+        name, alias, photoUrl, bio, email, birthDate, nationality,
+        following = 0, followers = 0, memberSince, followsYou,
     } = usuario
 
     return (
@@ -76,20 +76,20 @@ function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, 
                             onClick={aoEditarFoto}
                             aria-label="Alterar foto de perfil"
                         >
-                            <Avatar src={fotoUrl} nome={nome} tamanho={64} />
+                            <Avatar src={photoUrl} name={name} tamanho={64} />
                             <span className="perfil-avatar-camera" aria-hidden="true">
                                 <CameraIcon />
                             </span>
                         </button>
                     ) : (
-                        <Avatar src={fotoUrl} nome={nome} tamanho={64} />
+                        <Avatar src={photoUrl} name={name} tamanho={64} />
                     )}
 
                     <div className="perfil-nomes">
                         <div className="perfil-nome-linha">
-                            <h2>{nome}</h2>
+                            <h2>{name}</h2>
                             {proprio && (
-                                <button type="button" className="perfil-editar" onClick={() => aoEditar?.('nome')} aria-label="Editar nome">
+                                <button type="button" className="perfil-editar" onClick={() => aoEditar?.('name')} aria-label="Editar name">
                                     <EditIcon aria-hidden="true" />
                                 </button>
                             )}
@@ -98,16 +98,16 @@ function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, 
 
                         {/* Só aparece em perfil de terceiros: no próprio, o
                             servidor devolve null e a pergunta não faz sentido. */}
-                        {teSegue && <span className="perfil-te-segue">segue você</span>}
+                        {followsYou && <span className="perfil-te-segue">segue você</span>}
                     </div>
                 </div>
 
                 <div className="perfil-numeros">
                     <p className="perfil-contadores">
-                        <span><strong>{compacto(seguindo)}</strong> seguindo</span>
-                        <span><strong>{compacto(seguidores)}</strong> seguidores</span>
+                        <span><strong>{compacto(following)}</strong> following</span>
+                        <span><strong>{compacto(followers)}</strong> followers</span>
                     </p>
-                    {desde && <span className="perfil-desde">No Blabry desde {desde}</span>}
+                    {memberSince && <span className="perfil-desde">No Blabry memberSince {memberSince}</span>}
                     {acaoPrincipal}
                 </div>
             </section>
@@ -131,8 +131,8 @@ function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, 
             {proprio && (
                 <section className="perfil-dados">
                     <Campo rotulo="E-mail" valor={email} editavel aoEditar={() => aoEditar?.('email')} />
-                    <Campo rotulo="Nascimento" valor={dataBR(nascimento)} editavel aoEditar={() => aoEditar?.('nascimento')} />
-                    <Campo rotulo="Nacionalidade" valor={nacionalidade} editavel aoEditar={() => aoEditar?.('nacionalidade')} />
+                    <Campo rotulo="Nascimento" valor={dataBR(birthDate)} editavel aoEditar={() => aoEditar?.('birthDate')} />
+                    <Campo rotulo="Nacionalidade" valor={nationality} editavel aoEditar={() => aoEditar?.('nationality')} />
                 </section>
             )}
 

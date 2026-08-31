@@ -21,9 +21,9 @@ function Login() {
 
         setCarregando(true)
         try {
-            const dados = await login({ email: email.trim(), senha })
+            const dados = await login({ email: email.trim(), password: senha })
             localStorage.setItem('token', dados.token)
-            localStorage.setItem('nome', dados.usuario.nome)
+            localStorage.setItem('name', dados.user.name)
             navigate('/feed')
         } catch (err) {
             /* 403 significa "sabemos quem é você, mas falta confirmar o

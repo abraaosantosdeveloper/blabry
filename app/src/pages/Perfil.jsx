@@ -6,7 +6,7 @@ import EstadoLista from '../components/common/EstadoLista'
 import Toast from '../components/toasts/Toast'
 import useToast from '../hooks/useToast'
 import useUsuarioAtual from '../hooks/useUsuarioAtual'
-import { perfilPorAlias, alternarSeguir } from '../services/usuarios.service'
+import { perfilPorAlias, alternarSeguir } from '../services/users.service'
 import { mensagemDeErro } from '../services/http'
 
 function Perfil() {
@@ -37,19 +37,19 @@ function Perfil() {
         if (ocupado) return
         setOcupado(true)
 
-        const anterior = { seguindoEste: usuario.seguindoEste, seguidores: usuario.seguidores }
+        const anterior = { isFollowing: usuario.isFollowing, followers: usuario.followers }
         setUsuario((u) => ({
             ...u,
-            seguindoEste: !u.seguindoEste,
-            seguidores: u.seguidores + (u.seguindoEste ? -1 : 1),
+            isFollowing: !u.isFollowing,
+            followers: u.followers + (u.isFollowing ? -1 : 1),
         }))
 
         try {
-            const dados = await alternarSeguir(alias, anterior.seguindoEste)
+            const dados = await alternarSeguir(alias, anterior.isFollowing)
             setUsuario((u) => ({
                 ...u,
-                seguindoEste: dados.seguindo ?? !anterior.seguindoEste,
-                seguidores: dados.seguidores ?? u.seguidores,
+                isFollowing: dados.following ?? !anterior.isFollowing,
+                followers: dados.followers ?? u.followers,
             }))
         } catch (err) {
             setUsuario((u) => ({ ...u, ...anterior }))
@@ -62,19 +62,19 @@ function Perfil() {
     /* O servidor devolve seguindoEste como null no próprio perfil — a
        pergunta não faz sentido ali. Serve como segunda barreira caso o
        redirecionamento acima não tenha acontecido. */
-    const botaoSeguir = usuario && usuario.seguindoEste !== null && (
+    const botaoSeguir = usuario && usuario.isFollowing !== null && (
         <button
             type="button"
-            className={`perfil-acao ${usuario.seguindoEste ? 'secundaria' : ''}`}
+            className={`perfil-acao ${usuario.isFollowing ? 'secundaria' : ''}`}
             onClick={seguir}
             disabled={ocupado}
         >
-            {usuario.seguindoEste ? 'Seguindo' : 'Seguir'}
+            {usuario.isFollowing ? 'Seguindo' : 'Seguir'}
         </button>
     )
 
     /* Chegar ao próprio perfil pela URL pública é normal — basta clicar no
-       seu nome em um post. Redirecionar para /perfil/me evita uma segunda
+       seu name em um post. Redirecionar para /perfil/me evita uma segunda
        tela do mesmo perfil, sem os lápis de edição e com um botão de seguir
        que a API recusaria.
 

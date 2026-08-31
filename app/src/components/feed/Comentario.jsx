@@ -23,28 +23,28 @@ const quando = (iso) => {
 /** Um comentário, com edição no próprio lugar. */
 function Comentario({ comentario, souAutor, aoEditar, aoExcluir }) {
     const [editando, setEditando] = useState(false)
-    const [texto, setTexto] = useState(comentario.texto)
+    const [text, setTexto] = useState(comentario.text)
     const [salvando, setSalvando] = useState(false)
     const [erro, setErro] = useState(null)
     const campoRef = useRef(null)
 
     /* Reavaliado a cada render: um comentário publicado há 14 minutos deixa
        de ser editável enquanto a tela está aberta. */
-    const podeEditar = souAutor && dentroDaJanela(comentario.criadoEm)
+    const podeEditar = souAutor && dentroDaJanela(comentario.createdAt)
 
     useEffect(() => {
         if (!editando) return
-        setTexto(comentario.texto)
+        setTexto(comentario.text)
         setErro(null)
         campoRef.current?.focus()
-    }, [editando, comentario.texto])
+    }, [editando, comentario.text])
 
     async function salvar(e) {
         e.preventDefault()
-        const conteudo = texto.trim()
+        const conteudo = text.trim()
         if (!conteudo || salvando) return
 
-        if (conteudo === comentario.texto) return setEditando(false)
+        if (conteudo === comentario.text) return setEditando(false)
 
         setSalvando(true)
         setErro(null)
@@ -68,21 +68,21 @@ function Comentario({ comentario, souAutor, aoEditar, aoExcluir }) {
 
     return (
         <li className="comentario">
-            <Link to={`/perfil/${comentario.autor.alias}`} className="comentario-avatar">
-                <Avatar src={comentario.autor.fotoUrl} nome={comentario.autor.nome} tamanho={30} />
+            <Link to={`/perfil/${comentario.author.alias}`} className="comentario-avatar">
+                <Avatar src={comentario.author.photoUrl} name={comentario.author.name} tamanho={30} />
             </Link>
 
             <div className="comentario-corpo">
                 <p className="comentario-cabecalho">
-                    <Link to={`/perfil/${comentario.autor.alias}`}>{comentario.autor.nome}</Link>
-                    <span>@{comentario.autor.alias}</span>
-                    {comentario.criadoEm && (
-                        <time dateTime={comentario.criadoEm}>· {quando(comentario.criadoEm)}</time>
+                    <Link to={`/perfil/${comentario.author.alias}`}>{comentario.author.name}</Link>
+                    <span>@{comentario.author.alias}</span>
+                    {comentario.createdAt && (
+                        <time dateTime={comentario.createdAt}>· {quando(comentario.createdAt)}</time>
                     )}
-                    {comentario.editadoEm && (
+                    {comentario.editedAt && (
                         <span
                             className="comentario-editado"
-                            title={`Editado em ${new Date(comentario.editadoEm).toLocaleString('pt-BR')}`}
+                            title={`Editado em ${new Date(comentario.editedAt).toLocaleString('pt-BR')}`}
                         >
                             · editado
                         </span>
@@ -94,7 +94,7 @@ function Comentario({ comentario, souAutor, aoEditar, aoExcluir }) {
                         <input
                             ref={campoRef}
                             type="text"
-                            value={texto}
+                            value={text}
                             maxLength={LIMITE}
                             onChange={(e) => setTexto(e.target.value)}
                             onKeyDown={(e) => { if (e.key === 'Escape') setEditando(false) }}
@@ -107,13 +107,13 @@ function Comentario({ comentario, souAutor, aoEditar, aoExcluir }) {
                             <button type="button" className="neutro" onClick={() => setEditando(false)}>
                                 Cancelar
                             </button>
-                            <button type="submit" disabled={!texto.trim() || salvando}>
+                            <button type="submit" disabled={!text.trim() || salvando}>
                                 {salvando ? 'Salvando...' : 'Salvar'}
                             </button>
                         </div>
                     </form>
                 ) : (
-                    <p className="comentario-texto">{comentario.texto}</p>
+                    <p className="comentario-texto">{comentario.text}</p>
                 )}
             </div>
 

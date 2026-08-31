@@ -26,9 +26,9 @@ function ContaModal({ aberto, aoFechar, aoAlterarSenha, aoExcluirConta }) {
 
     function sair() {
         localStorage.removeItem('token')
-        localStorage.removeItem('nome')
+        localStorage.removeItem('name')
         localStorage.removeItem('alias')
-        localStorage.removeItem('fotoUrl')
+        localStorage.removeItem('photoUrl')
         navigate('/', { replace: true })
     }
 

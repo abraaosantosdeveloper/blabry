@@ -12,13 +12,13 @@ export { mensagemDeErro } from './http'
 export const login = (dados) => request('/auth/login', dados)
 
 /**
- * POST /auth/cadastro
+ * POST /auth/signup
  *
  * Não devolve mais token: a conta nasce pendente de confirmação. A resposta
  * traz `{ usuario, verificacaoPendente: true }`, e o próximo passo é a tela
  * de código.
  */
-export const cadastrar = (dados) => request('/auth/cadastro', dados)
+export const cadastrar = (dados) => request('/auth/signup', dados)
 
 export const listarPaises = () => request('/countries')
 
@@ -27,23 +27,23 @@ export const listarPaises = () => request('/countries')
    ------------------------------------------------------------------ */
 
 /**
- * POST /auth/verificar-email/reenviar — pede um novo código de confirmação.
+ * POST /auth/verify-email/resend — pede um novo código de confirmação.
  *
  * Responde 200 mesmo para e-mail sem conta: a API não revela quem está
  * cadastrado. A interface, por isso, nunca deve prometer "enviamos" com
  * certeza — a mensagem correta é "se houver conta, o código chegou".
  */
 export const reenviarCodigoCadastro = (email) =>
-    request('/auth/verificar-email/reenviar', { email })
+    request('/auth/verify-email/resend', { email })
 
-/** POST /auth/verificar-email — confirma a conta e devolve o token. */
-export const confirmarEmail = ({ email, codigo }) =>
-    request('/auth/verificar-email', { email, codigo })
+/** POST /auth/verify-email — confirma a conta e devolve o token. */
+export const confirmarEmail = ({ email, code }) =>
+    request('/auth/verify-email', { email, code })
 
-/** POST /auth/senha/codigo — envia o código de troca de senha. */
+/** POST /auth/password/code — envia o código de troca de senha. */
 export const solicitarCodigoSenha = (email) =>
-    request('/auth/senha/codigo', { email })
+    request('/auth/password/code', { email })
 
-/** POST /auth/senha — define a nova senha mediante código. */
-export const trocarSenha = ({ email, codigo, novaSenha }) =>
-    request('/auth/senha', { email, codigo, novaSenha })
+/** POST /auth/password — define a nova senha mediante código. */
+export const trocarSenha = ({ email, code, newPassword }) =>
+    request('/auth/password', { email, code, newPassword })

@@ -73,7 +73,7 @@ function ExcluirContaModal({ aberto, aoFechar, email, aoConfirmar, aoPedirCodigo
         if (!podeExcluir) return
         setEnviando(true)
         try {
-            await aoConfirmar?.({ codigo })
+            await aoConfirmar?.({ code: codigo })
         } finally {
             setEnviando(false)
         }

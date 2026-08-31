@@ -22,8 +22,8 @@ const ALTURA_MINIMA = 220
 const LIMITE_BUSCA = 120
 
 /** Remove acentos para que "coracao" encontre "coração". */
-const semAcento = (texto) =>
-    texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+const semAcento = (text) =>
+    text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
 
 /**
  * Painel de emojis.
@@ -53,7 +53,7 @@ function EmojiPicker({ ancoraRef, aoEscolher, aoFechar }) {
             const achados = []
             for (const grupo of grupos) {
                 for (const emoji of grupo.emojis) {
-                    if (semAcento(emoji.nome).includes(termo)) achados.push(emoji)
+                    if (semAcento(emoji.name).includes(termo)) achados.push(emoji)
                     if (achados.length >= LIMITE_BUSCA) return achados
                 }
             }
@@ -180,8 +180,8 @@ function EmojiPicker({ ancoraRef, aoEscolher, aoFechar }) {
                                     type="button"
                                     className="emoji-item"
                                     onClick={() => aoEscolher(e.char)}
-                                    title={e.nome}
-                                    aria-label={e.nome || 'Emoji'}
+                                    title={e.name}
+                                    aria-label={e.name || 'Emoji'}
                                 >
                                     {e.char}
                                 </button>

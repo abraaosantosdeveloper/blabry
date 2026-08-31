@@ -19,7 +19,7 @@
 export const SERVICOS = [
     {
         id: 'railway',
-        nome: 'Railway',
+        name: 'Railway',
         sigla: 'RW',
         cor: '#8A6DF1',
         papel: 'Hospedagem da API e do banco de dados',
@@ -27,7 +27,7 @@ export const SERVICOS = [
     },
     {
         id: 'github',
-        nome: 'GitHub Pages',
+        name: 'GitHub Pages',
         sigla: 'GH',
         cor: '#4A5568',
         papel: 'Hospedagem da interface web (arquivos estáticos)',
@@ -35,7 +35,7 @@ export const SERVICOS = [
     },
     {
         id: 'cloudinary',
-        nome: 'Cloudinary',
+        name: 'Cloudinary',
         sigla: 'CL',
         cor: '#2E7BEE',
         papel: 'Armazenamento e entrega das fotos de perfil',
@@ -43,7 +43,7 @@ export const SERVICOS = [
     },
     {
         id: 'mysql',
-        nome: 'MySQL',
+        name: 'MySQL',
         sigla: 'My',
         cor: '#00758F',
         papel: 'Banco de dados relacional onde os registros ficam gravados',
@@ -51,7 +51,7 @@ export const SERVICOS = [
     },
     {
         id: 'resend',
-        nome: 'Resend',
+        name: 'Resend',
         sigla: 'Re',
         cor: '#1F2933',
         papel: 'Envio dos e-mails com códigos de verificação',
@@ -67,7 +67,7 @@ export function SeloServico({ sigla, cor }) {
     return (
         /* aria-hidden porque o nome do serviço já aparece como texto ao lado:
            anunciar "RW" no leitor de tela só repetiria a informação em pior
-           qualidade. O selo é decoração de apoio ao nome, não substituto. */
+           qualidade. O selo é decoração de apoio ao name, não substituto. */
         <span className="selo-servico" style={{ '--selo-cor': cor }} aria-hidden="true">
             {sigla}
         </span>

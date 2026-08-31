@@ -15,7 +15,7 @@ function Abas({ itens, ativa, aoTrocar, rotulo = 'Seções' }) {
 
     return (
         <div className="abas" role="tablist" aria-label={rotulo} onKeyDown={aoTeclar}>
-            {itens.map(({ id, rotulo: texto }) => (
+            {itens.map(({ id, rotulo: text }) => (
                 <button
                     key={id}
                     type="button"
@@ -27,7 +27,7 @@ function Abas({ itens, ativa, aoTrocar, rotulo = 'Seções' }) {
                     className={`abas-item ${ativa === id ? 'ativa' : ''}`}
                     onClick={() => aoTrocar(id)}
                 >
-                    {texto}
+                    {text}
                 </button>
             ))}
         </div>

@@ -8,8 +8,8 @@ function normalizar(resposta) {
     return lista
         .map((item) => {
             const value = typeof item === 'string' ? item : (item.country ?? item.codigo ?? item.value)
-            const nome = typeof item === 'string' ? null : (item.name ?? item.nome ?? item.label)
-            return value ? { value, label: nome ? `${nome} (${value})` : value } : null
+            const name = typeof item === 'string' ? null : (item.name ?? item.name ?? item.label)
+            return value ? { value, label: name ? `${name} (${value})` : value } : null
         })
         .filter(Boolean)
         .sort((a, b) => a.label.localeCompare(b.label, 'pt-BR'))

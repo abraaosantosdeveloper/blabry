@@ -92,7 +92,7 @@ function PoliticaPrivacidade() {
                 <ul className="pp-lista">
                     <li>
                         <strong>Dados de cadastro:</strong> nome, @ (identificador único),
-                        e-mail, data de nascimento e nacionalidade. A data de nascimento
+                        e-mail, data de birthDate e nationality. A data de birthDate
                         existe para verificar a idade mínima de 13 anos.
                     </li>
                     <li>
@@ -101,7 +101,7 @@ function PoliticaPrivacidade() {
                     </li>
                     <li>
                         <strong>Conteúdo que você cria:</strong> posts, comentários,
-                        curtidas, quem você segue e quem segue você.
+                        likes, quem você segue e quem segue você.
                     </li>
                     <li>
                         <strong>Foto de perfil:</strong> opcional. Se enviada, é
@@ -127,14 +127,14 @@ function PoliticaPrivacidade() {
                 <ul className="pp-lista">
                     <li>E-mail e senha: autenticar você e recuperar o acesso.</li>
                     <li>Nome, @ e foto: identificar você para outras pessoas.</li>
-                    <li>Data de nascimento: confirmar a idade mínima.</li>
+                    <li>Data de birthDate: confirmar a idade mínima.</li>
                     <li>Nacionalidade: exibida apenas no seu próprio perfil.</li>
-                    <li>Posts, comentários, curtidas e seguidores: montar o feed e os perfis.</li>
+                    <li>Posts, comentários, likes e followers: montar o feed e os perfis.</li>
                 </ul>
                 <p>
-                    O <strong>perfil público</strong> mostra somente nome, @, foto, bio,
-                    contagem de seguidores e de quem você segue, e o ano em que a conta
-                    foi criada. E-mail, data de nascimento e nacionalidade aparecem
+                    O <strong>perfil público</strong> mostra somente name, @, foto, bio,
+                    contagem de followers e de quem você segue, e o ano em que a conta
+                    foi criada. E-mail, data de birthDate e nationality aparecem
                     apenas para você, quando está autenticado na própria conta — a API
                     devolve esses campos vazios para qualquer visitante.
                 </p>
@@ -174,7 +174,7 @@ function PoliticaPrivacidade() {
                 <p>
                     Não vendemos, alugamos nem cedemos seus dados. Eles só passam pelos
                     serviços de infraestrutura necessários para a plataforma existir,
-                    listados no rodapé desta página, e sempre no limite da função de
+                    listados no rodapé desta página, e sempre no limit da função de
                     cada um. Podemos ainda divulgar informações se houver ordem judicial
                     ou obrigação legal.
                 </p>
@@ -230,7 +230,7 @@ function PoliticaPrivacidade() {
                                 {/* rel="noreferrer" impede que o site de destino saiba
                                     de qual página o usuário veio; noopener evita que a
                                     aba aberta ganhe referência à nossa janela. */}
-                                <a href={s.site} target="_blank" rel="noopener noreferrer">{s.nome}</a>
+                                <a href={s.site} target="_blank" rel="noopener noreferrer">{s.name}</a>
                                 <small>{s.papel}</small>
                             </div>
                         </li>

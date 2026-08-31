@@ -16,7 +16,7 @@ function Feed() {
     const [modalAberto, setModalAberto] = useState(false)
     const usuario = useUsuarioAtual()
 
-    const buscar = useCallback(({ pagina, signal }) => listarPosts({ pagina, signal }), [])
+    const buscar = useCallback(({ page, signal }) => listarPosts({ page, signal }), [])
 
     const {
         itens: posts, setItens, carregando, erro,
@@ -29,8 +29,8 @@ function Feed() {
     }, [setItens])
 
     /** Substitui o post pelo que o servidor devolveu já normalizado. */
-    async function editar(id, texto) {
-        const atualizado = await editarPost(id, texto)
+    async function editar(id, text) {
+        const atualizado = await editarPost(id, text)
         setItens((atuais) => atuais.map((p) => (p.id === id ? atualizado : p)))
         mostrarToast('Blab atualizado.', 'sucesso')
     }
@@ -41,8 +41,8 @@ function Feed() {
         mostrarToast('Blab excluído.', 'sucesso')
     }
 
-    async function publicar(texto) {
-        const novo = await criarPost(texto)
+    async function publicar(text) {
+        const novo = await criarPost(text)
         setItens((atuais) => [novo, ...atuais])
         mostrarToast('Blab publicado!', 'sucesso')
     }
@@ -54,7 +54,7 @@ function Feed() {
             <h1 className="sr-only">Feed</h1>
 
             <PostComposer
-                autor={usuario}
+                author={usuario}
                 aoPublicar={publicar}
                 aoErro={(err) => mostrarToast(mensagemDeErro(err))}
             />
@@ -101,7 +101,7 @@ function Feed() {
             <NovoPostModal
                 aberto={modalAberto}
                 aoFechar={() => setModalAberto(false)}
-                autor={usuario}
+                author={usuario}
                 aoPublicar={publicar}
                 aoErro={(err) => mostrarToast(mensagemDeErro(err))}
             />

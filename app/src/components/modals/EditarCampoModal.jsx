@@ -7,7 +7,7 @@ const BIO_MAX = 280
 
 /** Configuração de cada campo editável do perfil. */
 const CAMPOS = {
-    nome: {
+    name: {
         titulo: 'Editar nome',
         rotulo: 'Nome completo',
         tipo: 'text',
@@ -32,12 +32,12 @@ const CAMPOS = {
         exigeSenha: true,
         ajuda: 'O e-mail é usado para recuperar a conta, por isso pedimos sua senha.',
     },
-    nascimento: {
+    birthDate: {
         titulo: 'Editar data de nascimento',
         rotulo: 'Data de nascimento',
         tipo: 'date',
     },
-    nacionalidade: {
+    nationality: {
         titulo: 'Editar nacionalidade',
         rotulo: 'Nacionalidade',
         tipo: 'pais',
@@ -55,7 +55,7 @@ function EditarCampoModal({ aberto, campo, usuario, aoFechar, aoSalvar }) {
     const config = CAMPOS[campo]
 
     const [valor, setValor] = useState('')
-    const [senhaAtual, setSenhaAtual] = useState('')
+    const [currentPassword, setSenhaAtual] = useState('')
     const [salvando, setSalvando] = useState(false)
     const [erro, setErro] = useState(null)
 
@@ -64,7 +64,7 @@ function EditarCampoModal({ aberto, campo, usuario, aoFechar, aoSalvar }) {
     useEffect(() => {
         if (!aberto || !config) return
         const atual = usuario?.[campo] ?? ''
-        setValor(campo === 'nascimento' ? paraInputDate(atual) : atual)
+        setValor(campo === 'birthDate' ? paraInputDate(atual) : atual)
         setSenhaAtual('')
         setErro(null)
         setSalvando(false)
@@ -72,13 +72,13 @@ function EditarCampoModal({ aberto, campo, usuario, aoFechar, aoSalvar }) {
 
     if (!config) return null
 
-    const original = campo === 'nascimento'
-        ? paraInputDate(usuario?.nascimento)
+    const original = campo === 'birthDate'
+        ? paraInputDate(usuario?.birthDate)
         : (usuario?.[campo] ?? '')
 
     const mudou = String(valor).trim() !== String(original ?? '').trim()
     const excedeu = campo === 'bio' && valor.length > BIO_MAX
-    const faltaSenha = config.exigeSenha && mudou && !senhaAtual
+    const faltaSenha = config.exigeSenha && mudou && !currentPassword
     const podeSalvar = mudou && !excedeu && !faltaSenha && !salvando
 
     async function salvar(e) {
@@ -89,7 +89,7 @@ function EditarCampoModal({ aberto, campo, usuario, aoFechar, aoSalvar }) {
         setErro(null)
         try {
             const corpo = { [campo]: valor }
-            if (config.exigeSenha) corpo.senhaAtual = senhaAtual
+            if (config.exigeSenha) corpo.currentPassword = currentPassword
             await aoSalvar(corpo)
         } catch (err) {
             // A mensagem da API é mais específica que o mapa genérico de status.
@@ -155,7 +155,7 @@ function EditarCampoModal({ aberto, campo, usuario, aoFechar, aoSalvar }) {
                         <span>Senha atual</span>
                         <input
                             type="password"
-                            value={senhaAtual}
+                            value={currentPassword}
                             onChange={(e) => setSenhaAtual(e.target.value)}
                             placeholder="Sua senha"
                             autoComplete="current-password"

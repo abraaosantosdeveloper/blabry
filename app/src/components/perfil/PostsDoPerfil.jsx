@@ -23,7 +23,7 @@ function PostsDoPerfil({ alias, autorAtual, aoErro }) {
        identidade a cada render e o usePaginado recarregaria em laço. Com
        ele, trocar de perfil (e só isso) dispara nova busca. */
     const buscar = useCallback(
-        ({ pagina, signal }) => listarPostsDoUsuario(alias, { pagina, signal }),
+        ({ page, signal }) => listarPostsDoUsuario(alias, { page, signal }),
         [alias]
     )
 
@@ -50,8 +50,8 @@ function PostsDoPerfil({ alias, autorAtual, aoErro }) {
     /* Editar e excluir vivem aqui, e não no PostCard, porque quem conhece a
        lista é esta seção: o cartão avisa o que aconteceu, a lista decide
        como se reorganizar. */
-    async function editar(id, texto) {
-        const atualizado = await editarPost(id, texto)
+    async function editar(id, text) {
+        const atualizado = await editarPost(id, text)
         setItens((atuais) => atuais.map((p) => (p.id === id ? atualizado : p)))
     }
 
