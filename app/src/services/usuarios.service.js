@@ -37,7 +37,13 @@ export function enviarFoto(blob) {
  * o destino sem escrever o endereço inteiro na tela.
  */
 export const solicitarCodigoExclusao = () =>
-    request('/users/me/exclusao/codigo', null, { auth: true })
+    /* `metodo: 'POST'` é obrigatório aqui. O `request` infere o verbo pelo
+       corpo — `metodo ?? (corpo ? 'POST' : 'GET')` — e esta rota não tem
+       corpo: a identidade vem do token e o e-mail de destino é lido do
+       banco, nada precisa ser enviado. Sem o verbo explícito sairia um GET
+       para uma rota que só aceita POST, e o 404 apareceria na interface
+       como "não foi possível enviar o código". */
+    request('/users/me/exclusao/codigo', null, { metodo: 'POST', auth: true })
 
 /**
  * DELETE /users/me — exclui a conta autenticada.
