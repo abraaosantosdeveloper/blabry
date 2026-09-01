@@ -40,8 +40,8 @@ function validar(etapa, f) {
         if (!f.nationality) return erro('Selecione sua nacionalidade.', 'nationality')
     }
     if (etapa === 1) {
-        if (!EMAIL_RE.test(f.email)) return erro('Digite um email válido.', 'email')
-        if (f.email !== f.confirmarEmail) return erro('Os emails não são iguais.', 'confirmarEmail')
+        if (!EMAIL_RE.test(f.email)) return erro('Digite um e-mail válido.', 'email')
+        if (f.email !== f.confirmarEmail) return erro('Os e-mails não são iguais.', 'confirmarEmail')
         if (!SENHA_RE.test(f.senha)) return erro('A senha precisa de 8 caracteres, uma maiúscula e um caractere especial.', 'senha')
         if (f.senha !== f.confirmarSenha) return erro('As senhas não são iguais.', 'confirmarSenha')
     }
@@ -182,7 +182,7 @@ function NovaConta() {
                         {etapa === 1 && (
                             <>
                                 <AuthInput label="Email" placeholder="email@exemplo.com" fieldType="email" fieldId="email-input" autoComplete="email" {...campo('email')} />
-                                <AuthInput label="Confirmar email" placeholder="Repita o email" fieldType="email" fieldId="confirmar-email-input" {...campo('confirmarEmail')} />
+                                <AuthInput label="Confirmar e-mail" placeholder="Repita o e-mail" fieldType="email" fieldId="confirmar-email-input" {...campo('confirmarEmail')} />
                                 <div className="input-line-wrapper">
                                     <AuthInput label="Senha" placeholder="Nova senha" fieldType="password" fieldId="senha-input" autoComplete="new-password" {...campo('senha')} />
                                     <AuthInput label="Confirmar senha" placeholder="Repita a senha" fieldType="password" fieldId="confirmar-senha-input" autoComplete="new-password" {...campo('confirmarSenha')} />

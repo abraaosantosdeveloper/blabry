@@ -81,7 +81,7 @@ function PoliticaPrivacidade() {
                     fins publicitários — não exibimos anúncios e não vendemos dados.
                 </p>
                 <p>
-                    Tudo o que você publica em um post ou comentário é <strong>público</strong>:
+                    Tudo o que você publica em uma publicação ou comentário é <strong>público</strong>:
                     fica visível para qualquer pessoa que acesse a plataforma, inclusive
                     sem estar logada. Trate essa área como você trataria um mural aberto.
                 </p>
@@ -100,7 +100,7 @@ function PoliticaPrivacidade() {
                         apenas um hash dela — veja a seção de criptografia.
                     </li>
                     <li>
-                        <strong>Conteúdo que você cria:</strong> posts, comentários,
+                        <strong>Conteúdo que você cria:</strong> publicações, comentários,
                         curtidas, quem você segue e quem segue você.
                     </li>
                     <li>
@@ -129,7 +129,7 @@ function PoliticaPrivacidade() {
                     <li>Nome, @ e foto: identificar você para outras pessoas.</li>
                     <li>Data de nascimento: confirmar a idade mínima.</li>
                     <li>Nacionalidade: exibida apenas no seu próprio perfil.</li>
-                    <li>Posts, comentários, curtidas e seguidores: montar o feed e os perfis.</li>
+                    <li>Publicações, comentários, curtidas e seguidores: montar o feed e os perfis.</li>
                 </ul>
                 <p>
                     O <strong>perfil público</strong> mostra somente nome, @, foto, bio,

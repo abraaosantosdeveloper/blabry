@@ -11,7 +11,16 @@ import './Comentarios.css'
 
 const LIMITE = 280
 
-function Comentarios({ postId, autorAtual, aoContarMudar, aoErro }) {
+/**
+ * Lista e formulário de comentários de uma publicação.
+ *
+ * @param {(mensagem: string, tipo?: 'erro'|'sucesso') => void} [aoAvisar]
+ *   Fala com o Toast da página. É o mesmo `mostrarToast` que o feed usa para
+ *   as publicações — por isso o segundo argumento é o tipo, e por isso
+ *   comentar avisa igual a blabrar. Sem esse retorno, a ação some sem
+ *   confirmação e só resta conferir na lista se deu certo.
+ */
+function Comentarios({ postId, autorAtual, aoContarMudar, aoAvisar }) {
     const [text, setTexto] = useState('')
     const [enviando, setEnviando] = useState(false)
     const [excluindo, setExcluindo] = useState(null)
@@ -56,17 +65,26 @@ function Comentarios({ postId, autorAtual, aoContarMudar, aoErro }) {
             setItens((atuais) => [...atuais, novo])
             aoContarMudar?.(total + 1)
             setTexto('')
+            aoAvisar?.('Comentário publicado!', 'sucesso')
         } catch (err) {
-            aoErro?.(mensagemDeErro(err))
+            aoAvisar?.(mensagemDeErro(err))
         } finally {
             setEnviando(false)
         }
     }
 
-    /** Substitui o comentário pelo que o servidor devolveu já normalizado. */
+    /**
+     * Substitui o comentário pelo que o servidor devolveu já normalizado.
+     *
+     * Sem try/catch de propósito: quem chama é o próprio `Comentario`, que
+     * captura a falha e a mostra dentro do formulário, mantendo-o aberto com
+     * o texto digitado. Engolir o erro aqui fecharia o formulário como se
+     * tivesse salvo.
+     */
     async function editar(comentarioId, text) {
         const atualizado = await editarComentario(postId, comentarioId, text)
         setItens((atuais) => atuais.map((c) => (c.id === comentarioId ? atualizado : c)))
+        aoAvisar?.('Comentário atualizado.', 'sucesso')
     }
 
     async function excluir(comentarioId) {
@@ -74,8 +92,9 @@ function Comentarios({ postId, autorAtual, aoContarMudar, aoErro }) {
             await excluirComentario(postId, comentarioId)
             setItens((atuais) => atuais.filter((c) => c.id !== comentarioId))
             aoContarMudar?.(Math.max(0, total - 1))
+            aoAvisar?.('Comentário excluído.', 'sucesso')
         } catch (err) {
-            aoErro?.(mensagemDeErro(err))
+            aoAvisar?.(mensagemDeErro(err))
         } finally {
             setExcluindo(null)
         }

@@ -17,7 +17,7 @@ function Login() {
 
     async function handleLogin() {
         if (carregando) return
-        if (!email || !senha) return mostrarToast('Preencha email e senha.')
+        if (!email || !senha) return mostrarToast('Preencha e-mail e senha.')
 
         setCarregando(true)
         try {
@@ -52,7 +52,7 @@ function Login() {
             <Logo className="logo" alt="Logo Blabry" />
 
             <form className="input-wrapper" onSubmit={(e) => { e.preventDefault(); handleLogin() }}>
-                <AuthInput label="Email ou @" placeholder="email@exemplo.com" fieldType="text" fieldId="email-input"
+                <AuthInput label="E-mail ou @" placeholder="email@exemplo.com" fieldType="text" fieldId="email-input"
                     value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="username" />
                 <AuthInput label="Senha" placeholder="Senha" fieldType="password" fieldId="password-input"
                     value={senha} onChange={(e) => setSenha(e.target.value)} autoComplete="current-password" />

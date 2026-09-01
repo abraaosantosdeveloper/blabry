@@ -3,10 +3,10 @@ const API = import.meta.env.VITE_API_URL
 const MENSAGENS = {
     0: 'Sem conexão com o servidor. Tente novamente.',
     400: 'Preencha todos os campos corretamente.',
-    401: 'Email ou senha incorretos.',
+    401: 'E-mail ou senha incorretos.',
     403: 'Você não tem permissão para isso.',
     404: 'Não encontramos o que você procura.',
-    409: 'Este email ou @ já está em uso.',
+    409: 'Este e-mail ou @ já está em uso.',
     413: 'Imagem muito grande. Escolha uma menor.',
     415: 'Formato de imagem não suportado. Envie JPEG, PNG ou WebP.',
     429: 'Muitas tentativas. Aguarde um instante.',

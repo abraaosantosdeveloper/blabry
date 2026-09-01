@@ -249,7 +249,7 @@ function PostCard({
                     postId={id}
                     autorAtual={autorAtual}
                     aoContarMudar={(total) => aoAtualizar?.(id, { comments: total })}
-                    aoErro={aoErro}
+                    aoAvisar={aoErro}
                 />
             )}
         </article>

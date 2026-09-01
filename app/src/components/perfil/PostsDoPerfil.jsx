@@ -16,7 +16,9 @@ import './PostsDoPerfil.css'
  *
  * @param {string} alias   @ do dono do perfil (sem a arroba)
  * @param {object} autorAtual usuário autenticado — decide o que é editável
- * @param {(mensagem: string) => void} [aoErro] repassa avisos ao Toast da página
+ * @param {(mensagem: string, tipo?: 'erro'|'sucesso') => void} [aoErro] repassa
+ *   avisos ao Toast da página. É o `mostrarToast` da página, então o segundo
+ *   argumento escolhe entre aviso de erro e confirmação de sucesso.
  */
 function PostsDoPerfil({ alias, autorAtual, aoErro }) {
     /* useCallback com `alias` na dependência: sem ele, a função mudaria de
@@ -53,11 +55,13 @@ function PostsDoPerfil({ alias, autorAtual, aoErro }) {
     async function editar(id, text) {
         const atualizado = await editarPost(id, text)
         setItens((atuais) => atuais.map((p) => (p.id === id ? atualizado : p)))
+        aoErro?.('Blab atualizado.', 'sucesso')
     }
 
     async function excluir(id) {
         await excluirPost(id)
         setItens((atuais) => atuais.filter((p) => p.id !== id))
+        aoErro?.('Blab excluído.', 'sucesso')
     }
 
     return (
