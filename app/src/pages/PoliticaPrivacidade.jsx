@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Logo from '../components/common/Logo'
 import { SERVICOS, SeloServico } from '../components/common/LogosHospedagem'
@@ -45,6 +46,27 @@ const SUMARIO = [
 function PoliticaPrivacidade() {
     const navigate = useNavigate()
 
+    /* Esta página abre sempre em aba nova — o cadastro e a modal de Conta
+       usam target="_blank" —, e aba nova nasce sem histórico. O botão fazia
+       navigate(-1) e não tinha para onde voltar: não era um clique perdido,
+       era um botão que nunca funcionou por nenhum dos dois caminhos.
+
+       `history.state.idx` é o índice que o React Router mantém na pilha
+       desta aba. Zero significa "esta é a primeira página daqui", e aí
+       voltar precisa de um destino de verdade em vez de um passo atrás.
+
+       Lido uma vez na montagem, e não a cada render: o valor que interessa
+       é como a aba começou. */
+    const [temHistorico] = useState(() => (window.history.state?.idx ?? 0) > 0)
+
+    /* Para onde ir quando não há passo atrás depende de quem está lendo:
+       quem veio da modal de Conta tem sessão e volta ao feed; quem veio do
+       cadastro ainda não tem conta e volta à entrada. */
+    function voltar() {
+        if (temHistorico) return navigate(-1)
+        navigate(localStorage.getItem('token') ? '/feed' : '/', { replace: true })
+    }
+
     return (
         <main className="pp">
             <header className="pp-cabecalho">
@@ -55,10 +77,11 @@ function PoliticaPrivacidade() {
                     <Logo className="pp-logo" alt="Blabry" />
                 </Link>
 
-                {/* navigate(-1) só é oferecido como conveniência secundária;
-                    se não houver histórico, o navegador simplesmente ignora. */}
-                <button type="button" className="pp-voltar" onClick={() => navigate(-1)}>
-                    Voltar
+                {/* O rótulo acompanha o que o botão faz de fato. Escrever
+                    "Voltar" numa aba recém-aberta promete desfazer um passo
+                    que não existe. */}
+                <button type="button" className="pp-voltar" onClick={voltar}>
+                    {temHistorico ? 'Voltar' : 'Ir para o início'}
                 </button>
             </header>
 
