@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import PerfilView from '../components/profile/PerfilView'
-import PostsDoPerfil from '../components/profile/PostsDoPerfil'
+import PerfilView from '../components/perfil/PerfilView'
+import PostsDoPerfil from '../components/perfil/PostsDoPerfil'
 import ContaModal from '../components/modals/ContaModal'
 import ExcluirContaModal from '../components/modals/ExcluirContaModal'
 import EditarCampoModal from '../components/modals/EditarCampoModal'
