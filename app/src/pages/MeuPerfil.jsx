@@ -108,6 +108,15 @@ function MeuPerfil() {
             <ContaModal
                 aberto={opcoesAbertas}
                 aoFechar={() => setOpcoesAbertas(false)}
+                usuario={usuario}
+                /* Os dados pessoais saíram da grade do perfil e passaram a
+                   viver numa vista desta modal. O salvamento é o mesmo PATCH
+                   que o modal de campo já usava — só o lugar mudou. */
+                aoSalvarCampo={async (corpo) => {
+                    const atualizado = await atualizarPerfil(corpo)
+                    setUsuario(atualizado)
+                    mostrarToast('Perfil atualizado!', 'sucesso')
+                }}
                 aoAlterarSenha={() => {
                     setOpcoesAbertas(false)
                     /* A troca de senha reaproveita a mesma tela pública de

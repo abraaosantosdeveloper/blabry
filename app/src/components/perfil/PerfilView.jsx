@@ -26,38 +26,13 @@ import './PerfilView.css'
 const compacto = (n) =>
     n >= 1000 ? `${(n / 1000).toFixed(n % 1000 === 0 ? 0 : 1)}k`.replace('.', ',') : String(n)
 
-/* Data de calendário: formatada a partir da string, sem passar por Date.
-   `new Date('2004-01-20')` seria lido como meia-noite UTC e, em fusos
-   negativos, exibiria o dia anterior. */
-const dataBR = (valor) => {
-    if (!valor) return '—'
-    const [ano, mes, dia] = String(valor).slice(0, 10).split('-')
-    return ano && mes && dia ? `${dia}/${mes}/${ano}` : '—'
-}
-
-function Campo({ rotulo, valor, editavel, aoEditar }) {
-    return (
-        <div className="perfil-campo">
-            <div className="perfil-campo-topo">
-                <h3>{rotulo}</h3>
-                {editavel && (
-                    <button type="button" className="perfil-editar" onClick={aoEditar} aria-label={`Editar ${rotulo}`}>
-                        <EditIcon aria-hidden="true" />
-                    </button>
-                )}
-            </div>
-            <p className="perfil-campo-valor">{valor || '—'}</p>
-        </div>
-    )
-}
-
 /**
  * Visualização de perfil compartilhada entre o perfil próprio e o público.
  * `proprio` liga os controles de edição e o bloco de configurações.
  */
 function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, aoAbrirOpcoes, aoAlternarTema, temaEscuro = false, acaoPrincipal }) {
     const {
-        name, alias, photoUrl, bio, email, birthDate, nationality,
+        name, alias, photoUrl, bio,
         following = 0, followers = 0, memberSince, followsYou,
     } = usuario
 
@@ -124,18 +99,6 @@ function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, 
                 <p className="perfil-bio-texto">{bio || 'Sem bio por enquanto.'}</p>
             </section>
 
-            {/* Dados pessoais existem apenas no próprio perfil. O servidor já
-                os devolve como null para visitantes; aqui a seção inteira não é
-                renderizada, porque caixa vazia com um travessão anuncia que há
-                algo escondido ali. O perfil público termina na bio. */}
-            {proprio && (
-                <section className="perfil-dados">
-                    <Campo rotulo="E-mail" valor={email} editavel aoEditar={() => aoEditar?.('email')} />
-                    <Campo rotulo="Nascimento" valor={dataBR(birthDate)} editavel aoEditar={() => aoEditar?.('birthDate')} />
-                    <Campo rotulo="Nacionalidade" valor={nationality} editavel aoEditar={() => aoEditar?.('nationality')} />
-                </section>
-            )}
-
             {proprio && (
                 <section className="perfil-config" aria-label="Ajustes">
                     <button
@@ -159,7 +122,7 @@ function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, 
                         <span className="perfil-config-icone"><SettingsIcon aria-hidden="true" /></span>
                         <span className="perfil-config-texto">
                             <strong>Conta e segurança</strong>
-                            <small>Senha, sessão e exclusão da conta</small>
+                            <small>Dados pessoais, senha e exclusão da conta</small>
                         </span>
                         <Chevron className="perfil-config-seta" aria-hidden="true" />
                     </button>

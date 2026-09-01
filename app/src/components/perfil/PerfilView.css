@@ -178,42 +178,6 @@
     height: 15px;
 }
 
-/* ---------- Dados ---------- */
-
-.perfil-dados {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    border-bottom: 1px solid var(--borda);
-}
-
-/* No perfil público sobra apenas a nacionalidade: sem um campo ao lado, a
-   divisória vertical separaria conteúdo de vazio. */
-.perfil-dados:has(> .perfil-campo:only-child) .perfil-campo {
-    border-right: none;
-}
-
-/* Seção sem nenhum campo não deve deixar uma linha solta na tela. */
-.perfil-dados:empty {
-    display: none;
-}
-
-.perfil-campo {
-    padding: clamp(14px, 4vw, 18px) clamp(14px, 4vw, 20px);
-    border-right: 1px solid var(--borda);
-    min-width: 0;
-}
-
-.perfil-campo:last-child {
-    border-right: none;
-}
-
-.perfil-campo-valor {
-    margin-top: 6px;
-    font-size: clamp(.75rem, 3.2vw, .8125rem);
-    color: var(--texto-suave);
-    overflow-wrap: anywhere;
-}
-
 /* ---------- Ajustes (só perfil próprio) ---------- */
 
 .perfil-config {

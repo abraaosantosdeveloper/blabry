@@ -135,3 +135,149 @@
 a.conta-item {
     text-decoration: none;
 }
+
+/* ---------- Vistas dentro da mesma janela ---------- */
+
+/* O deslize acompanha o sentido da navegação: avançar entra pela direita,
+   voltar entra pela esquerda. É a convenção de ajustes em aplicativo
+   nativo, e o que faz a pessoa saber se está indo ou voltando sem ler.
+
+   `key` na vista remonta o nó a cada troca, que é o que reinicia a
+   animação — o mesmo nó reaproveitado não a executaria de novo. */
+.conta-vista {
+    animation: conta-entrar-direita .22s ease-out;
+}
+
+.conta-vista.tras {
+    animation-name: conta-entrar-esquerda;
+}
+
+@keyframes conta-entrar-direita {
+    from { opacity: 0; transform: translateX(16px) }
+    to { opacity: 1; transform: translateX(0) }
+}
+
+@keyframes conta-entrar-esquerda {
+    from { opacity: 0; transform: translateX(-16px) }
+    to { opacity: 1; transform: translateX(0) }
+}
+
+/* ---------- Cabeçalho das vistas ---------- */
+
+.conta-titulo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    padding-right: 32px;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--texto);
+}
+
+.conta-titulo-icone {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.conta-voltar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin-left: -6px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 8px;
+    background: none;
+    color: var(--texto-medio);
+    cursor: pointer;
+    transition: background-color .15s, color .15s;
+}
+
+.conta-voltar:hover {
+    background-color: var(--superficie-2);
+    color: var(--texto);
+}
+
+.conta-voltar>svg {
+    width: 20px;
+    height: 20px;
+}
+
+.conta-nota {
+    margin-bottom: 14px;
+    font-size: .75rem;
+    line-height: 1.5;
+    color: var(--texto-suave);
+}
+
+/* ---------- Lista de dados pessoais ---------- */
+
+.conta-dados {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.conta-dado {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 10px;
+    border: none;
+    border-radius: 10px;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    color: var(--texto);
+    transition: background-color .15s;
+}
+
+.conta-dado:hover {
+    background-color: var(--superficie-2);
+}
+
+.conta-dado-textos {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+}
+
+/* O rótulo vem antes do valor e menor: quem abre esta tela procura um
+   campo específico, então o nome do campo é a âncora da busca visual. */
+.conta-dado-textos>small {
+    font-size: .75rem;
+    color: var(--texto-suave);
+}
+
+.conta-dado-textos>strong {
+    font-size: .875rem;
+    font-weight: 600;
+    /* E-mail longo não pode alargar a janela. */
+    overflow-wrap: anywhere;
+}
+
+.conta-dado-editar {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    color: var(--texto-fraco);
+    transition: color .15s;
+}
+
+.conta-dado:hover .conta-dado-editar {
+    color: var(--acento);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .conta-vista {
+        animation: none;
+    }
+}
