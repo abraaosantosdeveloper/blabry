@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import usePaises from '../../hooks/usePaises'
-import './EditarCampoModal.css'
+import './EditarCampoForm.css'
 
 const BIO_MAX = 280
 

@@ -216,6 +216,35 @@ a.conta-item {
 
 /* ---------- Lista de dados pessoais ---------- */
 
+/* Cada grupo de campos (Perfil / Dados pessoais). O espaço entre grupos é
+   maior que o espaço entre campos do mesmo grupo — é essa diferença, e não
+   uma linha divisória, que faz a leitura separar os dois blocos. */
+.conta-grupo+.conta-grupo {
+    margin-top: 18px;
+}
+
+/* O título carrega a nota de visibilidade na mesma linha, alinhada à
+   direita: "Perfil — qualquer pessoa vê" é uma informação só, e quebrá-la em
+   duas linhas faria a nota parecer um parágrafo à parte. */
+.conta-grupo-titulo {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+    padding-inline: 10px;
+    font-size: .8125rem;
+    font-weight: 700;
+    color: var(--texto);
+}
+
+.conta-grupo-titulo>span {
+    font-size: .6875rem;
+    font-weight: 500;
+    color: var(--texto-suave);
+    white-space: nowrap;
+}
+
 .conta-dados {
     list-style: none;
     display: flex;

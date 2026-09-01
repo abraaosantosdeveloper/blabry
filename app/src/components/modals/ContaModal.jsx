@@ -33,11 +33,32 @@ const dataBR = (valor) => {
     return ano && mes && dia ? `${dia}/${mes}/${ano}` : '—'
 }
 
-/** Os três campos que saíram da grade do perfil e vivem aqui. */
-const DADOS_PESSOAIS = [
-    { campo: 'email', rotulo: 'E-mail', valor: (u) => u?.email },
-    { campo: 'birthDate', rotulo: 'Nascimento', valor: (u) => dataBR(u?.birthDate) },
-    { campo: 'nationality', rotulo: 'Nacionalidade', valor: (u) => u?.nationality },
+/**
+ * Todos os campos editáveis do perfil, em dois grupos.
+ *
+ * A divisão é por visibilidade, não por tipo de dado, e é a informação que
+ * mais importa a quem edita: o primeiro grupo aparece para qualquer pessoa
+ * que abra o seu perfil; o segundo, só para você. Sem esse rótulo, alguém
+ * pode escrever o telefone na bio achando que é campo privado.
+ */
+const GRUPOS = [
+    {
+        titulo: 'Perfil',
+        nota: 'Qualquer pessoa vê.',
+        campos: [
+            { campo: 'name', rotulo: 'Nome', valor: (u) => u?.name },
+            { campo: 'bio', rotulo: 'Bio', valor: (u) => u?.bio },
+        ],
+    },
+    {
+        titulo: 'Dados pessoais',
+        nota: 'Só você vê.',
+        campos: [
+            { campo: 'email', rotulo: 'E-mail', valor: (u) => u?.email },
+            { campo: 'birthDate', rotulo: 'Nascimento', valor: (u) => dataBR(u?.birthDate) },
+            { campo: 'nationality', rotulo: 'Nacionalidade', valor: (u) => u?.nationality },
+        ],
+    },
 ]
 
 /**
@@ -116,7 +137,7 @@ function ContaModal({ aberto, aoFechar, aoAlterarSenha, aoExcluirConta, usuario,
                                     <span className="conta-item-icone"><AccountInfoIcon aria-hidden="true" /></span>
                                     <span className="conta-item-textos">
                                         <strong>Informações pessoais</strong>
-                                        <small>E-mail, nascimento e nacionalidade.</small>
+                                        <small>Nome, bio, e-mail, nascimento e nacionalidade.</small>
                                     </span>
                                     <Chevron className="conta-item-seta" aria-hidden="true" />
                                 </button>
@@ -196,23 +217,31 @@ function ContaModal({ aberto, aoFechar, aoAlterarSenha, aoExcluirConta, usuario,
                         </h2>
 
                         <p className="conta-nota">
-                            Estes dados aparecem só para você. O perfil público mostra apenas
-                            nome, @, foto, bio e os contadores.
+                            A foto continua sendo trocada no próprio perfil, tocando no avatar.
                         </p>
 
-                        <ul className="conta-dados">
-                            {DADOS_PESSOAIS.map(({ campo, rotulo, valor }) => (
-                                <li key={campo}>
-                                    <button type="button" className="conta-dado" onClick={() => abrirEdicao(campo)}>
-                                        <span className="conta-dado-textos">
-                                            <small>{rotulo}</small>
-                                            <strong>{valor(usuario) || '—'}</strong>
-                                        </span>
-                                        <EditIcon className="conta-dado-editar" aria-hidden="true" />
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
+                        {GRUPOS.map(({ titulo, nota, campos }) => (
+                            <section className="conta-grupo" key={titulo}>
+                                <h3 className="conta-grupo-titulo">
+                                    {titulo}
+                                    <span>{nota}</span>
+                                </h3>
+
+                                <ul className="conta-dados">
+                                    {campos.map(({ campo, rotulo, valor }) => (
+                                        <li key={campo}>
+                                            <button type="button" className="conta-dado" onClick={() => abrirEdicao(campo)}>
+                                                <span className="conta-dado-textos">
+                                                    <small>{rotulo}</small>
+                                                    <strong>{valor(usuario) || '—'}</strong>
+                                                </span>
+                                                <EditIcon className="conta-dado-editar" aria-hidden="true" />
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </section>
+                        ))}
                     </>
                 )}
 

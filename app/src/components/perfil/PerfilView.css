@@ -136,14 +136,10 @@
     border-bottom: 1px solid var(--borda);
 }
 
-.perfil-campo-topo {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-.perfil-campo-topo h3 {
+/* O lápis saiu daqui: toda edição de perfil vive agora na modal de Conta.
+   Sem o botão ao lado, o cabeçalho da bio deixou de precisar de flex com
+   `space-between` e virou só um título. */
+.perfil-bio-titulo {
     font-size: clamp(.8125rem, 3.4vw, .875rem);
     font-weight: 700;
     color: var(--texto);
@@ -155,27 +151,6 @@
     line-height: 1.6;
     color: var(--texto-suave);
     overflow-wrap: anywhere;
-}
-
-.perfil-editar {
-    display: flex;
-    padding: 5px;
-    border: none;
-    border-radius: 6px;
-    background: none;
-    color: var(--texto-suave);
-    cursor: pointer;
-    flex-shrink: 0;
-}
-
-.perfil-editar:hover {
-    background-color: var(--superficie-2);
-    color: var(--acento);
-}
-
-.perfil-editar>svg {
-    width: 15px;
-    height: 15px;
 }
 
 /* ---------- Ajustes (só perfil próprio) ---------- */
@@ -335,15 +310,5 @@
     .perfil-contadores {
         justify-content: flex-start;
     }
-
-    .perfil-campo {
-        border-right: none;
-        border-bottom: 1px solid var(--borda);
-    }
-
-    .perfil-campo:last-child {
-        border-bottom: none;
-    }
 }
-
 

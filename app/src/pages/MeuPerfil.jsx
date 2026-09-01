@@ -3,7 +3,6 @@ import PerfilView from '../components/perfil/PerfilView'
 import PostsDoPerfil from '../components/perfil/PostsDoPerfil'
 import ContaModal from '../components/modals/ContaModal'
 import ExcluirContaModal from '../components/modals/ExcluirContaModal'
-import EditarCampoModal from '../components/modals/EditarCampoModal'
 import FotoPerfilModal from '../components/modals/FotoPerfilModal'
 import EstadoLista from '../components/common/EstadoLista'
 import Toast from '../components/toasts/Toast'
@@ -23,7 +22,6 @@ function MeuPerfil() {
     const [erro, setErro] = useState(null)
     const [opcoesAbertas, setOpcoesAbertas] = useState(false)
     const [exclusaoAberta, setExclusaoAberta] = useState(false)
-    const [campoEditando, setCampoEditando] = useState(null)
     const [fotoAberta, setFotoAberta] = useState(false)
     const { toast, mostrarToast } = useToast()
     const { escuro, alternar } = useTema()
@@ -59,7 +57,6 @@ function MeuPerfil() {
                     usuario={usuario}
                     proprio
                     titulo="Meu Perfil"
-                    aoEditar={setCampoEditando}
                     aoEditarFoto={() => setFotoAberta(true)}
                     temaEscuro={escuro}
                     aoAlternarTema={alternar}
@@ -87,21 +84,6 @@ function MeuPerfil() {
                     localStorage.setItem('photoUrl', photoUrl)
                     setFotoAberta(false)
                     mostrarToast('Foto atualizada!', 'sucesso')
-                }}
-            />
-
-            <EditarCampoModal
-                aberto={Boolean(campoEditando)}
-                campo={campoEditando}
-                usuario={usuario}
-                aoFechar={() => setCampoEditando(null)}
-                aoSalvar={async (corpo) => {
-                    // O servidor devolve o perfil já normalizado — é ele que
-                    // vira o novo estado, não o que foi digitado.
-                    const atualizado = await atualizarPerfil(corpo)
-                    setUsuario(atualizado)
-                    setCampoEditando(null)
-                    mostrarToast('Perfil atualizado!', 'sucesso')
                 }}
             />
 

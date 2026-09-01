@@ -1,5 +1,4 @@
 import Avatar from '../common/Avatar'
-import EditIcon from '../../assets/icons/edit.svg?react'
 import SettingsIcon from '../../assets/icons/settings.svg?react'
 
 const Chevron = (props) => (
@@ -30,7 +29,7 @@ const compacto = (n) =>
  * Visualização de perfil compartilhada entre o perfil próprio e o público.
  * `proprio` liga os controles de edição e o bloco de configurações.
  */
-function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, aoAbrirOpcoes, aoAlternarTema, temaEscuro = false, acaoPrincipal }) {
+function PerfilView({ usuario, proprio = false, titulo, aoEditarFoto, aoAbrirOpcoes, aoAlternarTema, temaEscuro = false, acaoPrincipal }) {
     const {
         name, alias, photoUrl, bio,
         following = 0, followers = 0, memberSince, followsYou,
@@ -63,11 +62,6 @@ function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, 
                     <div className="perfil-nomes">
                         <div className="perfil-nome-linha">
                             <h2>{name}</h2>
-                            {proprio && (
-                                <button type="button" className="perfil-editar" onClick={() => aoEditar?.('name')} aria-label="Editar nome">
-                                    <EditIcon aria-hidden="true" />
-                                </button>
-                            )}
                         </div>
                         <span className="perfil-alias">@{alias}</span>
 
@@ -88,14 +82,7 @@ function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, 
             </section>
 
             <section className="perfil-bio">
-                <div className="perfil-campo-topo">
-                    <h3>Bio</h3>
-                    {proprio && (
-                        <button type="button" className="perfil-editar" onClick={() => aoEditar?.('bio')} aria-label="Editar bio">
-                            <EditIcon aria-hidden="true" />
-                        </button>
-                    )}
-                </div>
+                <h3 className="perfil-bio-titulo">Bio</h3>
                 <p className="perfil-bio-texto">{bio || 'Sem bio por enquanto.'}</p>
             </section>
 
@@ -122,7 +109,7 @@ function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, 
                         <span className="perfil-config-icone"><SettingsIcon aria-hidden="true" /></span>
                         <span className="perfil-config-texto">
                             <strong>Conta e segurança</strong>
-                            <small>Dados pessoais, senha e exclusão da conta</small>
+                            <small>Editar perfil, senha e exclusão da conta</small>
                         </span>
                         <Chevron className="perfil-config-seta" aria-hidden="true" />
                     </button>
