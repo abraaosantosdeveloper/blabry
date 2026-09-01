@@ -107,7 +107,7 @@ function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, 
                         <span><strong>{compacto(following)}</strong> following</span>
                         <span><strong>{compacto(followers)}</strong> followers</span>
                     </p>
-                    {memberSince && <span className="perfil-desde">No Blabry memberSince {memberSince}</span>}
+                    {memberSince && <span className="perfil-desde">No Blabry {memberSince}</span>}
                     {acaoPrincipal}
                 </div>
             </section>
