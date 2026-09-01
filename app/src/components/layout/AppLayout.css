@@ -216,8 +216,29 @@
 /* ---------- Desktop ---------- */
 
 @media (min-width: 768px) {
+    /* O menu fica preso abaixo do topo enquanto a página rola. Quem rola o
+       feed está lendo publicações, não procurando navegação — e empurrar o
+       menu para fora da tela obriga a voltar ao topo só para trocar de
+       seção.
+
+       `align-self: flex-start` é o que faz o sticky funcionar aqui. Sem
+       ele, o item de flex é esticado até a altura do corpo inteiro, e um
+       elemento que já ocupa toda a área de rolagem não tem por onde
+       deslizar — o sticky não teria efeito nenhum.
+
+       A altura é a da janela menos o topo, e não 100dvh, porque o topo
+       também é sticky e já ocupa essa faixa: sem descontá-lo, o fim do
+       menu ficaria abaixo da borda inferior da tela. */
     .app-menu {
         display: flex;
+        position: sticky;
+        top: var(--topo-altura);
+        align-self: flex-start;
+        height: calc(100dvh - var(--topo-altura));
+        /* Se um dia o menu crescer além da janela, ele rola sozinho — e a
+           rolagem não vaza para a página quando chega ao fim. */
+        overflow-y: auto;
+        overscroll-behavior: contain;
     }
 
     .app-navbar {
