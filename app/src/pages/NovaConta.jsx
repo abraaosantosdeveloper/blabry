@@ -162,7 +162,7 @@ function NovaConta() {
                         {etapa === 0 && (
                             <>
                                 <div className="input-line-wrapper">
-                                    <AuthInput label="Nome" placeholder="Seu name" fieldType="text" fieldId="nome-input" {...campo('name')} />
+                                    <AuthInput label="Nome" placeholder="Seu nome" fieldType="text" fieldId="nome-input" {...campo('name')} />
                                     <AuthInput label="Sobrenome" placeholder="Seu sobrenome" fieldType="text" fieldId="sobrenome-input" {...campo('sobrenome')} />
                                 </div>
                                 <div className="input-line-wrapper">

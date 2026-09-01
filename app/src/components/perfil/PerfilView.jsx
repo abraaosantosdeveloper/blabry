@@ -89,7 +89,7 @@ function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, 
                         <div className="perfil-nome-linha">
                             <h2>{name}</h2>
                             {proprio && (
-                                <button type="button" className="perfil-editar" onClick={() => aoEditar?.('name')} aria-label="Editar name">
+                                <button type="button" className="perfil-editar" onClick={() => aoEditar?.('name')} aria-label="Editar nome">
                                     <EditIcon aria-hidden="true" />
                                 </button>
                             )}
