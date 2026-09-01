@@ -104,10 +104,10 @@ function PerfilView({ usuario, proprio = false, titulo, aoEditar, aoEditarFoto, 
 
                 <div className="perfil-numeros">
                     <p className="perfil-contadores">
-                        <span><strong>{compacto(following)}</strong> following</span>
-                        <span><strong>{compacto(followers)}</strong> followers</span>
+                        <span><strong>{compacto(following)}</strong> seguindo</span>
+                        <span><strong>{compacto(followers)}</strong> seguidores</span>
                     </p>
-                    {memberSince && <span className="perfil-desde">No Blabry {memberSince}</span>}
+                    {memberSince && <span className="perfil-desde">No Blabry desde {memberSince}</span>}
                     {acaoPrincipal}
                 </div>
             </section>
