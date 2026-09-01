@@ -68,13 +68,13 @@ function Comentario({ comentario, souAutor, aoEditar, aoExcluir }) {
 
     return (
         <li className="comentario">
-            <Link to={`/perfil/${comentario.author.alias}`} className="comentario-avatar">
+            <Link to={`/profile/${comentario.author.alias}`} className="comentario-avatar">
                 <Avatar src={comentario.author.photoUrl} name={comentario.author.name} tamanho={30} />
             </Link>
 
             <div className="comentario-corpo">
                 <p className="comentario-cabecalho">
-                    <Link to={`/perfil/${comentario.author.alias}`}>{comentario.author.name}</Link>
+                    <Link to={`/profile/${comentario.author.alias}`}>{comentario.author.name}</Link>
                     <span>@{comentario.author.alias}</span>
                     {comentario.createdAt && (
                         <time dateTime={comentario.createdAt}>· {quando(comentario.createdAt)}</time>

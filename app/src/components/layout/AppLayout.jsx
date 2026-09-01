@@ -11,8 +11,8 @@ import './AppLayout.css'
 
 const NAVEGACAO = [
     { para: '/feed', rotulo: 'Feed', Icone: HomeIcon },
-    { para: '/conversas', rotulo: 'Conversas', Icone: ChatsIcon },
-    { para: '/perfil/me', rotulo: 'Perfil', Icone: AvatarIcon },
+    { para: '/chats', rotulo: 'Conversas', Icone: ChatsIcon },
+    { para: '/profile/me', rotulo: 'Perfil', Icone: AvatarIcon },
 ]
 
 /**

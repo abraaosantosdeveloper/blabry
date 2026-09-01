@@ -112,7 +112,7 @@ function Post() {
                         Acima do post, e não abaixo: quem abre um link de
                         publicação de fora do app costuma não conhecer o
                         author, e saber quem escreveu muda como se lê o text. */}
-                    <Link to={`/perfil/${author.alias}`} className="pagina-post-autor">
+                    <Link to={`/profile/${author.alias}`} className="pagina-post-autor">
                         <Avatar src={author.photoUrl} name={author.name} tamanho={52} />
                         <span className="pagina-post-autor-textos">
                             <strong>{author.name}</strong>

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
-import PerfilView from '../components/perfil/PerfilView'
-import PostsDoPerfil from '../components/perfil/PostsDoPerfil'
+import PerfilView from '../components/profile/PerfilView'
+import PostsDoPerfil from '../components/profile/PostsDoPerfil'
 import EstadoLista from '../components/common/EstadoLista'
 import Toast from '../components/toasts/Toast'
 import useToast from '../hooks/useToast'
@@ -74,7 +74,7 @@ function Perfil() {
     )
 
     /* Chegar ao próprio perfil pela URL pública é normal — basta clicar no
-       seu name em um post. Redirecionar para /perfil/me evita uma segunda
+       seu name em um post. Redirecionar para /profile/me evita uma segunda
        tela do mesmo perfil, sem os lápis de edição e com um botão de seguir
        que a API recusaria.
 
@@ -82,7 +82,7 @@ function Perfil() {
        estar vazio, e redirecionar aí levaria todo mundo para o próprio
        perfil. */
     if (usuarioAtual?.alias && usuarioAtual.alias === alias) {
-        return <Navigate to="/perfil/me" replace />
+        return <Navigate to="/profile/me" replace />
     }
 
     return (

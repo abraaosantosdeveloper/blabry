@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import PerfilView from '../components/perfil/PerfilView'
-import PostsDoPerfil from '../components/perfil/PostsDoPerfil'
+import PerfilView from '../components/profile/PerfilView'
+import PostsDoPerfil from '../components/profile/PostsDoPerfil'
 import ContaModal from '../components/modals/ContaModal'
 import ExcluirContaModal from '../components/modals/ExcluirContaModal'
 import EditarCampoModal from '../components/modals/EditarCampoModal'
@@ -116,7 +116,7 @@ function MeuPerfil() {
                        seria manter duas chances de divergirem.
 
                        O e-mail segue pelo `state`, não pela URL. */
-                    navigate('/recuperar-senha', { state: { email: usuario?.email } })
+                    navigate('/reset-password', { state: { email: usuario?.email } })
                 }}
                 aoExcluirConta={() => {
                     setOpcoesAbertas(false)

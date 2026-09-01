@@ -57,7 +57,7 @@ function ContaModal({ aberto, aoFechar, aoAlterarSenha, aoExcluirConta }) {
                         atual, já que a política é leitura de apoio. */}
                     <Link
                         className="conta-item"
-                        to="/politica-de-privacidade"
+                        to="/privacy-policy"
                         target="_blank"
                         rel="noopener noreferrer"
                     >

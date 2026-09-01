@@ -35,7 +35,7 @@ function PostsDoPerfil({ alias, autorAtual, aoErro }) {
         // `acumular` porque a seção usa "carregar mais", como o feed: o
         // usuário está lendo uma lista contínua, não navegando por páginas.
         acumular: true,
-        // `ativo` só quando há alias. No primeiro render de /perfil/me o
+        // `ativo` só quando há alias. No primeiro render de /profile/me o
         // alias ainda não chegou, e buscar "/users/undefined/posts" daria
         // um 404 que apareceria como erro na tela.
         ativo: Boolean(alias),

@@ -119,12 +119,12 @@ function PostCard({
     return (
         <article className="post">
             <header className="post-cabecalho">
-                <Link to={`/perfil/${author.alias}`} className="post-avatar-link">
+                <Link to={`/profile/${author.alias}`} className="post-avatar-link">
                     <Avatar src={author.photoUrl} name={author.name} tamanho={44} />
                 </Link>
 
                 <div className="post-identificacao">
-                    <Link to={`/perfil/${author.alias}`} className="post-nome">{author.name}</Link>
+                    <Link to={`/profile/${author.alias}`} className="post-nome">{author.name}</Link>
                     <span className="post-alias">@{author.alias}</span>
                 </div>
 

@@ -37,7 +37,7 @@ function Login() {
                qualquer proxy no caminho. */
             if (err?.status === 403) {
                 mostrarToast('Confirme seu e-mail para entrar.')
-                return navigate('/verificar-email', { state: { email: email.trim() } })
+                return navigate('/verify-email', { state: { email: email.trim() } })
             }
             mostrarToast(mensagemDeErro(err))
         } finally {
@@ -56,12 +56,12 @@ function Login() {
                     value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="username" />
                 <AuthInput label="Senha" placeholder="Senha" fieldType="password" fieldId="password-input"
                     value={senha} onChange={(e) => setSenha(e.target.value)} autoComplete="current-password" />
-                <Link className="forgot-psw" to="/recuperar-senha">Esqueci a senha</Link>
+                <Link className="forgot-psw" to="/reset-password">Esqueci a senha</Link>
 
                 <AuthButton label="Entrar" type="submit" carregando={carregando} />
             </form>
 
-            <p className="already-user">Não tem conta? <Link className="already-user-link" to="/nova-conta">Cadastre-se</Link></p>
+            <p className="already-user">Não tem conta? <Link className="already-user-link" to="/signup">Cadastre-se</Link></p>
         </div>
     )
 }

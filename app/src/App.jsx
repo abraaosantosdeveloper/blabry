@@ -20,14 +20,14 @@ function App() {
         <Route path='/' element={<Login />} />
         {/* Públicas por necessidade: quem precisa confirmar o e-mail ou
             recuperar a senha, por definição, ainda não tem sessão. */}
-        <Route path='/verificar-email' element={<VerificarEmail />} />
-        <Route path='/recuperar-senha' element={<RecuperarSenha />} />
-        <Route path='/nova-conta' element={<Cadastro />} />
+        <Route path='/verify-email' element={<VerificarEmail />} />
+        <Route path='/reset-password' element={<RecuperarSenha />} />
+        <Route path='/signup' element={<Cadastro />} />
 
         {/* Pública de propósito: o cadastro exige aceitar a política, e
             exigir login para ler o que se está aceitando seria um ciclo
             impossível de fechar. Fica fora do ProtectedRoute. */}
-        <Route path='/politica-de-privacidade' element={<PoliticaPrivacidade />} />
+        <Route path='/privacy-policy' element={<PoliticaPrivacidade />} />
 
         {/* Rotas autenticadas — compartilham a casca da aplicação */}
         <Route element={
@@ -36,13 +36,13 @@ function App() {
           </ProtectedRoute>
         }>
           <Route path='/feed' element={<Feed />} />
-          <Route path='/conversas' element={<EmConstrucao />} />
+          <Route path='/chats' element={<EmConstrucao />} />
           <Route path='/chat/:id' element={<Chat />} />
           {/* Endereço próprio da publicação: compartilhável e recarregável.
               Fica dentro da casca autenticada porque a API exige token. */}
           <Route path='/post/:id' element={<Post />} />
-          <Route path='/perfil/me' element={<MeuPerfil />} />
-          <Route path='/perfil/:alias' element={<Perfil />} />
+          <Route path='/profile/me' element={<MeuPerfil />} />
+          <Route path='/profile/:alias' element={<Perfil />} />
           <Route path='*' element={<EmConstrucao />} />
         </Route>
       </Routes>

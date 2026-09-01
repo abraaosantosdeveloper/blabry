@@ -124,7 +124,7 @@ function BuscaModal({ aberto, aoFechar }) {
                                 {aba === 'users'
                                     ? itens.map((u) => (
                                         <li key={u.alias}>
-                                            <Link to={`/perfil/${u.alias}`} className="busca-item" onClick={fechar}>
+                                            <Link to={`/profile/${u.alias}`} className="busca-item" onClick={fechar}>
                                                 <Avatar src={u.photoUrl} name={u.name} tamanho={38} />
                                                 <span className="busca-item-textos">
                                                     <strong>{u.name}</strong>

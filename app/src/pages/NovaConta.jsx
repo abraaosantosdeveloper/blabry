@@ -120,7 +120,7 @@ function NovaConta() {
                ficaria no histórico do navegador. */
             mostrarToast('Conta criada! Enviamos um código para seu e-mail.', 'sucesso')
             return setTimeout(
-                () => navigate('/verificar-email', { state: { email: form.email.trim() } }),
+                () => navigate('/verify-email', { state: { email: form.email.trim() } }),
                 1200
             )
         } catch (err) {
@@ -216,7 +216,7 @@ function NovaConta() {
                                         Li e aceito a{' '}
                                         {/* target="_blank" para não destruir o formulário
                                             já preenchido ao abrir a política. */}
-                                        <Link to="/politica-de-privacidade" target="_blank" rel="noopener noreferrer">
+                                        <Link to="/privacy-policy" target="_blank" rel="noopener noreferrer">
                                             política de privacidade
                                         </Link>.
                                     </span>
