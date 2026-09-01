@@ -31,7 +31,7 @@ const CONSEQUENCIAS = [
  */
 function ExcluirContaModal({ aberto, aoFechar, email, aoConfirmar, aoPedirCodigo }) {
     const [etapa, setEtapa] = useState(0)
-    const [codigo, setCodigo] = useState('')
+    const [code, setCode] = useState('')
     const [palavra, setPalavra] = useState('')
     const [enviando, setEnviando] = useState(false)
     const [pedindoCodigo, setPedindoCodigo] = useState(false)
@@ -44,11 +44,11 @@ function ExcluirContaModal({ aberto, aoFechar, email, aoConfirmar, aoPedirCodigo
        ação irreversível é exatamente o que não se quer. */
     useEffect(() => {
         if (aberto) return
-        setEtapa(0); setCodigo(''); setPalavra(''); setEnviando(false)
+        setEtapa(0); setCode(''); setPalavra(''); setEnviando(false)
         setPedindoCodigo(false); setDestino(''); setErroCodigo(null)
     }, [aberto])
 
-    const podeAvancar = etapa === 1 ? codigo.length === TAMANHO_CODIGO : true
+    const podeAvancar = etapa === 1 ? code.length === TAMANHO_CODIGO : true
     const podeExcluir = palavra === PALAVRA && !enviando
 
     /** Etapa 0 → 1: pede o código antes de mostrar o campo. */
@@ -73,7 +73,7 @@ function ExcluirContaModal({ aberto, aoFechar, email, aoConfirmar, aoPedirCodigo
         if (!podeExcluir) return
         setEnviando(true)
         try {
-            await aoConfirmar?.({ code: codigo })
+            await aoConfirmar?.({ code })
         } finally {
             setEnviando(false)
         }
@@ -115,8 +115,8 @@ function ExcluirContaModal({ aberto, aoFechar, email, aoConfirmar, aoPedirCodigo
                         </p>
 
                         <CampoCodigo
-                            valor={codigo}
-                            aoMudar={setCodigo}
+                            valor={code}
+                            aoMudar={setCode}
                             desabilitado={enviando}
                             id="excluir-codigo"
                         />

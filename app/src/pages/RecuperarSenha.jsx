@@ -34,7 +34,7 @@ function RecuperarSenha() {
        conta manda o e-mail no state), o campo já vem preenchido. */
     const [email, setEmail] = useState(state?.email ?? '')
     const [etapa, setEtapa] = useState(0)
-    const [codigo, setCodigo] = useState('')
+    const [code, setCode] = useState('')
     const [newPassword, setNovaSenha] = useState('')
     const [confirmarSenha, setConfirmarSenha] = useState('')
     const [enviando, setEnviando] = useState(false)
@@ -75,7 +75,7 @@ function RecuperarSenha() {
         evento.preventDefault()
         if (enviando) return
 
-        if (codigo.length < TAMANHO_CODIGO)
+        if (code.length < TAMANHO_CODIGO)
             return mostrarToast('Digite o código completo.')
 
         if (!SENHA_RE.test(newPassword))
@@ -86,7 +86,7 @@ function RecuperarSenha() {
 
         setEnviando(true)
         try {
-            await trocarSenha({ email: email.trim(), codigo, newPassword })
+            await trocarSenha({ email: email.trim(), code, newPassword })
             mostrarToast('Senha alterada! Faça login com a nova senha.', 'sucesso')
             /* Não emitimos token aqui de propósito. Quem trocou a senha deve
                entrar com ela — é a confirmação prática de que a nova senha
@@ -94,7 +94,7 @@ function RecuperarSenha() {
                antiga na cabeça do usuário. */
             setTimeout(() => navigate('/', { replace: true }), 1400)
         } catch (err) {
-            setCodigo('')
+            setCode('')
             mostrarToast(mensagemDeErro(err))
             setEnviando(false)
         }
@@ -133,8 +133,8 @@ function RecuperarSenha() {
                     </p>
 
                     <CampoCodigo
-                        valor={codigo}
-                        aoMudar={setCodigo}
+                        valor={code}
+                        aoMudar={setCode}
                         desabilitado={enviando}
                         id="recuperar-codigo"
                     />

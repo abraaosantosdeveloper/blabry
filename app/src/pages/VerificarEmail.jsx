@@ -29,7 +29,7 @@ function VerificarEmail() {
     const { toast, mostrarToast } = useToast()
 
     const email = state?.email ?? ''
-    const [codigo, setCodigo] = useState('')
+    const [code, setCode] = useState('')
     const [erro, setErro] = useState(false)
     const [enviando, setEnviando] = useState(false)
     /* Começa no intervalo cheio: o código do cadastro acabou de ser enviado,
@@ -55,12 +55,12 @@ function VerificarEmail() {
 
     async function confirmar(evento) {
         evento.preventDefault()
-        if (codigo.length < TAMANHO_CODIGO || enviando) return
+        if (code.length < TAMANHO_CODIGO || enviando) return
 
         setEnviando(true)
         setErro(false)
         try {
-            const dados = await confirmarEmail({ email, codigo })
+            const dados = await confirmarEmail({ email, code })
 
             // A confirmação já devolve o token: o usuário entra direto.
             localStorage.setItem('token', dados.token)
@@ -71,7 +71,7 @@ function VerificarEmail() {
             setTimeout(() => navigate('/feed', { replace: true }), 900)
         } catch (err) {
             setErro(true)
-            setCodigo('')
+            setCode('')
             mostrarToast(mensagemDeErro(err))
             setEnviando(false)
         }
@@ -106,8 +106,8 @@ function VerificarEmail() {
                 </p>
 
                 <CampoCodigo
-                    valor={codigo}
-                    aoMudar={(v) => { setCodigo(v); setErro(false) }}
+                    valor={code}
+                    aoMudar={(v) => { setCode(v); setErro(false) }}
                     erro={erro}
                     desabilitado={enviando}
                 />
@@ -118,7 +118,7 @@ function VerificarEmail() {
                     carregando={enviando}
                     // Só habilita com o código completo: enviar 3 dígitos
                     // gastaria uma das 5 tentativas do usuário por nada.
-                    disabled={codigo.length < TAMANHO_CODIGO}
+                    disabled={code.length < TAMANHO_CODIGO}
                 />
 
                 <p className="verificar-reenvio">
