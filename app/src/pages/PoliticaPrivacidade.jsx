@@ -229,7 +229,7 @@ function PoliticaPrivacidade() {
             <Secao id="contato" titulo="Contato">
                 <p>
                     Dúvidas sobre esta política ou sobre seus dados podem ser enviadas
-                    para <a href="mailto:afs6@cesar.school">afs6@cesar.school</a>.
+                    para <a href="mailto:abraaofilipi12@gmail.com">abraaofilipi12@gmail.com</a>.
                 </p>
             </Secao>
 
