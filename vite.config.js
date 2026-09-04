@@ -27,5 +27,5 @@ function copiaIndexPara404() {
 
 export default defineConfig({
   plugins: [react(), svgr(), copiaIndexPara404()],
-  base: '/',
+  base: '/blabry/',
 })
