@@ -9,7 +9,7 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist -c blabry.com.br"
+    "deploy": "gh-pages -d dist --cname=blabry.com.br"
   },
   "dependencies": {
     "react": "^19.2.8",
