@@ -15,7 +15,7 @@ import ProtectedRoute from './components/protectRoutes/ProtectedRoutes';
 
 function App() {
   return (
-    <BrowserRouter basename="/blabry">
+    <BrowserRouter basename="/">
       <Routes>
         <Route path='/' element={<Login />} />
         {/* Públicas por necessidade: quem precisa confirmar o e-mail ou
