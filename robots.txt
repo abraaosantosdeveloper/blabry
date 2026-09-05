@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /login
+Disallow: /signup
+Disallow: /verify-email
+Disallow: /reset-password
+Disallow: /feed
+Disallow: /chats
+Disallow: /chat/
+Disallow: /post/
+Disallow: /profile/
+Sitemap: https://blabry.com.br/sitemap.xml
