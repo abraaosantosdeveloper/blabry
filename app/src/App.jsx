@@ -12,14 +12,16 @@ import VerificarEmail from './pages/VerificarEmail';
 import RecuperarSenha from './pages/RecuperarSenha';
 import AppLayout from './components/layout/AppLayout';
 import ProtectedRoute from './components/protectRoutes/ProtectedRoutes';
+import Landing from './pages/Landing';
 
 function App() {
   return (
     <BrowserRouter basename="/">
       <Routes>
-        <Route path='/' element={<Login />} />
+        <Route path='/' element={<Landing />} />
         {/* Públicas por necessidade: quem precisa confirmar o e-mail ou
             recuperar a senha, por definição, ainda não tem sessão. */}
+        <Route path='/login' element={<Login />} />
         <Route path='/verify-email' element={<VerificarEmail />} />
         <Route path='/reset-password' element={<RecuperarSenha />} />
         <Route path='/signup' element={<Cadastro />} />
