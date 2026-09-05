@@ -98,6 +98,9 @@ export default function Landing() {
                     name="twitter:description"
                     content="Uma rede social focada em conversas reais, sem anúncios e sem distrações."
                 />
+                <meta property="og:image" content="../assets/meta/hero-for-link-cards.png" />
+                <meta property="og:image:width" content="1200" />
+                <meta property="og:image:height" content="630" />
             </Helmet>
             <header>
                 <nav className="nav">
@@ -278,11 +281,11 @@ export default function Landing() {
                                 </span>
 
                                 <h3>
-                                    Publicações em tempo real
+                                    Publicações em tempo real via SSE
                                 </h3>
 
                                 <span className="feature-status status-live">
-                                    Parcialmente implementado
+                                    Disponível
                                 </span>
                             </div>
 
