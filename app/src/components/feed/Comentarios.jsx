@@ -9,7 +9,7 @@ import { listarComentarios, comentar, editarComentario, excluirComentario } from
 import { mensagemDeErro } from '../../services/http'
 import './Comentarios.css'
 
-const LIMITE = 280
+const LIMITE = 500
 
 /**
  * Lista e formulário de comentários de uma publicação.

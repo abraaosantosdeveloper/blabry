@@ -11,6 +11,8 @@ import { alternarCurtida } from '../../services/posts.service'
 import { mensagemDeErro } from '../../services/http'
 import './PostCard.css'
 
+const LIMITE = 500
+
 const CurtirIcon = (props) => (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
         <path d="M12 20.5S3.5 15.2 3.5 9.6A4.6 4.6 0 0 1 12 7a4.6 4.6 0 0 1 8.5 2.6c0 5.6-8.5 10.9-8.5 10.9Z"
@@ -178,7 +180,7 @@ function PostCard({
                 <form className="post-edicao" onSubmit={salvarEdicao}>
                     <textarea
                         value={rascunho}
-                        maxLength={280}
+                        maxLength={LIMITE}
                         rows={3}
                         autoFocus
                         onChange={(e) => setRascunho(e.target.value)}
@@ -189,7 +191,7 @@ function PostCard({
                     {erroEdicao && <p className="post-edicao-erro" role="alert">{erroEdicao}</p>}
 
                     <div className="post-edicao-acoes">
-                        <span className="post-edicao-contador">{280 - rascunho.length}</span>
+                        <span className="post-edicao-contador">{LIMITE - rascunho.length}</span>
                         <button type="button" className="neutro" onClick={() => setEditando(false)}>
                             Cancelar
                         </button>
