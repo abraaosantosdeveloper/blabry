@@ -8,6 +8,7 @@
     --purple: #5c33f2;
     --purple-2: #9839fe;
     --line: #e4dffb;
+    --landing-header-height: 52px;
     --radius-bubble: 42% 58% 61% 39% / 46% 40% 60% 54%;
 }
 
@@ -16,7 +17,7 @@
     box-sizing: border-box;
 }
 
-.landing-page {
+html:has(.landing-page) {
     scroll-behavior: smooth;
 }
 
@@ -66,6 +67,7 @@
 
 .landing-page section {
     padding: 96px 0;
+    scroll-margin-top: var(--landing-header-height);
 }
 
 .landing-page .hairline {
@@ -137,7 +139,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 28px;
+    min-height: var(--landing-header-height);
+    padding: 4px 28px;
     max-width: 1120px;
     margin: 0 auto;
 }
@@ -150,9 +153,10 @@
 }
 
 .landing-page .logo-img {
-    height: 30px;
+    height: 36px;
     width: auto;
     display: block;
+    transform: translateY(.7rem);
 }
 
 .landing-page .nav-links {
@@ -215,7 +219,7 @@
 
 /* ---------- hero ---------- */
 .landing-page .hero {
-    padding: 76px 0 60px;
+    padding: 15px 0 60px;
     overflow: hidden;
 }
 
@@ -336,9 +340,6 @@
         margin: 0 auto;
     }
 
-    .landing-page .float-card {
-        display: none;
-    }
 }
 
 /* ---------- manifesto ---------- */
