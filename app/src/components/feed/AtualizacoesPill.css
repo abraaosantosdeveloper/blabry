@@ -1,0 +1,55 @@
+.atualizacoes-pill {
+    position: fixed;
+    top: calc(var(--topo-altura) + 12px);
+    left: 50%;
+    z-index: 15;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 36px;
+    padding: 8px 14px;
+    border: 1px solid var(--acento-borda);
+    border-radius: 999px;
+    background-color: var(--superficie);
+    color: var(--acento);
+    box-shadow: var(--sombra-media);
+    font-size: .8125rem;
+    font-weight: 700;
+    cursor: pointer;
+    transform: translateX(-50%);
+    animation: atualizacoes-pill-entrar .2s ease-out;
+}
+
+.atualizacoes-pill:hover {
+    background-color: var(--acento-suave);
+}
+
+.atualizacoes-pill:focus-visible {
+    outline: 3px solid var(--acento-foco);
+    outline-offset: 2px;
+}
+
+.atualizacoes-pill-ponto {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--acento);
+}
+
+@keyframes atualizacoes-pill-entrar {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-8px)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0)
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .atualizacoes-pill {
+        animation: none;
+    }
+}
