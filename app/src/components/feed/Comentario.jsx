@@ -6,7 +6,7 @@ import EditIcon from '../../assets/icons/edit.svg?react'
 import TrashIcon from '../../assets/icons/trash.svg?react'
 import { dentroDaJanela } from '../../utils/janelaEdicao'
 
-const LIMITE = 280
+const LIMITE = 500
 
 const quando = (iso) => {
     if (!iso) return ''

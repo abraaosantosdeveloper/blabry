@@ -3,7 +3,7 @@ import Avatar from '../common/Avatar'
 import EmojiPicker, { EmojiIcon } from '../common/EmojiPicker'
 import './PostComposer.css'
 
-const LIMITE = 280
+const LIMITE = 500
 
 /**
  * Campo de nova publicação. Usado inline no feed e dentro do modal do FAB.
@@ -74,7 +74,7 @@ function PostComposer({ author, aoPublicar, focoAutomatico = false, aoErro }) {
                     placeholder="O que tem em mente?"
                     rows={1}
                     value={text}
-                    maxLength={LIMITE + 40}
+                    maxLength={LIMITE}
                     onChange={(e) => {
                         setTexto(e.target.value)
                         ajustarAltura(e.target)
