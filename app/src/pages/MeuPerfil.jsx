@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import PerfilView from '../components/perfil/PerfilView'
 import PostsDoPerfil from '../components/perfil/PostsDoPerfil'
 import ContaModal from '../components/modals/ContaModal'
+import ConfirmarModal from '../components/modals/ConfirmarModal'
 import ExcluirContaModal from '../components/modals/ExcluirContaModal'
 import FotoPerfilModal from '../components/modals/FotoPerfilModal'
 import EstadoLista from '../components/common/EstadoLista'
@@ -21,6 +22,7 @@ function MeuPerfil() {
     const [carregando, setCarregando] = useState(true)
     const [erro, setErro] = useState(null)
     const [opcoesAbertas, setOpcoesAbertas] = useState(false)
+    const [sairAberto, setSairAberto] = useState(false)
     const [exclusaoAberta, setExclusaoAberta] = useState(false)
     const [fotoAberta, setFotoAberta] = useState(false)
     const { toast, mostrarToast } = useToast()
@@ -53,25 +55,25 @@ function MeuPerfil() {
 
             {usuario && (
                 <>
-                <PerfilView
-                    usuario={usuario}
-                    proprio
-                    titulo="Meu Perfil"
-                    aoEditarFoto={() => setFotoAberta(true)}
-                    temaEscuro={escuro}
-                    aoAlternarTema={alternar}
-                    aoAbrirOpcoes={() => setOpcoesAbertas(true)}
-                />
+                    <PerfilView
+                        usuario={usuario}
+                        proprio
+                        titulo="Meu Perfil"
+                        aoEditarFoto={() => setFotoAberta(true)}
+                        temaEscuro={escuro}
+                        aoAlternarTema={alternar}
+                        aoAbrirOpcoes={() => setOpcoesAbertas(true)}
+                    />
 
-                {/* Mesmo componente do perfil de terceiros. O que muda —
+                    {/* Mesmo componente do perfil de terceiros. O que muda —
                     poder editar ou excluir — é decidido dentro do PostCard,
                     comparando o author da publicação com o usuário do token,
                     e não por uma variante desta tela. */}
-                <PostsDoPerfil
-                    alias={usuario.alias}
-                    autorAtual={usuarioAtual ?? usuario}
-                    aoErro={mostrarToast}
-                />
+                    <PostsDoPerfil
+                        alias={usuario.alias}
+                        autorAtual={usuarioAtual ?? usuario}
+                        aoErro={mostrarToast}
+                    />
                 </>
             )}
 
@@ -109,9 +111,29 @@ function MeuPerfil() {
                        O e-mail segue pelo `state`, não pela URL. */
                     navigate('/reset-password', { state: { email: usuario?.email } })
                 }}
+                aoSair={() => {
+                    setOpcoesAbertas(false)
+                    setSairAberto(true)
+                }}
                 aoExcluirConta={() => {
                     setOpcoesAbertas(false)
                     setExclusaoAberta(true)
+                }}
+            />
+
+            <ConfirmarModal
+                aberto={sairAberto}
+                aoFechar={() => setSairAberto(false)}
+                titulo="Sair da conta"
+                mensagem="Tem certeza que deseja sair?"
+                rotuloConfirmar="Sair"
+                rotuloCancelar="Continuar logado"
+                aoConfirmar={async () => {
+                    localStorage.removeItem('token')
+                    localStorage.removeItem('name')
+                    localStorage.removeItem('alias')
+                    localStorage.removeItem('photoUrl')
+                    navigate('/', { replace: true })
                 }}
             />
 

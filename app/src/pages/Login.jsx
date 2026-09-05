@@ -24,7 +24,14 @@ function Login() {
             const dados = await login({ email: email.trim(), password: senha })
             localStorage.setItem('token', dados.token)
             localStorage.setItem('name', dados.user.name)
-            navigate('/feed')
+            navigate('/feed', {
+                state: {
+                    toast: {
+                        mensagem: 'Login realizado com sucesso!',
+                        tipo: 'sucesso',
+                    },
+                },
+            })
         } catch (err) {
             /* 403 significa "sabemos quem é você, mas falta confirmar o
                e-mail" — distinto do 401 de credencial errada. Como a senha

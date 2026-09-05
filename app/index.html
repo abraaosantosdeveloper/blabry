@@ -1,27 +1,44 @@
 <!doctype html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blabry</title>
-  </head>
-  <body>
-    <script>
-      /* Antes de qualquer pintura: evita o flash branco ao abrir no tema escuro. */
-      (function () {
-        try {
-          var salvo = localStorage.getItem('tema');
-          var escuro = salvo
-            ? salvo === 'escuro'
-            : window.matchMedia('(prefers-color-scheme: dark)').matches;
-          document.documentElement.dataset.tema = escuro ? 'escuro' : 'claro';
-        } catch (e) {
-          document.documentElement.dataset.tema = 'claro';
-        }
-      })();
-    </script>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#fbfaff" />
+  <meta name="description"
+    content="Blabry é uma rede social focada em conversas reais, publicações em tempo real e comunicação sem anúncios." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://blabry.com.br/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Blabry" />
+  <meta property="og:title" content="Blabry | Uma rede social para conversar" />
+  <meta property="og:description" content="Uma rede social focada em conversas reais, sem anúncios e sem distrações." />
+  <meta property="og:url" content="https://blabry.com.br/" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Blabry | Uma rede social para conversar" />
+  <meta name="twitter:description"
+    content="Uma rede social focada em conversas reais, sem anúncios e sem distrações." />
+  <title>Blabry | Uma rede social para conversar</title>
+</head>
+
+<body>
+  <script>
+    /* Antes de qualquer pintura: evita o flash branco ao abrir no tema escuro. */
+    (function () {
+      try {
+        var salvo = localStorage.getItem('tema');
+        var escuro = salvo
+          ? salvo === 'escuro'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.tema = escuro ? 'escuro' : 'claro';
+      } catch (e) {
+        document.documentElement.dataset.tema = 'claro';
+      }
+    })();
+  </script>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>

@@ -1,4 +1,5 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import PostComposer from '../components/feed/PostComposer'
 import PostCard from '../components/feed/PostCard'
 import NovoPostModal from '../components/modals/NovoPostModal'
@@ -13,8 +14,18 @@ import './Feed.css'
 
 function Feed() {
     const { toast, mostrarToast } = useToast()
+    const location = useLocation()
+    const navigate = useNavigate()
     const [modalAberto, setModalAberto] = useState(false)
     const usuario = useUsuarioAtual()
+
+    useEffect(() => {
+        const aviso = location.state?.toast
+        if (!aviso) return
+
+        mostrarToast(aviso.mensagem, aviso.tipo)
+        navigate('/feed', { replace: true, state: null })
+    }, [location.state, mostrarToast, navigate])
 
     const buscar = useCallback(({ page, signal }) => listarPosts({ page, signal }), [])
 

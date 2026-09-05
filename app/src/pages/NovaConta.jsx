@@ -118,9 +118,16 @@ function NovaConta() {
 
                O e-mail vai pelo `state` da navegação, nunca na URL — lá ele
                ficaria no histórico do navegador. */
-            mostrarToast('Conta criada! Enviamos um código para seu e-mail.', 'sucesso')
             return setTimeout(
-                () => navigate('/verify-email', { state: { email: form.email.trim() } }),
+                () => navigate('/verify-email', {
+                    state: {
+                        email: form.email.trim(),
+                        toast: {
+                            mensagem: 'Conta criada! Enviamos um código para seu e-mail.',
+                            tipo: 'sucesso',
+                        },
+                    },
+                }),
                 1200
             )
         } catch (err) {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Modal from './Modal'
 import EditarCampoForm, { CAMPOS } from './EditarCampoForm'
 import AvatarIcon from '../../assets/icons/avatar.svg?react'
@@ -76,9 +76,7 @@ const GRUPOS = [
  * @param {object} usuario perfil atual — alimenta os valores exibidos
  * @param {(corpo: object) => Promise<void>} aoSalvarCampo executa o PATCH
  */
-function ContaModal({ aberto, aoFechar, aoAlterarSenha, aoExcluirConta, usuario, aoSalvarCampo }) {
-    const navigate = useNavigate()
-
+function ContaModal({ aberto, aoFechar, aoAlterarSenha, aoExcluirConta, aoSair, usuario, aoSalvarCampo }) {
     const [vista, setVista] = useState('menu')
     const [campoEditando, setCampoEditando] = useState(null)
     /* Direção do deslize. Guardada em estado, e não deduzida da vista, porque
@@ -102,14 +100,6 @@ function ContaModal({ aberto, aoFechar, aoAlterarSenha, aoExcluirConta, usuario,
     function abrirEdicao(campo) {
         setCampoEditando(campo)
         avancar('editar')
-    }
-
-    function sair() {
-        localStorage.removeItem('token')
-        localStorage.removeItem('name')
-        localStorage.removeItem('alias')
-        localStorage.removeItem('photoUrl')
-        navigate('/', { replace: true })
     }
 
     const titulos = {
@@ -175,7 +165,7 @@ function ContaModal({ aberto, aoFechar, aoAlterarSenha, aoExcluirConta, usuario,
                             </li>
 
                             <li>
-                                <button type="button" className="conta-item" onClick={sair}>
+                                <button type="button" className="conta-item" onClick={aoSair}>
                                     <span className="conta-item-icone"><LogoffIcon aria-hidden="true" /></span>
                                     <span className="conta-item-textos">
                                         <strong>Sair da conta</strong>

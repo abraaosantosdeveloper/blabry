@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Login from './pages/Login';
 import Cadastro from './pages/NovaConta';
 import Chat from './pages/Chat';
@@ -14,9 +15,24 @@ import AppLayout from './components/layout/AppLayout';
 import ProtectedRoute from './components/protectRoutes/ProtectedRoutes';
 import Landing from './pages/Landing';
 
+const URL_CANONICA = 'https://blabry.com.br';
+
+function MetadadosDaRota() {
+  const { pathname } = useLocation();
+  const indexavel = pathname === '/' || pathname === '/privacy-policy';
+
+  return (
+    <Helmet>
+      <meta name="robots" content={indexavel ? 'index, follow' : 'noindex, nofollow'} />
+      <link rel="canonical" href={`${URL_CANONICA}${pathname}`} />
+    </Helmet>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter basename="/">
+      <MetadadosDaRota />
       <Routes>
         <Route path='/' element={<Landing />} />
         {/* Públicas por necessidade: quem precisa confirmar o e-mail ou

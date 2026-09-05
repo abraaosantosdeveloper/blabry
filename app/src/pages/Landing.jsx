@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import './Landing.css';
 
 import logoText from '../assets/icons/logo_text.svg';
@@ -77,6 +78,27 @@ export default function Landing() {
 
     return (
         <div className="landing-page">
+            <Helmet>
+                <title>Blabry | Uma rede social para conversar</title>
+                <meta
+                    name="description"
+                    content="Blabry é uma rede social focada em conversas reais, publicações em tempo real e comunicação sem anúncios."
+                />
+                <meta property="og:type" content="website" />
+                <meta property="og:site_name" content="Blabry" />
+                <meta property="og:title" content="Blabry | Uma rede social para conversar" />
+                <meta
+                    property="og:description"
+                    content="Uma rede social focada em conversas reais, sem anúncios e sem distrações."
+                />
+                <meta property="og:url" content="https://blabry.com.br/" />
+                <meta name="twitter:card" content="summary" />
+                <meta name="twitter:title" content="Blabry | Uma rede social para conversar" />
+                <meta
+                    name="twitter:description"
+                    content="Uma rede social focada em conversas reais, sem anúncios e sem distrações."
+                />
+            </Helmet>
             <header>
                 <nav className="nav">
                     <Link to="/" className="logo">
@@ -210,13 +232,13 @@ export default function Landing() {
                             <p className="pull-quote">
                                 Perdi uma vaga de desenvolvedor por não saber
                                 WebSockets. A resposta foi construir uma rede
-                                social inteira em cima desse recurso.
+                                social que utilizasse esse recurso.
                             </p>
 
                             <p>
                                 O Blabry é um microblog com cara de Threads:
                                 publique um "blab", curta, comente, siga quem
-                                quiser. Mas por baixo, tudo foi desenhado para
+                                quiser. E nos chats, tudo foi desenhado para
                                 funcionar em tempo real — do jeito que uma
                                 conversa de verdade funciona, não do jeito que
                                 um formulário funciona.

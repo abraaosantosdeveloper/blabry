@@ -32,6 +32,18 @@ function VerificarEmail() {
     const [code, setCode] = useState('')
     const [erro, setErro] = useState(false)
     const [enviando, setEnviando] = useState(false)
+
+    useEffect(() => {
+        const aviso = state?.toast
+        if (!aviso) return
+
+        mostrarToast(aviso.mensagem, aviso.tipo)
+        navigate('/verify-email', {
+            replace: true,
+            state: { email },
+        })
+    }, [email, mostrarToast, navigate, state])
+
     /* Começa no intervalo cheio: o código do cadastro acabou de ser enviado,
        então pedir outro imediatamente receberia 429 do servidor. Mostrar o
        contador é melhor do que deixar o usuário descobrir pelo erro. */
