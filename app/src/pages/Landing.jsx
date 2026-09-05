@@ -7,7 +7,7 @@ import logoText from '../assets/icons/logo_text.svg';
 import smilingUsingCellphone from '../assets/webp_assets/smiling-using-cellphone.webp';
 import groupSelfie from '../assets/webp_assets/group-selfie.webp';
 import fotoProfissional from '../assets/webp_assets/foto-profissional.webp';
-import heroForLinkCards from '../assets/meta/hero-for-link-cards.png';
+import heroForLinkCards from '../assets/meta/hero-image.png';
 
 export default function Landing() {
     useEffect(() => {
