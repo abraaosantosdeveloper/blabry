@@ -7,7 +7,6 @@ import logoText from '../assets/icons/logo_text.svg';
 import smilingUsingCellphone from '../assets/webp_assets/smiling-using-cellphone.webp';
 import groupSelfie from '../assets/webp_assets/group-selfie.webp';
 import fotoProfissional from '../assets/webp_assets/foto-profissional.webp';
-import heroForLinkCards from '../assets/meta/hero-image.png';
 
 export default function Landing() {
     useEffect(() => {
@@ -99,9 +98,6 @@ export default function Landing() {
                     name="twitter:description"
                     content="Uma rede social focada em conversas reais, sem anúncios e sem distrações."
                 />
-                <meta property="og:image" content={heroForLinkCards} />
-                <meta property="og:image:width" content="1200" />
-                <meta property="og:image:height" content="630" />
             </Helmet>
             <header>
                 <nav className="nav">
