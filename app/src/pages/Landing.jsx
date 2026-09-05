@@ -76,7 +76,7 @@ export default function Landing() {
     }, []);
 
     return (
-        <>
+        <div className="landing-page">
             <header>
                 <nav className="nav">
                     <Link to="/" className="logo">
@@ -651,6 +651,6 @@ export default function Landing() {
                     </div>
                 </div>
             </footer>
-        </>
+        </div>
     );
 }
