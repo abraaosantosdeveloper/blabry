@@ -19,7 +19,7 @@ function copiaIndexPara404() {
   return {
     name: 'copia-index-para-404',
     closeBundle() {
-      const saida = resolve(__dirname, 'dist')
+      const saida = resolve(import.meta.dirname, 'dist')
       copyFileSync(resolve(saida, 'index.html'), resolve(saida, '404.html'))
     },
   }
