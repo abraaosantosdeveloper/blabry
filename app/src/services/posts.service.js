@@ -1,5 +1,47 @@
 import { request, query } from './http'
 
+const API = import.meta.env.VITE_API_URL
+
+/** Escuta avisos de novas publicações sem alterar a lista do feed. */
+export async function escutarAtualizacoesPill({ signal, aoAtualizar }) {
+    const resposta = await fetch(`${API}/pill-updates`, {
+        headers: {
+            Accept: 'text/event-stream',
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        signal,
+    })
+
+    if (!resposta.ok) {
+        throw Object.assign(new Error('Falha ao conectar às atualizações'), {
+            status: resposta.status,
+        })
+    }
+
+    if (!resposta.body) return
+
+    const leitor = resposta.body.getReader()
+    const decodificador = new TextDecoder()
+    let buffer = ''
+
+    try {
+        while (true) {
+            const { value, done } = await leitor.read()
+            if (done) break
+
+            buffer += decodificador.decode(value, { stream: true })
+            const eventos = buffer.split(/\r?\n\r?\n/)
+            buffer = eventos.pop() ?? ''
+
+            eventos.forEach((evento) => {
+                if (/^data:/m.test(evento)) aoAtualizar()
+            })
+        }
+    } finally {
+        leitor.releaseLock()
+    }
+}
+
 /** GET /posts — feed paginado. */
 export const listarPosts = ({ page = 1, limit = 10, signal } = {}) =>
     request(`/posts${query({ page, limit })}`, null, { auth: true, signal })
