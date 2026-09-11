@@ -1,13 +1,15 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import PostComposer from '../components/feed/PostComposer'
 import PostCard from '../components/feed/PostCard'
+import AtualizacoesPill from '../components/feed/AtualizacoesPill'
 import NovoPostModal from '../components/modals/NovoPostModal'
 import EstadoLista from '../components/common/EstadoLista'
 import Toast from '../components/toasts/Toast'
 import useToast from '../hooks/useToast'
 import usePaginado from '../hooks/usePaginado'
 import useUsuarioAtual from '../hooks/useUsuarioAtual'
+import useAtualizacoesPill from '../hooks/useAtualizacoesPill'
 import { listarPosts, criarPost, editarPost, excluirPost } from '../services/posts.service'
 import { mensagemDeErro } from '../services/http'
 import './Feed.css'
@@ -17,7 +19,9 @@ function Feed() {
     const location = useLocation()
     const navigate = useNavigate()
     const [modalAberto, setModalAberto] = useState(false)
+    const listaRef = useRef(null)
     const usuario = useUsuarioAtual()
+    const { temAtualizacoes, limparAtualizacoes } = useAtualizacoesPill()
 
     useEffect(() => {
         const aviso = location.state?.toast
@@ -58,9 +62,16 @@ function Feed() {
         mostrarToast('Blab publicado!', 'sucesso')
     }
 
+    async function verNovosBlabs() {
+        limparAtualizacoes()
+        await recarregar()
+        listaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+
     return (
         <div className="feed">
             <Toast {...toast} />
+            <AtualizacoesPill visivel={temAtualizacoes} aoClicar={verNovosBlabs} />
 
             <h1 className="sr-only">Feed</h1>
 
@@ -70,7 +81,7 @@ function Feed() {
                 aoErro={(err) => mostrarToast(mensagemDeErro(err))}
             />
 
-            <div className="feed-lista">
+            <div className="feed-lista" ref={listaRef}>
                 {posts.map((post) => (
                     <PostCard
                         key={post.id}

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { cadastrar, mensagemDeErro } from '../services/auth.service'
 import { enviarFoto } from '../services/users.service'
@@ -69,6 +69,7 @@ function NovaConta() {
     const [direcao, setDirecao] = useState('frente')
     const [invalidos, setInvalidos] = useState([])
     const [carregando, setCarregando] = useState(false)
+    const envioEmAndamento = useRef(false)
     const [foto, setFoto] = useState(null)
     const { toast, mostrarToast } = useToast()
     const { paises, carregando: carregandoPaises, falhou: falhouPaises, recarregar } = usePaises()
@@ -91,7 +92,7 @@ function NovaConta() {
     }
 
     async function avancar() {
-        if (carregando) return
+        if (carregando || envioEmAndamento.current) return
         const falha = validar(etapa, form)
         if (falha) {
             setInvalidos(falha.campos)
@@ -99,6 +100,7 @@ function NovaConta() {
         }
         if (etapa < 2) return ir(etapa + 1)
 
+        envioEmAndamento.current = true
         setCarregando(true)
         try {
             const dados = await cadastrar({
@@ -133,6 +135,7 @@ function NovaConta() {
         } catch (err) {
             mostrarToast(mensagemDeErro(err))
         } finally {
+            envioEmAndamento.current = false
             setCarregando(false)
         }
     }
